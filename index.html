@@ -1,147 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi Plataforma de Videos</title>
+<meta charset="UTF-8">
+<title>Mi Plataforma de Videos</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      background: #111;
-      color: white;
-      margin: 0;
-      display: flex;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #111;
+  color: white;
+  display: flex;
+}
 
-    /* LISTA */
-    .lista {
-      width: 30%;
-      background: #1c1c1c;
-      padding: 10px;
-      height: 100vh;
-      overflow-y: auto;
-    }
+.lista {
+  width: 30%;
+  background: #1c1c1c;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 10px;
+}
 
-    .video-item {
-      padding: 10px;
-      margin: 5px 0;
-      background: #333;
-      cursor: pointer;
-    }
+.item {
+  padding: 10px;
+  margin: 5px 0;
+  background: #333;
+  cursor: pointer;
+}
 
-    .video-item:hover {
-      background: #555;
-    }
+.item:hover {
+  background: #555;
+}
 
-    /* REPRODUCTOR */
-    .reproductor {
-      width: 70%;
-      padding: 20px;
-    }
+.reproductor {
+  width: 70%;
+  padding: 20px;
+}
 
-    video {
-      width: 100%;
-      max-height: 500px;
-      background: black;
-    }
+video {
+  width: 100%;
+  max-height: 500px;
+  background: black;
+}
 
-    .titulo {
-      margin-top: 10px;
-      font-size: 20px;
-      color: #00ffcc;
-    }
+.titulo {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #00ffcc;
+}
 
-    /* COMENTARIOS */
-    .comentarios {
-      margin-top: 20px;
-    }
+.comentarios {
+  margin-top: 20px;
+}
 
-    textarea {
-      width: 100%;
-      height: 60px;
-    }
+textarea {
+  width: 100%;
+  height: 60px;
+}
 
-    button {
-      margin-top: 5px;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
+button {
+  margin-top: 5px;
+  padding: 5px;
+}
 
-    .comentario {
-      background: #222;
-      padding: 5px;
-      margin-top: 5px;
-    }
-  </style>
+.comentario {
+  background: #222;
+  margin-top: 5px;
+  padding: 5px;
+}
+</style>
 </head>
 
 <body>
 
-<!-- LISTA DE VIDEOS -->
+<!-- LISTA -->
 <div class="lista">
-  <h3>Lista de videos</h3>
 
-  <div class="video-item" onclick="cargarVideo('5.mp4', '5')">
-    🎥 5
-  </div>
+  <div class="item" onclick="playVideo('5.mp4','Video 5')">🎥 Video 5</div>
 
-  <div class="video-item" onclick="cargarVideo('recreo-emprendedor.mp4', 'Recreo Emprendedor')">
-    🎥 Recreo Emprendedor
-  </div>
+  <div class="item" onclick="playVideo('7.mp4','Video 7')">🎥 Video 7</div>
 
-  <div class="video-item" onclick="cargarVideo('7.mp4', '7: Demo')">
-    🎥 7
-  </div>
+  <div class="item" onclick="playVideo('recreo-emprendedor.mp4','Recreo emprendedor')">🎥 Recreo emprendedor</div>
+
 </div>
 
 <!-- REPRODUCTOR -->
 <div class="reproductor">
 
-  <video id="player" controls>
-    <source src="video1.mp4" type="video/mp4">
-  </video>
+<video id="player" controls>
+  <source src="5.mp4" type="video/mp4">
+</video>
 
-  <div class="titulo" id="tituloVideo">
-    Video 1: Presentación
-  </div>
+<div class="titulo" id="titulo">Video 5</div>
 
-  <!-- COMENTARIOS -->
-  <div class="comentarios">
-    <h3>Comentarios</h3>
+<!-- COMENTARIOS -->
+<div class="comentarios">
+  <h3>Comentarios</h3>
 
-    <textarea id="textoComentario" placeholder="Escribe tu comentario..."></textarea>
-    <br>
-    <button onclick="agregarComentario()">Enviar</button>
+  <textarea id="txt"></textarea>
+  <br>
+  <button onclick="addComment()">Enviar</button>
 
-    <div id="listaComentarios"></div>
-  </div>
+  <div id="listaComentarios"></div>
+</div>
 
 </div>
 
 <script>
-  function cargarVideo(src, titulo) {
-    const player = document.getElementById("player");
-    player.src = src;
-    player.play();
 
-    document.getElementById("tituloVideo").innerText = titulo;
-  }
+function playVideo(src, title) {
+  const player = document.getElementById("player");
+  player.src = src;
+  player.play();
 
-  function agregarComentario() {
-    const texto = document.getElementById("textoComentario").value;
+  document.getElementById("titulo").innerText = title;
+}
 
-    if (texto.trim() === "") return;
+/* comentarios simples */
+function addComment() {
+  let txt = document.getElementById("txt").value;
 
-    const div = document.createElement("div");
-    div.className = "comentario";
-    div.innerText = texto;
+  if (txt.trim() === "") return;
 
-    document.getElementById("listaComentarios").appendChild(div);
+  let div = document.createElement("div");
+  div.className = "comentario";
+  div.innerText = txt;
 
-    document.getElementById("textoComentario").value = "";
-  }
+  document.getElementById("listaComentarios").appendChild(div);
+
+  document.getElementById("txt").value = "";
+}
+
 </script>
 
 </body>
 </html>
-<!-- COMENTARIOS -->
