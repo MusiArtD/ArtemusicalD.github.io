@@ -2,43 +2,145 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Mi Página</title>
+  <title>Mi Plataforma de Videos</title>
 
   <style>
     body {
       font-family: Arial;
       background: #111;
       color: white;
-      text-align: center;
-      padding: 50px;
+      margin: 0;
+      display: flex;
     }
 
-    h1 {
+    /* LISTA */
+    .lista {
+      width: 30%;
+      background: #1c1c1c;
+      padding: 10px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .video-item {
+      padding: 10px;
+      margin: 5px 0;
+      background: #333;
+      cursor: pointer;
+    }
+
+    .video-item:hover {
+      background: #555;
+    }
+
+    /* REPRODUCTOR */
+    .reproductor {
+      width: 70%;
+      padding: 20px;
+    }
+
+    video {
+      width: 100%;
+      max-height: 500px;
+      background: black;
+    }
+
+    .titulo {
+      margin-top: 10px;
+      font-size: 20px;
       color: #00ffcc;
     }
 
-    .boton {
-      display: inline-block;
+    /* COMENTARIOS */
+    .comentarios {
       margin-top: 20px;
-      padding: 10px 20px;
-      background: red;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 60px;
+    }
+
+    button {
+      margin-top: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .comentario {
+      background: #222;
+      padding: 5px;
+      margin-top: 5px;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>Bienvenido a mi página</h1>
+<!-- LISTA DE VIDEOS -->
+<div class="lista">
+  <h3>Lista de videos</h3>
 
-  <p>Mi sistema de videos está en construcción 🚧</p>
+  <div class="video-item" onclick="cargarVideo('Recreo-Emprendedor.mp4', 'Recreo Emprendedor: Presentación')">
+    🎥 Recreo Emprendedor
+  </div>
 
-  <a class="boton" href="#">Próximamente</a>
+  <div class="video-item" onclick="cargarVideo('Logo-Son-Musick-2025.mp4', 'Logo Son Musick 2025: Tutorial')">
+    🎥 Logo Son Musick 2025
+  </div>
+
+  <div class="video-item" onclick="cargarVideo('7.mp4', '7: Demo')">
+    🎥 7
+  </div>
+</div>
+
+<!-- REPRODUCTOR -->
+<div class="reproductor">
+
+  <video id="player" controls>
+    <source src="video1.mp4" type="video/mp4">
+  </video>
+
+  <div class="titulo" id="tituloVideo">
+    Video 1: Presentación
+  </div>
+
+  <!-- COMENTARIOS -->
+  <div class="comentarios">
+    <h3>Comentarios</h3>
+
+    <textarea id="textoComentario" placeholder="Escribe tu comentario..."></textarea>
+    <br>
+    <button onclick="agregarComentario()">Enviar</button>
+
+    <div id="listaComentarios"></div>
+  </div>
+
+</div>
+
+<script>
+  function cargarVideo(src, titulo) {
+    const player = document.getElementById("player");
+    player.src = src;
+    player.play();
+
+    document.getElementById("tituloVideo").innerText = titulo;
+  }
+
+  function agregarComentario() {
+    const texto = document.getElementById("textoComentario").value;
+
+    if (texto.trim() === "") return;
+
+    const div = document.createElement("div");
+    div.className = "comentario";
+    div.innerText = texto;
+
+    document.getElementById("listaComentarios").appendChild(div);
+
+    document.getElementById("textoComentario").value = "";
+  }
+</script>
 
 </body>
 </html>
-
-<!-- update -->
