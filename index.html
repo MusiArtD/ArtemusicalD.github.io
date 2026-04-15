@@ -13,7 +13,7 @@ body {
   display: flex;
 }
 
-/* LISTA IZQUIERDA */
+/* LISTA */
 .lista {
   width: 35%;
   background: #1e1e1e;
@@ -56,31 +56,26 @@ audio {
   color: #aaa;
   margin-top: 5px;
 }
-
-/* comentario simple */
-textarea {
-  width: 100%;
-  margin-top: 20px;
-  height: 60px;
-}
-
-button {
-  margin-top: 5px;
-  padding: 6px;
-}
 </style>
 </head>
 
 <body>
 
-<!-- LISTA DE CANCIONES -->
+<!-- LISTA DE CANCIONES (AQUÍ ES DONDE TE GUIAS) -->
 <div class="lista">
 
-  <div class="item" onclick="playMusic('recreo-emprendedor.mp3','Recreo Emprendedor','AMU-001')">
+  <div class="item"
+  onclick="playMusic('Amelia Celeste 3.mp3','Amelia Celeste 3','AMU-001')">
+    🎵 Amelia Celeste 3
+  </div>
+
+  <div class="item"
+  onclick="playMusic('recreo emprendedor.mp3','Recreo Emprendedor','AMU-002')">
     🎵 Recreo Emprendedor
   </div>
 
-  <div class="item" onclick="playMusic('serenata-de-amor.mp3','Serenata de Amor','AMU-002')">
+  <div class="item"
+  onclick="playMusic('serenata de amor.mp3','Serenata de Amor','AMU-003')">
     🎵 Serenata de Amor
   </div>
 
@@ -94,15 +89,6 @@ button {
   <div class="titulo" id="titulo">Selecciona una canción</div>
   <div class="codigo" id="codigo">Código: ---</div>
 
-  <!-- comentarios simples -->
-  <h3>Comentarios</h3>
-
-  <textarea id="coment"></textarea>
-  <br>
-  <button onclick="addComment()">Enviar</button>
-
-  <div id="listaComentarios"></div>
-
 </div>
 
 <script>
@@ -114,22 +100,6 @@ function playMusic(file, title, code) {
 
   document.getElementById("titulo").innerText = title;
   document.getElementById("codigo").innerText = "Código: " + code;
-}
-
-/* comentarios simples */
-function addComment() {
-  let txt = document.getElementById("coment").value;
-  if (!txt.trim()) return;
-
-  let div = document.createElement("div");
-  div.style.background = "#222";
-  div.style.marginTop = "5px";
-  div.style.padding = "5px";
-  div.innerText = txt;
-
-  document.getElementById("listaComentarios").appendChild(div);
-
-  document.getElementById("coment").value = "";
 }
 
 </script>
