@@ -93,14 +93,62 @@ audio {
 
 <script>
 
-function playMusic(file, title, code) {
-  const player = document.getElementById("player");
-  player.src = file;
+const playlist = [
+  { file: "Amelia Celeste 3.mp3", title: "Amelia Celeste 3", code: "AMU-001" },
+  { file: "Los 15 de Yuliana.mp3", title: "Los 15 de Yuliana", code: "AMU-002" },
+  { file: "Baila Yuliana en tus 15.mp3", title: "Baila Yuliana en tus 15", code: "AMU-003" }
+];
+
+let currentIndex = 0;
+let manualMode = false;
+
+const player = document.getElementById("player");
+
+function updateUI(song) {
+  document.getElementById("titulo").innerText = song.title;
+  document.getElementById("codigo").innerText = "Código: " + song.code;
+}
+
+function playSong(index, isManual = false) {
+  currentIndex = index;
+  manualMode = isManual;
+
+  const song = playlist[index];
+
+  player.src = song.file;
   player.play();
 
-  document.getElementById("titulo").innerText = title;
-  document.getElementById("codigo").innerText = "Código: " + code;
+  updateUI(song);
 }
+
+// CLICK MANUAL (usa tu HTML actual)
+function playMusic(file, title, code) {
+  const index = playlist.findIndex(s => s.file === file);
+
+  if (index === -1) {
+    console.error("Archivo no encontrado en playlist:", file);
+    return;
+  }
+
+  playSong(index, true);
+}
+
+// AUTO SIGUIENTE
+player.onended = function () {
+
+  if (manualMode) {
+    manualMode = false;
+    return;
+  }
+
+  currentIndex++;
+
+  if (currentIndex >= playlist.length) {
+    currentIndex = 0;
+  }
+
+  playSong(currentIndex, false);
+};
 
 </script>
 
