@@ -100,7 +100,6 @@ const playlist = [
 ];
 
 let currentIndex = 0;
-let manualMode = false;
 
 const player = document.getElementById("player");
 
@@ -109,9 +108,8 @@ function updateUI(song) {
   document.getElementById("codigo").innerText = "Código: " + song.code;
 }
 
-function playSong(index, isManual = false) {
+function playSong(index) {
   currentIndex = index;
-  manualMode = isManual;
 
   const song = playlist[index];
 
@@ -121,25 +119,20 @@ function playSong(index, isManual = false) {
   updateUI(song);
 }
 
-// CLICK MANUAL (usa tu HTML actual)
+// click manual desde HTML
 function playMusic(file, title, code) {
   const index = playlist.findIndex(s => s.file === file);
 
   if (index === -1) {
-    console.error("Archivo no encontrado en playlist:", file);
+    console.error("Archivo no encontrado:", file);
     return;
   }
 
-  playSong(index, true);
+  playSong(index);
 }
 
-// AUTO SIGUIENTE
-player.onended = function () {
-
-  if (manualMode) {
-    manualMode = false;
-    return;
-  }
+// autoplay
+player.addEventListener("ended", function () {
 
   currentIndex++;
 
@@ -147,8 +140,9 @@ player.onended = function () {
     currentIndex = 0;
   }
 
-  playSong(currentIndex, false);
-};
+  playSong(currentIndex);
+
+});
 
 </script>
 
