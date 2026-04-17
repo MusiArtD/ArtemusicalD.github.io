@@ -13,7 +13,7 @@ body {
   display: flex;
 }
 
-/* LISTA (DERECHA) */
+/* LISTA */
 .lista {
   width: 35%;
   background: #1e1e1e;
@@ -22,16 +22,6 @@ body {
   padding: 10px;
 }
 
-/* TITULOS DE SECCION */
-.seccion {
-  font-size: 16px;
-  color: #1db954;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-/* ITEMS */
 .item {
   padding: 12px;
   margin: 8px 0;
@@ -44,7 +34,7 @@ body {
   background: #3a3a3a;
 }
 
-/* REPRODUCTOR (IZQUIERDA) */
+/* REPRODUCTOR */
 .reproductor {
   width: 65%;
   padding: 20px;
@@ -66,12 +56,45 @@ audio {
   color: #aaa;
   margin-top: 5px;
 }
+
+/* 🔥 ANIMACIONES */
+@keyframes latido {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fuego {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.icono-corazon {
+  display: inline-block;
+  animation: latido 1s infinite;
+}
+
+.icono-fuego {
+  display: inline-block;
+  animation: fuego 0.8s infinite;
+}
+
+/* TITULOS DE SECCION */
+.seccion {
+  font-size: 16px;
+  color: #1db954;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
 </style>
+
 </head>
 
 <body>
 
-<!-- IZQUIERDA -->
+<!-- IZQUIERDA (REPRODUCTOR) -->
 <div class="reproductor">
 
   <audio id="player" controls></audio>
@@ -81,10 +104,12 @@ audio {
 
 </div>
 
-<!-- DERECHA -->
+<!-- DERECHA (LISTA) -->
 <div class="lista">
 
-  <div class="seccion">🎵 Lista de reproducción</div>
+  <div class="seccion">
+    <span class="icono-corazon">❤️</span> Más reproducido
+  </div>
 
   <div class="item"
   onclick="playMusic('Amelia Celeste 3.mp3','Amelia Celeste 3','AMU-001')">
@@ -96,19 +121,19 @@ audio {
     🎵 Los 15 de Yuliana
   </div>
 
+  <div class="seccion">
+    <span class="icono-fuego">🔥</span> Últimas reproducciones
+  </div>
+
   <div class="item"
   onclick="playMusic('Baila Yuliana en tus 15.mp3','Baila Yuliana en tus 15','AMU-003')">
     🎵 Baila Yuliana en tus 15
   </div>
 
-  <div class="seccion">🔥 Más reproducido</div>
-
   <div class="item"
   onclick="playMusic('Serenata de Yuliana.mp3','Serenata de Yuliana','AMU-002')">
     🎵 Serenata de Yuliana
   </div>
-
-  <div class="seccion">🕒 Últimas reproducciones</div>
 
   <div class="item"
   onclick="playMusic('Ejemplo 1.mp3','Ejemplo 1','AMU-003')">
@@ -122,8 +147,9 @@ audio {
 const playlist = [
   { file: "Amelia Celeste 3.mp3", title: "Amelia Celeste 3", code: "AMU-001" },
   { file: "Los 15 de Yuliana.mp3", title: "Los 15 de Yuliana", code: "AMU-002" },
-  { file: "Baila Yuliana en tus 15.mp3", title: "Baila Yuliana en tus 15", code: "AMU-001" },
+  { file: "Baila Yuliana en tus 15.mp3", title: "Baila Yuliana en tus 15", code: "AMU-003" },
   { file: "Serenata de Yuliana.mp3", title: "Serenata de Yuliana", code: "AMU-002" },
+  { file: "Ejemplo 1.mp3", title: "Ejemplo 1", code: "AMU-003" }
 ];
 
 let currentIndex = 0;
@@ -146,6 +172,7 @@ function playSong(index) {
   updateUI(song);
 }
 
+// click manual
 function playMusic(file, title, code) {
   const index = playlist.findIndex(s => s.file === file);
 
@@ -157,6 +184,7 @@ function playMusic(file, title, code) {
   playSong(index);
 }
 
+// autoplay
 player.addEventListener("ended", function () {
 
   currentIndex++;
