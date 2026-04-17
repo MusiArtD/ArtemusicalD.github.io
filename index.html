@@ -79,8 +79,18 @@ audio {
     ?? Baila Yuliana en tus 15
   </div>
 
-</div>
+  <div class="item"
+  onclick="playMusic('Serenata de Yuliana.mp3','Serenata de Yuliana','AMU-002')">
+    ?? Serenata de Yuliana
+  </div>
 
+  <div class="item"
+  onclick="playMusic('Ejemplo 1.mp3','Ejemplo 1','AMU-003')">
+    ?? Ejemplo 1
+  </div>
+
+</div>
+  
 <!-- REPRODUCTOR -->
 <div class="reproductor">
 
@@ -96,7 +106,9 @@ audio {
 const playlist = [
   { file: "Amelia Celeste 3.mp3", title: "Amelia Celeste 3", code: "AMU-001" },
   { file: "Los 15 de Yuliana.mp3", title: "Los 15 de Yuliana", code: "AMU-002" },
-  { file: "Baila Yuliana en tus 15.mp3", title: "Baila Yuliana en tus 15", code: "AMU-003" }
+  { file: "Baila Yuliana en tus 15.mp3", title: "Baila Yuliana en tus 15", code: "AMU-001" },
+  { file: "Serenata de Yuliana.mp3", title: "Serenata de Yuliana", code: "AMU-002" },
+  { file: "Ejemplo 1.mp3", title: "Ejemplo 1", code: "AMU-003" }
 ];
 
 let currentIndex = 0;
