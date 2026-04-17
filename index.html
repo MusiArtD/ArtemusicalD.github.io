@@ -57,7 +57,7 @@ audio {
   margin-top: 5px;
 }
 
-/* 🔥 ANIMACIONES */
+/* ANIMACIONES */
 @keyframes latido {
   0% { transform: scale(1); }
   50% { transform: scale(1.2); }
@@ -65,9 +65,9 @@ audio {
 }
 
 @keyframes fuego {
-  0% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.1) rotate(2deg); }
-  100% { transform: scale(1) rotate(0deg); }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 .icono-corazon {
@@ -80,7 +80,7 @@ audio {
   animation: fuego 0.8s infinite;
 }
 
-/* TITULOS DE SECCION */
+/* TITULOS */
 .seccion {
   font-size: 16px;
   color: #1db954;
@@ -94,7 +94,7 @@ audio {
 
 <body>
 
-<!-- IZQUIERDA (REPRODUCTOR) -->
+<!-- IZQUIERDA -->
 <div class="reproductor">
 
   <audio id="player" controls></audio>
@@ -104,41 +104,26 @@ audio {
 
 </div>
 
-<!-- DERECHA (LISTA) -->
+<!-- DERECHA -->
 <div class="lista">
+
+  <div class="seccion">📜 Lista de reproducción</div>
+
+  <div class="item" onclick="playMusic('Amelia Celeste 3.mp3','Amelia Celeste 3','AMU-001')">🎵 Amelia Celeste 3</div>
+  <div class="item" onclick="playMusic('Los 15 de Yuliana.mp3','Los 15 de Yuliana','AMU-002')">🎵 Los 15 de Yuliana</div>
+  <div class="item" onclick="playMusic('Baila Yuliana en tus 15.mp3','Baila Yuliana en tus 15','AMU-003')">🎵 Baila Yuliana en tus 15</div>
+  <div class="item" onclick="playMusic('Serenata de Yuliana.mp3','Serenata de Yuliana','AMU-002')">🎵 Serenata de Yuliana</div>
+  <div class="item" onclick="playMusic('Ejemplo 1.mp3','Ejemplo 1','AMU-003')">🎵 Ejemplo 1</div>
 
   <div class="seccion">
     <span class="icono-corazon">❤️</span> Más reproducido
   </div>
-
-  <div class="item"
-  onclick="playMusic('Amelia Celeste 3.mp3','Amelia Celeste 3','AMU-001')">
-    🎵 Amelia Celeste 3
-  </div>
-
-  <div class="item"
-  onclick="playMusic('Los 15 de Yuliana.mp3','Los 15 de Yuliana','AMU-002')">
-    🎵 Los 15 de Yuliana
-  </div>
+  <div id="masReproducido"></div>
 
   <div class="seccion">
     <span class="icono-fuego">🔥</span> Últimas reproducciones
   </div>
-
-  <div class="item"
-  onclick="playMusic('Baila Yuliana en tus 15.mp3','Baila Yuliana en tus 15','AMU-003')">
-    🎵 Baila Yuliana en tus 15
-  </div>
-
-  <div class="item"
-  onclick="playMusic('Serenata de Yuliana.mp3','Serenata de Yuliana','AMU-002')">
-    🎵 Serenata de Yuliana
-  </div>
-
-  <div class="item"
-  onclick="playMusic('Ejemplo 1.mp3','Ejemplo 1','AMU-003')">
-    🎵 Ejemplo 1
-  </div>
+  <div id="ultimas"></div>
 
 </div>
 
@@ -156,6 +141,10 @@ let currentIndex = 0;
 
 const player = document.getElementById("player");
 
+// DATOS GUARDADOS
+let reproducciones = JSON.parse(localStorage.getItem("reproducciones")) || {};
+let historial = JSON.parse(localStorage.getItem("historial")) || [];
+
 function updateUI(song) {
   document.getElementById("titulo").innerText = song.title;
   document.getElementById("codigo").innerText = "Código: " + song.code;
@@ -172,7 +161,7 @@ function playSong(index) {
   updateUI(song);
 }
 
-// click manual
+// CLICK MANUAL
 function playMusic(file, title, code) {
   const index = playlist.findIndex(s => s.file === file);
 
@@ -181,10 +170,63 @@ function playMusic(file, title, code) {
     return;
   }
 
+  registrarReproduccion(file, title);
+
   playSong(index);
 }
 
-// autoplay
+// REGISTRAR SOLO MANUAL
+function registrarReproduccion(file, title) {
+
+  reproducciones[file] = (reproducciones[file] || 0) + 1;
+
+  historial.unshift({ file, title });
+  historial = historial.slice(0, 5);
+
+  localStorage.setItem("reproducciones", JSON.stringify(reproducciones));
+  localStorage.setItem("historial", JSON.stringify(historial));
+
+  actualizarSecciones();
+}
+
+// ACTUALIZAR UI
+function actualizarSecciones() {
+
+  const top = Object.entries(reproducciones)
+    .sort((a,b) => b[1] - a[1])
+    .slice(0, 3);
+
+  const contTop = document.getElementById("masReproducido");
+  contTop.innerHTML = "";
+
+  top.forEach(([file]) => {
+    const song = playlist.find(s => s.file === file);
+
+    if (song) {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerText = "🎵 " + song.title;
+      div.onclick = () => playSong(playlist.indexOf(song));
+      contTop.appendChild(div);
+    }
+  });
+
+  const contUlt = document.getElementById("ultimas");
+  contUlt.innerHTML = "";
+
+  historial.forEach(s => {
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerText = "🎵 " + s.title;
+    div.onclick = () => {
+      const index = playlist.findIndex(p => p.file === s.file);
+      playSong(index);
+    };
+    contUlt.appendChild(div);
+  });
+}
+
+// AUTOPLAY (NO cuenta)
 player.addEventListener("ended", function () {
 
   currentIndex++;
@@ -196,6 +238,9 @@ player.addEventListener("ended", function () {
   playSong(currentIndex);
 
 });
+
+// CARGAR DATOS AL INICIO
+actualizarSecciones();
 
 </script>
 
