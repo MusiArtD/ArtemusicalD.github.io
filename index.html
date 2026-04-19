@@ -182,6 +182,17 @@ function updateUI(song) {
   document.getElementById("codigo").innerText = "Código: " + song.code;
 }
 
+function preloadNext() {
+  let nextIndex = currentIndex + 1;
+
+  if (nextIndex >= playlist.length) {
+    nextIndex = 0;
+  }
+
+  const audioPreload = new Audio();
+  audioPreload.src = playlist[nextIndex].file;
+}
+
 function playSong(index) {
   currentIndex = index;
   const song = playlist[index];
@@ -245,9 +256,17 @@ function actualizarSecciones() {
 }
 
 player.addEventListener("ended", function () {
+
   currentIndex++;
-  if (currentIndex >= playlist.length) currentIndex = 0;
+
+  if (currentIndex >= playlist.length) {
+    currentIndex = 0;
+  }
+
   playSong(currentIndex);
+
+  preloadNext(); // 👈 aquí la magia
+
 });
 
 function toggle(id) {
