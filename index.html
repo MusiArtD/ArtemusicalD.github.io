@@ -119,22 +119,22 @@ audio {
 
   <div id="listaContenido" class="contenido activo">
 
-    <div class="item" onclick="playMusic('El Cielo se Viste de Fiesta.mp3','El Cielo se Viste de Fiesta','AMU-001')">🎵 El Cielo se Viste de Fiesta</div>
-    <div class="item" onclick="playMusic('Jehová Te Cuide Yuliana.mp3','Jehová Te Cuide Yuliana','AMU-002')">🎵 Jehová Te Cuide Yuliana</div>
-    <div class="item" onclick="playMusic('Mariachi Serenata de Yuliana.mp3','Mariachi Serenata de Yuliana','AMU-003')">🎵 Mariachi Serenata de Yuliana</div>
-    <div class="item" onclick="playMusic('Mariachi Serenata Yuliana.mp3','Mariachi Serenata Yuliana','AMU-004')">🎵 Mariachi Serenata Yuliana</div>
-    <div class="item" onclick="playMusic('Tropical Baila Yuliana en tus 15.mp3','Tropical Baila Yuliana en tus 15','AMU-005')">🎵 Tropical Baila Yuliana en tus 15</div>
-    <div class="item" onclick="playMusic('Tropical Desde el Cielo una Luz desendio.mp3','Tropical Desde el Cielo una Luz desendio','AMU-002')">🎵 Tropical Desde el Cielo una Luz desendio</div>
-    <div class="item" onclick="playMusic('Tropical Los 15 de Yuliana.mp3','Tropical Los 15 de Yuliana','AMU-002')">🎵 Tropical Los 15 de Yuliana</div>
-    <div class="item" onclick="playMusic('Tropical Para Vos Yuliana.mp3','Tropical Para Vos Yuliana','AMU-002')">🎵 Tropical Para Vos Yuliana</div>
-    <div class="item" onclick="playMusic('Vals 15 Rosas en Tu Corazón.mp3','Vals 15 Rosas en Tu Corazón','AMU-002')">🎵 Vals 15 Rosas en Tu Corazón</div>
-    <div class="item" onclick="playMusic('Vals Como un Susuro.mp3','Vals Como un Susuro','AMU-002')">🎵 Vals Como un Susuro</div>
-    <div class="item" onclick="playMusic('Vals Con Cariño y Apresio.mp3','Vals Con Cariño y Apresio','AMU-002')">🎵 Vals Con Cariño y Apresio</div>
-    <div class="item" onclick="playMusic('Vals Feliz Cumpleaños Yuliana.mp3','Vals Feliz Cumpleaños Yuliana','AMU-002')">🎵 Vals Feliz Cumpleaños Yuliana</div>
-    <div class="item" onclick="playMusic('Vals La Aventura de tu Visa.mp3','Vals La Aventura de tu Visa','AMU-002')">🎵 Vals La Aventura de tu Visa</div>
-    <div class="item" onclick="playMusic('Vals Regalo de amor en tus 15.mp3','Vals Regalo de amor en tus 15','AMU-002')">🎵 Vals Regalo de amor en tus 15</div>
-    <div class="item" onclick="playMusic('Vals Yuliana Tu Tiempo de Soñar.mp3','Vals Yuliana Tu Tiempo de Soñar','AMU-002')">🎵 Vals Yuliana Tu Tiempo de Soñar</div>
-    <div class="item" onclick="playMusic('Vals para Yuliana.mp3','Vals para Yuliana','AMU-002')">🎵 Vals para Yuliana</div>
+    <div class="item" onclick="playMusic('El Cielo se Viste de Fiesta.mp3')">🎵 El Cielo se Viste de Fiesta</div>
+    <div class="item" onclick="playMusic('Jehová Te Cuide Yuliana.mp3')">🎵 Jehová Te Cuide Yuliana</div>
+    <div class="item" onclick="playMusic('Mariachi Serenata de Yuliana.mp3')">🎵 Mariachi Serenata de Yuliana</div>
+    <div class="item" onclick="playMusic('Mariachi Serenata Yuliana.mp3')">🎵 Mariachi Serenata Yuliana</div>
+    <div class="item" onclick="playMusic('Tropical Baila Yuliana en tus 15.mp3')">🎵 Tropical Baila Yuliana en tus 15</div>
+    <div class="item" onclick="playMusic('Tropical Desde el Cielo una Luz desendio.mp3')">🎵 Tropical Desde el Cielo una Luz desendio</div>
+    <div class="item" onclick="playMusic('Tropical Los 15 de Yuliana.mp3')">🎵 Tropical Los 15 de Yuliana</div>
+    <div class="item" onclick="playMusic('Tropical Para Vos Yuliana.mp3')">🎵 Tropical Para Vos Yuliana</div>
+    <div class="item" onclick="playMusic('Vals 15 Rosas en Tu Corazón.mp3')">🎵 Vals 15 Rosas en Tu Corazón</div>
+    <div class="item" onclick="playMusic('Vals Como un Susuro.mp3')">🎵 Vals Como un Susuro</div>
+    <div class="item" onclick="playMusic('Vals Con Cariño y Apresio.mp3')">🎵 Vals Con Cariño y Apresio</div>
+    <div class="item" onclick="playMusic('Vals Feliz Cumpleaños Yuliana.mp3')">🎵 Vals Feliz Cumpleaños Yuliana</div>
+    <div class="item" onclick="playMusic('Vals La Aventura de tu Visa.mp3')">🎵 Vals La Aventura de tu Visa</div>
+    <div class="item" onclick="playMusic('Vals Regalo de amor en tus 15.mp3')">🎵 Vals Regalo de amor en tus 15</div>
+    <div class="item" onclick="playMusic('Vals Yuliana Tu Tiempo de Soñar.mp3')">🎵 Vals Yuliana Tu Tiempo de Soñar</div>
+    <div class="item" onclick="playMusic('Vals para Yuliana.mp3')">🎵 Vals para Yuliana</div>
 
   </div>
 
@@ -199,6 +199,8 @@ function playSong(index) {
   player.src = song.file;
   player.play();
   updateUI(song);
+
+  preloadNext(); // 🔥 mejora extra
 }
 
 function playMusic(file) {
@@ -264,8 +266,6 @@ player.addEventListener("ended", function () {
   }
 
   playSong(currentIndex);
-
-  preloadNext(); // 👈 aquí la magia
 
 });
 
