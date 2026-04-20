@@ -40,21 +40,11 @@ body {
   padding: 20px;
 }
 
-audio {
-  width: 100%;
-  margin-top: 20px;
-}
-
+/* TITULO */
 .titulo {
   font-size: 24px;
   color: #1db954;
   margin-top: 10px;
-}
-
-.codigo {
-  font-size: 14px;
-  color: #aaa;
-  margin-top: 5px;
 }
 
 /* AUTOR */
@@ -64,11 +54,17 @@ audio {
   margin-top: 5px;
 }
 
+/* CODIGO */
+.codigo {
+  font-size: 14px;
+  color: #aaa;
+  margin-top: 5px;
+}
+
 /* CORAZON */
 .corazon {
   font-size: 24px;
   cursor: pointer;
-  margin-left: 10px;
 }
 
 .corazon.activo {
@@ -82,6 +78,7 @@ audio {
   margin-top: 15px;
   height: 40px;
   align-items: flex-end;
+  justify-content: center;
 }
 
 .barra {
@@ -101,30 +98,7 @@ audio {
   height: 15px;
 }
 
-/* ANIMACIONES */
-@keyframes latido {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-@keyframes fuego {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-.icono-corazon {
-  display: inline-block;
-  animation: latido 1s infinite;
-}
-
-.icono-fuego {
-  display: inline-block;
-  animation: fuego 0.8s infinite;
-}
-
-/* TITULOS */
+/* SECCIONES */
 .seccion {
   font-size: 16px;
   color: #1db954;
@@ -134,7 +108,6 @@ audio {
   cursor: pointer;
 }
 
-/* DESPLEGABLES */
 .contenido {
   display: none;
 }
@@ -142,25 +115,69 @@ audio {
 .contenido.activo {
   display: block;
 }
+
+/* 🔥 NUEVO DISEÑO PLACA */
+.placa {
+  background: linear-gradient(145deg, #1a1a1a, #222);
+  border-radius: 20px;
+  padding: 30px;
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.controles {
+  margin-top: 20px;
+}
+
+.controles button {
+  background: #1db954;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.controles button:hover {
+  background: #1ed760;
+}
 </style>
 </head>
 
 <body>
 
-<!-- IZQUIERDA -->
+<!-- IZQUIERDA (REPRODUCTOR NUEVO) -->
 <div class="reproductor">
 
-  <audio id="player" controls></audio>
+  <div class="placa">
 
-  <div>
-    <span class="titulo" id="titulo">Selecciona una canción</span>
-    <span id="like" class="corazon" onclick="toggleLike()">♡</span>
+    <div class="header">
+      <span id="like" class="corazon" onclick="toggleLike()">♡</span>
+    </div>
+
+    <div class="titulo" id="titulo">Selecciona una canción</div>
+    <div class="autor" id="autor">Autor: ---</div>
+
+    <div id="ondas" class="ondas"></div>
+
+    <div class="controles">
+      <button onclick="player.play()">▶️</button>
+      <button onclick="player.pause()">⏸️</button>
+    </div>
+
+    <div class="codigo" id="codigo">Código: ---</div>
+
+    <audio id="player"></audio>
+
   </div>
-
-  <div class="autor" id="autor">Autor: ---</div>
-  <div class="codigo" id="codigo">Código: ---</div>
-
-  <div id="ondas" class="ondas"></div>
 
 </div>
 
@@ -176,14 +193,10 @@ audio {
 
   </div>
 
-  <div class="seccion" onclick="toggle('masReproducido')">
-    <span class="icono-corazon">❤️</span> Más reproducido
-  </div>
+  <div class="seccion" onclick="toggle('masReproducido')">❤️ Más reproducido</div>
   <div id="masReproducido" class="contenido"></div>
 
-  <div class="seccion" onclick="toggle('ultimas')">
-    <span class="icono-fuego">🔥</span> Últimas reproducciones
-  </div>
+  <div class="seccion" onclick="toggle('ultimas')">🔥 Últimas reproducciones</div>
   <div id="ultimas" class="contenido"></div>
 
 </div>
