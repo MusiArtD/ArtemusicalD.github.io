@@ -57,6 +57,50 @@ audio {
   margin-top: 5px;
 }
 
+/* AUTOR */
+.autor {
+  font-size: 16px;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+/* CORAZON */
+.corazon {
+  font-size: 24px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.corazon.activo {
+  color: red;
+}
+
+/* ONDAS */
+.ondas {
+  display: flex;
+  gap: 4px;
+  margin-top: 15px;
+  height: 40px;
+  align-items: flex-end;
+}
+
+.barra {
+  width: 4px;
+  background: #1db954;
+  animation: sonido 1s infinite ease-in-out;
+}
+
+@keyframes sonido {
+  0% { height: 10px; }
+  50% { height: 35px; }
+  100% { height: 10px; }
+}
+
+.pausa .barra {
+  animation: none;
+  height: 15px;
+}
+
 /* ANIMACIONES */
 @keyframes latido {
   0% { transform: scale(1); }
@@ -98,53 +142,6 @@ audio {
 .contenido.activo {
   display: block;
 }
-
-/* INFO EXTRA */
-.autor {
-  font-size: 16px;
-  color: #ccc;
-  margin-top: 5px;
-}
-
-/* CORAZON */
-.corazon {
-  font-size: 24px;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.corazon.activo {
-  color: red;
-}
-
-/* ONDAS */
-.ondas {
-  display: flex;
-  gap: 4px;
-  margin-top: 15px;
-  height: 40px;
-  align-items: flex-end;
-}
-
-.barra {
-  width: 4px;
-  background: #1db954;
-  animation: sonido 1s infinite ease-in-out;
-}
-
-/* animación */
-@keyframes sonido {
-  0% { height: 10px; }
-  50% { height: 35px; }
-  100% { height: 10px; }
-}
-
-/* PAUSA (congelado) */
-.pausa .barra {
-  animation: none;
-  height: 15px;
-}
-
 </style>
 </head>
 
@@ -152,47 +149,32 @@ audio {
 
 <!-- IZQUIERDA -->
 <div class="reproductor">
+
   <audio id="player" controls></audio>
-  <div class="titulo" id="titulo">Selecciona una canción</div>
+
+  <div>
+    <span class="titulo" id="titulo">Selecciona una canción</span>
+    <span id="like" class="corazon" onclick="toggleLike()">♡</span>
+  </div>
+
+  <div class="autor" id="autor">Autor: ---</div>
   <div class="codigo" id="codigo">Código: ---</div>
+
+  <div id="ondas" class="ondas"></div>
+
 </div>
 
 <!-- DERECHA -->
 <div class="lista">
 
-  <div class="seccion" onclick="toggle('listaContenido')">
-    📜 Lista de reproducción
-  </div>
+  <div class="seccion" onclick="toggle('listaContenido')">📜 Lista de reproducción</div>
 
   <div id="listaContenido" class="contenido activo">
 
     <div class="item" onclick="playMusic('El Cielo se Viste de Fiesta.mp3')">🎵 El Cielo se Viste de Fiesta</div>
     <div class="item" onclick="playMusic('Jehová Te Cuide Yuliana.mp3')">🎵 Jehová Te Cuide Yuliana</div>
-    <div class="item" onclick="playMusic('Mariachi Serenata de Yuliana.mp3')">🎵 Mariachi Serenata de Yuliana</div>
-    <div class="item" onclick="playMusic('Mariachi Serenata Yuliana.mp3')">🎵 Mariachi Serenata Yuliana</div>
-    <div class="item" onclick="playMusic('Tropical Baila Yuliana en tus 15.mp3')">🎵 Tropical Baila Yuliana en tus 15</div>
-    <div class="item" onclick="playMusic('Tropical Desde el Cielo una Luz desendio.mp3')">🎵 Tropical Desde el Cielo una Luz desendio</div>
-    <div class="item" onclick="playMusic('Tropical Los 15 de Yuliana.mp3')">🎵 Tropical Los 15 de Yuliana</div>
-    <div class="item" onclick="playMusic('Tropical Para Vos Yuliana.mp3')">🎵 Tropical Para Vos Yuliana</div>
-    <div class="item" onclick="playMusic('Vals 15 Rosas en Tu Corazón.mp3')">🎵 Vals 15 Rosas en Tu Corazón</div>
-    <div class="item" onclick="playMusic('Vals Como un Susuro.mp3')">🎵 Vals Como un Susuro</div>
-    <div class="item" onclick="playMusic('Vals Con Cariño y Apresio.mp3')">🎵 Vals Con Cariño y Apresio</div>
-    <div class="item" onclick="playMusic('Vals Feliz Cumpleaños Yuliana.mp3')">🎵 Vals Feliz Cumpleaños Yuliana</div>
-    <div class="item" onclick="playMusic('Vals La Aventura de tu Visa.mp3')">🎵 Vals La Aventura de tu Visa</div>
-    <div class="item" onclick="playMusic('Vals Regalo de amor en tus 15.mp3')">🎵 Vals Regalo de amor en tus 15</div>
-    <div class="item" onclick="playMusic('Vals Yuliana Tu Tiempo de Soñar.mp3')">🎵 Vals Yuliana Tu Tiempo de Soñar</div>
-    <div class="item" onclick="playMusic('Vals para Yuliana.mp3')">🎵 Vals para Yuliana</div>
 
   </div>
-
-  <div>
-    <span id="titulo"></span>
-    <span id="like" class="corazon" onclick="toggleLike()">♡</span>
-</div>
-
-<div class="autor" id="autor">Autor: ---</div>
-
-<div id="ondas" class="ondas"></div>
 
   <div class="seccion" onclick="toggle('masReproducido')">
     <span class="icono-corazon">❤️</span> Más reproducido
@@ -209,22 +191,8 @@ audio {
 <script>
 
 const playlist = [
-  { file: "El Cielo se Viste de Fiesta.mp3", title: "El Cielo se Viste de Fiesta", code: "AMU-001", para: "Yuliana", color: "#1db954" },
-  { file: "Jehová Te Cuide Yuliana.mp3", title: "Jehová Te Cuide Yuliana", code: "AMU-002", para: "Yuliana", color: "#ff4d4d" },
-  { file: "Mariachi Serenata de Yuliana.mp3", title: "Mariachi Serenata de Yuliana", code: "AMU-003", para: "Yuliana", color: "#1db954" },
-  { file: "Mariachi Serenata Yuliana.mp3", title: "Mariachi Serenata Yuliana", code: "AMU-004", para: "Yuliana", color: "#ff4d4d" },
-  { file: "Tropical Baila Yuliana en tus 15.mp3", title: "Tropical Baila Yuliana en tus 15", code: "AMU-005", para: "Yuliana", color: "#1db954" },
-  { file: "Tropical Desde el Cielo una Luz desendio.mp3", title: "Tropical Desde el Cielo una Luz desendio", code: "AMU-006", para: "Yuliana", color: "#ff4d4d" },
-  { file: "Tropical Los 15 de Yuliana.mp3", title: "Tropical Los 15 de Yuliana", code: "AMU-007", para: "Yuliana", color: "#1db954" },
-  { file: "Tropical Para Vos Yuliana.mp3", title: "Tropical Para Vos Yuliana", code: "AMU-008", para: "Yuliana", color: "#ff4d4d" },
-  { file: "Vals 15 Rosas en Tu Corazón.mp3", title: "Vals 15 Rosas en Tu Corazón", code: "AMU-009", para: "Yuliana", color: "#1db954" },
-  { file: "Vals Como un Susuro.mp3", title: "Vals Como un Susuro", code: "AMU-010", para: "Yuliana", color: "#ff4d4d" },
-  { file: "Vals Con Cariño y Apresio.mp3", title: "Vals Con Cariño y Apresio", code: "AMU-011", para: "Yuliana", color: "#1db954" },
-  { file: "Vals Feliz Cumpleaños Yuliana.mp3", title: "Vals Feliz Cumpleaños Yuliana", code: "AMU-012", para: "Yuliana", color: "#ff4d4d" },
-  { file: "Vals La Aventura de tu Visa.mp3", title: "Vals La Aventura de tu Visa", code: "AMU-013", para: "Yuliana", color: "#1db954" },
-  { file: "Vals Regalo de amor en tus 15.mp3", title: "Vals Regalo de amor en tus 15", code: "AMU-014", para: "Yuliana", color: "#ff4d4d" },
-  { file: "Vals Yuliana Tu Tiempo de Soñar.mp3", title: "Vals Yuliana Tu Tiempo de Soñar", code: "AMU-015", para: "Yuliana", color: "#1db954" },
-  { file: "Vals para Yuliana.mp3", title: "Vals para Yuliana", code: "AMU-016", para: "Yuliana", color: "#ff4d4d" },
+  { file: "El Cielo se Viste de Fiesta.mp3", title: "El Cielo se Viste de Fiesta", code: "AMU-001", autor: "Para Yuliana", color: "#1db954" },
+  { file: "Jehová Te Cuide Yuliana.mp3", title: "Jehová Te Cuide Yuliana", code: "AMU-002", autor: "Marcelo", color: "#ff4d4d" }
 ];
 
 let currentIndex = 0;
@@ -246,22 +214,6 @@ function generarOndas(color) {
   }
 }
 
-function updateUI(song) {
-  document.getElementById("titulo").innerText = song.title;
-  document.getElementById("codigo").innerText = "Código: " + song.code;
-}
-
-function preloadNext() {
-  let nextIndex = currentIndex + 1;
-
-  if (nextIndex >= playlist.length) {
-    nextIndex = 0;
-  }
-
-  const audioPreload = new Audio();
-  audioPreload.src = playlist[nextIndex].file;
-}
-
 function playSong(index) {
   currentIndex = index;
   const song = playlist[index];
@@ -274,8 +226,9 @@ function playSong(index) {
   document.getElementById("autor").innerText = "Autor: " + song.autor;
 
   generarOndas(song.color);
-
   document.getElementById("ondas").classList.remove("pausa");
+
+  preloadNext();
 }
 
 function playMusic(file) {
@@ -332,6 +285,20 @@ function actualizarSecciones() {
   });
 }
 
+function preloadNext() {
+  let nextIndex = currentIndex + 1;
+  if (nextIndex >= playlist.length) nextIndex = 0;
+
+  const audioPreload = new Audio();
+  audioPreload.src = playlist[nextIndex].file;
+}
+
+player.addEventListener("ended", function () {
+  currentIndex++;
+  if (currentIndex >= playlist.length) currentIndex = 0;
+  playSong(currentIndex);
+});
+
 player.addEventListener("pause", () => {
   document.getElementById("ondas").classList.add("pausa");
 });
@@ -340,15 +307,9 @@ player.addEventListener("play", () => {
   document.getElementById("ondas").classList.remove("pausa");
 });
 
-  currentIndex++;
-
-  if (currentIndex >= playlist.length) {
-    currentIndex = 0;
-  }
-
-  playSong(currentIndex);
-
-});
+function toggle(id) {
+  document.getElementById(id).classList.toggle("activo");
+}
 
 function toggleLike() {
   const btn = document.getElementById("like");
