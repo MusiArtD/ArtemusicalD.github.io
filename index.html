@@ -40,62 +40,82 @@ body {
   padding: 20px;
 }
 
+/* PLACA */
+.placa {
+  background: linear-gradient(145deg, #1a1a1a, #222);
+  border-radius: 20px;
+  padding: 25px;
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+  text-align: center;
+}
+
+/* CARATULA */
+.caratula img {
+  width: 100%;
+  max-width: 250px;
+  border-radius: 12px;
+}
+
 /* TITULO */
 .titulo {
-  font-size: 24px;
+  font-size: 22px;
   color: #1db954;
   margin-top: 10px;
 }
 
-/* AUTOR */
-.autor {
-  font-size: 16px;
+/* DEDICATORIA */
+.dedicatoria {
+  margin-top: 10px;
   color: #ccc;
-  margin-top: 5px;
+  font-size: 14px;
 }
 
 /* CODIGO */
 .codigo {
   font-size: 14px;
   color: #aaa;
-  margin-top: 5px;
-}
-
-/* CORAZON */
-.corazon {
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.corazon.activo {
-  color: red;
+  margin-top: 10px;
 }
 
 /* ONDAS */
 .ondas {
   display: flex;
-  gap: 4px;
-  margin-top: 15px;
-  height: 40px;
-  align-items: flex-end;
   justify-content: center;
+  align-items: flex-end;
+  height: 50px;
+  margin: 15px 0;
 }
 
-.barra {
+.ondas span {
   width: 4px;
-  background: #1db954;
-  animation: sonido 1s infinite ease-in-out;
+  height: 10px;
+  margin: 0 2px;
+  background: #ff2e88;
+  animation: onda 1s infinite ease-in-out;
 }
 
-@keyframes sonido {
+@keyframes onda {
   0% { height: 10px; }
-  50% { height: 35px; }
+  50% { height: 40px; }
   100% { height: 10px; }
 }
 
-.pausa .barra {
+.pausa span {
   animation: none;
-  height: 15px;
+  height: 12px;
+}
+
+/* CONTROLES */
+.controles button {
+  background: linear-gradient(45deg, #00ff88, #ff2e88);
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
 }
 
 /* SECCIONES */
@@ -115,62 +135,32 @@ body {
 .contenido.activo {
   display: block;
 }
-
-/* 🔥 NUEVO DISEÑO PLACA */
-.placa {
-  background: linear-gradient(145deg, #1a1a1a, #222);
-  border-radius: 20px;
-  padding: 30px;
-  width: 80%;
-  margin: auto;
-  box-shadow: 0 0 25px rgba(0,0,0,0.6);
-  text-align: center;
-}
-
-.header {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.controles {
-  margin-top: 20px;
-}
-
-.controles button {
-  background: #1db954;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  border-radius: 50%;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.controles button:hover {
-  background: #1ed760;
-}
 </style>
 </head>
 
 <body>
 
-<!-- IZQUIERDA (REPRODUCTOR NUEVO) -->
+<!-- REPRODUCTOR -->
 <div class="reproductor">
 
   <div class="placa">
 
-    <div class="header">
-      <span id="like" class="corazon" onclick="toggleLike()">♡</span>
+    <div class="caratula">
+      <img id="cover" src="" alt="cover">
     </div>
 
     <div class="titulo" id="titulo">Selecciona una canción</div>
-    <div class="autor" id="autor">Autor: ---</div>
 
-    <div id="ondas" class="ondas"></div>
+    <div class="dedicatoria">
+      <div id="de">De: ---</div>
+      <div id="para">Para: ---</div>
+    </div>
+
+    <div class="ondas" id="ondas"></div>
 
     <div class="controles">
-      <button onclick="player.play()">▶️</button>
-      <button onclick="player.pause()">⏸️</button>
+      <button onclick="player.play()">▶</button>
+      <button onclick="player.pause()">⏸</button>
     </div>
 
     <div class="codigo" id="codigo">Código: ---</div>
@@ -181,16 +171,14 @@ body {
 
 </div>
 
-<!-- DERECHA -->
+<!-- LISTA -->
 <div class="lista">
 
   <div class="seccion" onclick="toggle('listaContenido')">📜 Lista de reproducción</div>
 
   <div id="listaContenido" class="contenido activo">
-
     <div class="item" onclick="playMusic('El Cielo se Viste de Fiesta.mp3')">🎵 El Cielo se Viste de Fiesta</div>
     <div class="item" onclick="playMusic('Jehová Te Cuide Yuliana.mp3')">🎵 Jehová Te Cuide Yuliana</div>
-
   </div>
 
   <div class="seccion" onclick="toggle('masReproducido')">❤️ Más reproducido</div>
@@ -204,8 +192,22 @@ body {
 <script>
 
 const playlist = [
-  { file: "El Cielo se Viste de Fiesta.mp3", title: "El Cielo se Viste de Fiesta", code: "AMU-001", autor: "Para Yuliana", color: "#1db954" },
-  { file: "Jehová Te Cuide Yuliana.mp3", title: "Jehová Te Cuide Yuliana", code: "AMU-002", autor: "Marcelo", color: "#ff4d4d" }
+  {
+    file: "El Cielo se Viste de Fiesta.mp3",
+    title: "El Cielo se Viste de Fiesta",
+    code: "AMU-001",
+    cover: "cover1.jpg",
+    de: "Marcelo y Familia",
+    para: "Yuliana"
+  },
+  {
+    file: "Jehová Te Cuide Yuliana.mp3",
+    title: "Jehová Te Cuide Yuliana",
+    code: "AMU-002",
+    cover: "cover2.jpg",
+    de: "Marcelo",
+    para: "Yuliana"
+  }
 ];
 
 let currentIndex = 0;
@@ -214,19 +216,24 @@ const player = document.getElementById("player");
 let reproducciones = JSON.parse(localStorage.getItem("reproducciones")) || {};
 let historial = JSON.parse(localStorage.getItem("historial")) || [];
 
-function generarOndas(color) {
-  const cont = document.getElementById("ondas");
-  cont.innerHTML = "";
-
-  for (let i = 0; i < 20; i++) {
-    const barra = document.createElement("div");
-    barra.className = "barra";
-    barra.style.background = color;
-    barra.style.animationDelay = (i * 0.1) + "s";
-    cont.appendChild(barra);
-  }
+/* ONDAS */
+const ondasContainer = document.getElementById("ondas");
+for (let i = 0; i < 25; i++) {
+  const bar = document.createElement("span");
+  bar.style.animationDelay = (i * 0.05) + "s";
+  ondasContainer.appendChild(bar);
 }
 
+/* UI */
+function updateUI(song) {
+  document.getElementById("titulo").innerText = song.title;
+  document.getElementById("codigo").innerText = "Código: " + song.code;
+  document.getElementById("cover").src = song.cover || "";
+  document.getElementById("de").innerText = "De: " + (song.de || "---");
+  document.getElementById("para").innerText = "Para: " + (song.para || "---");
+}
+
+/* PLAY */
 function playSong(index) {
   currentIndex = index;
   const song = playlist[index];
@@ -234,14 +241,8 @@ function playSong(index) {
   player.src = song.file;
   player.play();
 
-  document.getElementById("titulo").innerText = song.title;
-  document.getElementById("codigo").innerText = "Código: " + song.code;
-  document.getElementById("autor").innerText = "Autor: " + song.autor;
-
-  generarOndas(song.color);
+  updateUI(song);
   document.getElementById("ondas").classList.remove("pausa");
-
-  preloadNext();
 }
 
 function playMusic(file) {
@@ -252,6 +253,7 @@ function playMusic(file) {
   playSong(index);
 }
 
+/* HISTORIAL */
 function registrarReproduccion(file) {
   reproducciones[file] = (reproducciones[file] || 0) + 1;
 
@@ -264,6 +266,7 @@ function registrarReproduccion(file) {
   actualizarSecciones();
 }
 
+/* SECCIONES */
 function actualizarSecciones() {
 
   const contTop = document.getElementById("masReproducido");
@@ -298,14 +301,7 @@ function actualizarSecciones() {
   });
 }
 
-function preloadNext() {
-  let nextIndex = currentIndex + 1;
-  if (nextIndex >= playlist.length) nextIndex = 0;
-
-  const audioPreload = new Audio();
-  audioPreload.src = playlist[nextIndex].file;
-}
-
+/* EVENTOS */
 player.addEventListener("ended", function () {
   currentIndex++;
   if (currentIndex >= playlist.length) currentIndex = 0;
@@ -320,14 +316,9 @@ player.addEventListener("play", () => {
   document.getElementById("ondas").classList.remove("pausa");
 });
 
+/* TOGGLE */
 function toggle(id) {
   document.getElementById(id).classList.toggle("activo");
-}
-
-function toggleLike() {
-  const btn = document.getElementById("like");
-  btn.classList.toggle("activo");
-  btn.innerText = btn.classList.contains("activo") ? "❤️" : "♡";
 }
 
 actualizarSecciones();
