@@ -55,6 +55,11 @@ body {
   border-radius: 12px;
 }
 
+  .caratula {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 /* ONDAS */
 .ondas {
   display: flex;
@@ -364,6 +369,61 @@ document.getElementById("playBtn").innerText="▶";
 document.getElementById("ondas").classList.add("pausa");
 });
 
+let reproducciones = JSON.parse(localStorage.getItem("reproducciones")) || {};
+let historial = JSON.parse(localStorage.getItem("historial")) || [];
+
+/* REGISTRAR */
+function registrarReproduccion(file) {
+reproducciones[file] = (reproducciones[file] || 0) + 1;
+
+historial.unshift(file);
+historial = historial.slice(0, 5);
+
+localStorage.setItem("reproducciones", JSON.stringify(reproducciones));
+localStorage.setItem("historial", JSON.stringify(historial));
+
+  actualizarSecciones();
+}
+
+/* ACTUALIZAR BLOQUES */
+function actualizarSecciones() {
+
+  const contTop = document.getElementById("mas");
+  contTop.innerHTML = "";
+
+  Object.entries(reproducciones)
+    .sort((a,b) => b[1] - a[1])
+    .slice(0,3)
+    .forEach(([file, count]) => {
+
+      const song = playlist.find(s => s.file === file);
+      if (!song) return;
+
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerText = `🎵 ${song.title} (${count})`;
+      div.onclick = () => playSong(playlist.indexOf(song));
+
+      contTop.appendChild(div);
+    });
+
+  const contUlt = document.getElementById("ult");
+  contUlt.innerHTML = "";
+
+  [...new Set(historial)].forEach(file => {
+
+    const song = playlist.find(s => s.file === file);
+    if (!song) return;
+
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerText = `🎵 ${song.title}`;
+    div.onclick = () => playSong(playlist.indexOf(song));
+
+    contUlt.appendChild(div);
+  });
+}
+
 /* SEEK */
 function seek(e){
 let rect=e.currentTarget.getBoundingClientRect();
@@ -379,14 +439,19 @@ player.volume=v;
 
 /* PLAY CLICK */
 function playMusic(file){
-let i=playlist.findIndex(s=>s.file===file);
-if(i!=-1) playSong(i);
+  let i = playlist.findIndex(s => s.file === file);
+  if(i != -1){
+    registrarReproduccion(file); // 🔥 IMPORTANTE
+    playSong(i);
+  }
 }
 
 /* TOGGLE */
 function toggle(id){
 document.getElementById(id).classList.toggle("activo");
 }
+
+actualizarSecciones();
 
 </script>
 
