@@ -264,6 +264,7 @@ body {
 <div class="seccion" onclick="toggle('ult')">🔥 Últimas</div>
 <div id="ult" class="contenido"></div>
 
+<div class="titulo" id="titulo">Selecciona una canción</div>
 <div class="valor titulo-texto" id="titulo">---</div>
 
 </div>
@@ -303,38 +304,50 @@ ondas.appendChild(s);
 /* UI */
 function updateUI(song){
 
-  document.getElementById("titulo").innerText = song.title;
+  if (!song) return; // 🔥 evita errores
 
   const titulo = document.getElementById("titulo");
 
-  // 🔥 detectar longitud del título
-  if (song.title.length > 40) {
+  titulo.innerText = song.title || "---";
+
+  if (song.title && song.title.length > 40) {
     titulo.classList.add("largo");
   } else {
     titulo.classList.remove("largo");
   }
 
-  document.getElementById("codigo").innerText = "Código: " + song.code;
-  document.getElementById("cover").src = song.cover;
-  document.getElementById("de").innerText = "De: " + song.de;
-  document.getElementById("para").innerText = "Para: " + song.para;
+  document.getElementById("codigo").innerText = "Código: " + (song.code || "---");
+  document.getElementById("cover").src = song.cover || "";
+
+  document.getElementById("de").innerText = "De: " + (song.de || "---");
+  document.getElementById("para").innerText = "Para: " + (song.para || "---");
 
   let fechas = JSON.parse(localStorage.getItem("fechas")) || {};
-  if (!fechas[song.file]) {
+
+  if (song.file && !fechas[song.file]) {
     fechas[song.file] = new Date().toLocaleString();
     localStorage.setItem("fechas", JSON.stringify(fechas));
   }
 
-  document.getElementById("fecha").innerText = "Agregado: " + fechas[song.file];
+  document.getElementById("fecha").innerText =
+    "Agregado: " + (fechas[song.file] || "---");
 }
 
 /* PLAY */
 function playSong(i){
-currentIndex=i;
-let song=playlist[i];
-player.src=song.file;
-player.play();
-updateUI(song);
+
+  if (i < 0 || i >= playlist.length) return;
+
+  currentIndex = i;
+
+  const song = playlist[i];
+
+  if (!song) return;
+
+  player.src = song.file;
+  player.play();
+
+  updateUI(song);
 }
 
 /* CONTROLES */
@@ -425,8 +438,16 @@ contUlt.appendChild(div);
 }
 
 function playMusic(file){
-let i=playlist.findIndex(s=>s.file===file);
-if(i!=-1){registrarReproduccion(file);playSong(i);}
+
+  const index = playlist.findIndex(s => s.file === file);
+
+  if (index === -1) {
+    console.log("Canción no encontrada:", file);
+    return;
+  }
+
+  registrarReproduccion(file);
+  playSong(index);
 }
 
 function toggle(id){
