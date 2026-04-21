@@ -156,9 +156,9 @@ body {
   
 .info {
   max-width: 250px;
-  width: calc(100% - 150px);
+  width: 100%;              /* 🔥 recupera ancho completo */
   margin: 15px auto;
-  transform: translateX(-150px); /* 🔥 mueve a la izquierda */
+  transform: translateX(-20px); /* 🔥 solo mueve, no reduce espacio */
 }
 
 .linea {
