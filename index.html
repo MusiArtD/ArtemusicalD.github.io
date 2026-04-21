@@ -176,6 +176,12 @@ body {
   cursor:pointer;
 }
 
+.titulo-texto {
+  white-space: nowrap;      /* 🔥 una sola línea */
+  overflow: hidden;         /* 🔥 oculta exceso */
+  text-overflow: ellipsis;  /* 🔥 agrega ... */
+}
+
 .contenido { display:none; }
 .contenido.activo { display:block; }
 
@@ -238,6 +244,8 @@ body {
 
 <div class="seccion" onclick="toggle('ult')">🔥 Últimas</div>
 <div id="ult" class="contenido"></div>
+
+<div class="valor titulo-texto" id="titulo">---</div>
 
 </div>
 
