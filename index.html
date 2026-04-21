@@ -45,7 +45,7 @@ body {
   padding: 25px;
   width: 80%;
   margin: auto;
-  text-align: center;
+  text-align: left;
 }
 
 /* CARATULA */
@@ -147,6 +147,26 @@ body {
 
 .contenido { display:none; }
 .contenido.activo { display:block; }
+.info {
+  margin-top: 15px;
+}
+
+.linea {
+  display: flex;
+  gap: 10px;
+  margin: 3px 0;
+}
+
+.label {
+  width: 90px;
+  color: #1db954;
+  font-weight: bold;
+}
+
+.valor {
+  flex: 1;
+  color: #ccc;
+}
 
 </style>
 </head>
@@ -184,15 +204,34 @@ body {
 
 </div>
 
-<div class="titulo" id="titulo">Selecciona una canción</div>
+<div class="info">
 
-<div class="dedicatoria">
-<div id="de">De: ---</div>
-<div id="para">Para: ---</div>
+  <div class="linea">
+    <div class="label">Título:</div>
+    <div class="valor" id="titulo">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">De:</div>
+    <div class="valor" id="de">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">Para:</div>
+    <div class="valor" id="para">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">Código:</div>
+    <div class="valor" id="codigo">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">Agregado:</div>
+    <div class="valor" id="fecha">---</div>
+  </div>
+
 </div>
-
-<div class="codigo" id="codigo">Código: ---</div>
-<div class="fecha" id="fecha">Agregado: ---</div>
 
 <audio id="player"></audio>
 
