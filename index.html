@@ -185,6 +185,25 @@ body {
 .contenido { display:none; }
 .contenido.activo { display:block; }
 
+.titulo {
+  font-size: 20px;
+  color: #1db954;
+  margin-top: 10px;
+
+  max-width: 100%;
+  text-align: center;
+}
+
+/* ESTILO CUANDO ES LARGO */
+.titulo.largo {
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  text-align: center;
+}
+
 </style>
 </head>
 
@@ -281,8 +300,32 @@ ondas.appendChild(s);
 
 /* UI */
 function updateUI(song){
-document.getElementById("titulo").innerText=song.title;
-document.getElementById("codigo").innerText="Código: "+song.code;
+function updateUI(song){
+
+  document.getElementById("titulo").innerText = song.title;
+
+  const titulo = document.getElementById("titulo");
+
+  // 🔥 detectar longitud del título
+  if (song.title.length > 40) {
+    titulo.classList.add("largo");
+  } else {
+    titulo.classList.remove("largo");
+  }
+
+  document.getElementById("codigo").innerText = "Código: " + song.code;
+  document.getElementById("cover").src = song.cover;
+  document.getElementById("de").innerText = "De: " + song.de;
+  document.getElementById("para").innerText = "Para: " + song.para;
+
+  let fechas = JSON.parse(localStorage.getItem("fechas")) || {};
+  if (!fechas[song.file]) {
+    fechas[song.file] = new Date().toLocaleString();
+    localStorage.setItem("fechas", JSON.stringify(fechas));
+  }
+
+  document.getElementById("fecha").innerText = "Agregado: " + fechas[song.file];
+}document.getElementById("codigo").innerText="Código: "+song.code;
 document.getElementById("cover").src=song.cover || "";
 document.getElementById("de").innerText="De: "+song.de;
 document.getElementById("para").innerText="Para: "+song.para;
