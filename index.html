@@ -146,6 +146,12 @@ body {
 /* INFO */
 .info { margin-top: 15px; }
 
+.info {
+  max-width: 250px;     /* mismo ancho que carátula */
+  width: calc(100% - 20px);
+  margin: 15px auto;    /* lo centra igual que la barra */
+}
+
 .linea {
   display: flex;
   gap: 10px;
@@ -156,6 +162,11 @@ body {
   width: 90px;
   color: #1db954;
   font-weight: bold;
+}
+
+.label {
+  width: 100px;
+  text-align: right;
 }
 
 .valor {
