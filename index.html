@@ -55,6 +55,13 @@ body {
   border-radius: 12px;
 }
 
+.caratula img {
+  width: 100%;
+  max-width: 250px;
+  border-radius: 12px;
+  display: block;
+  margin: auto;
+}
   .caratula {
   text-align: center;
   margin-bottom: 10px;
@@ -85,18 +92,17 @@ body {
 
 /* PROGRESO */
 .progreso {
-  width: 100%;
-  height: 6px;
-  background: #333;
-  border-radius: 10px;
-  cursor: pointer;
+  max-width: 250px;  /* mismo ancho que la carátula */
+  width: calc(100% - 20px);
+  margin: 10px auto;
 }
 
 .barra {
   height: 100%;
   width: 0%;
   background: #00e5ff;
-  box-shadow: 0 0 10px #00e5ff;
+  box-shadow: 0 0 8px #00e5ff, 0 0 15px #00e5ff;
+  border-radius: 10px;
 }
 
 /* CONTROLES */
