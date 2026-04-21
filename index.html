@@ -45,10 +45,15 @@ body {
   padding: 25px;
   width: 80%;
   margin: auto;
-  text-align: center;
+  text-align: left;
 }
 
 /* CARATULA */
+.caratula {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 .caratula img {
   width: 100%;
   max-width: 250px;
@@ -96,7 +101,8 @@ body {
   height: 100%;
   width: 0%;
   background: #00e5ff;
-  box-shadow: 0 0 8px #00e5ff;
+  box-shadow: 0 0 8px #00e5ff, 0 0 15px #00e5ff;
+  border-radius: 10px;
 }
 
 /* CONTROLES */
@@ -112,11 +118,13 @@ body {
   cursor: pointer;
   font-size: 20px;
   color: #00ff88;
+  text-shadow: 0 0 8px #00ff88;
 }
 
 .ctrl.main {
   font-size: 28px;
   color: #00e5ff;
+  text-shadow: 0 0 10px #00e5ff;
 }
 
 /* VOLUMEN */
@@ -125,29 +133,37 @@ body {
 }
 
 .volumen input {
-  display: none;
   position: absolute;
   left: 25px;
+  top: 0;
+  display: none;
 }
 
 .volumen:hover input {
   display: block;
 }
 
-/* TEXTOS */
-.titulo { margin-top:15px; font-size:20px; color:#1db954;}
-.titulo.largo {
-  font-size: 18px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* INFO */
+.info { margin-top: 15px; }
+
+.linea {
+  display: flex;
+  gap: 10px;
+  margin: 3px 0;
 }
 
-.dedicatoria { font-size:14px; color:#ccc;}
-.codigo { font-size:13px; color:#aaa;}
-.fecha { font-size:12px; color:#777;}
+.label {
+  width: 90px;
+  color: #1db954;
+  font-weight: bold;
+}
 
-/* SECCIONES */
+.valor {
+  flex: 1;
+  color: #ccc;
+}
+
+/* DESPLEGABLES */
 .seccion {
   color:#1db954;
   margin-top:10px;
@@ -156,22 +172,6 @@ body {
 
 .contenido { display:none; }
 .contenido.activo { display:block; }
-
-.info { margin-top:15px; }
-
-.linea {
-  display:flex;
-  gap:10px;
-  margin:3px 0;
-}
-
-.label {
-  width:90px;
-  color:#1db954;
-  font-weight:bold;
-}
-
-.valor { flex:1; color:#ccc; }
 
 </style>
 </head>
@@ -183,7 +183,7 @@ body {
 <div class="placa">
 
 <div class="caratula">
-<img id="cover">
+<img id="cover" alt="Carátula">
 </div>
 
 <div class="ondas" id="ondas"></div>
@@ -193,12 +193,9 @@ body {
 </div>
 
 <div class="controles">
-
 <span class="ctrl" onclick="toggleShuffle()">🔀</span>
 <span class="ctrl" onclick="prev()">⏮</span>
-
 <span id="playBtn" class="ctrl main" onclick="togglePlay()">▶</span>
-
 <span class="ctrl" onclick="next()">⏭</span>
 <span class="ctrl" onclick="toggleLoop()">🔁</span>
 
@@ -206,17 +203,14 @@ body {
 <span class="ctrl">🔊</span>
 <input type="range" min="0" max="1" step="0.01" onchange="setVolume(this.value)">
 </div>
-
 </div>
 
 <div class="info">
-
 <div class="linea"><div class="label">Título:</div><div class="valor" id="titulo">---</div></div>
 <div class="linea"><div class="label">De:</div><div class="valor" id="de">---</div></div>
 <div class="linea"><div class="label">Para:</div><div class="valor" id="para">---</div></div>
 <div class="linea"><div class="label">Código:</div><div class="valor" id="codigo">---</div></div>
 <div class="linea"><div class="label">Agregado:</div><div class="valor" id="fecha">---</div></div>
-
 </div>
 
 <audio id="player"></audio>
@@ -229,10 +223,8 @@ body {
 
 <div class="seccion" onclick="toggle('listaContenido')">📜 Lista</div>
 <div id="listaContenido" class="contenido activo">
-
 <div class="item" onclick="playMusic('El Cielo se Viste de Fiesta.mp3')">🎵 El Cielo...</div>
 <div class="item" onclick="playMusic('Jehová Te Cuide Yuliana.mp3')">🎵 Jehová...</div>
-
 </div>
 
 <div class="seccion" onclick="toggle('mas')">❤️ Más reproducido</div>
@@ -245,7 +237,7 @@ body {
 
 <script>
 
-const playlist = [
+const playlist=[
 {
 file:"El Cielo se Viste de Fiesta.mp3",
 title:"El Cielo se Viste de Fiesta",
@@ -264,10 +256,7 @@ para:"Yuliana"
 }
 ];
 
-let currentIndex=0;
-let shuffle=false;
-let loop=false;
-
+let currentIndex=0, shuffle=false, loop=false;
 const player=document.getElementById("player");
 
 /* ONDAS */
@@ -280,108 +269,126 @@ ondas.appendChild(s);
 
 /* UI */
 function updateUI(song){
-
-if(!song) return;
-
-const titulo=document.getElementById("titulo");
-titulo.innerText=song.title||"---";
-
-if(song.title && song.title.length>40){
-titulo.classList.add("largo");
-}else{
-titulo.classList.remove("largo");
-}
-
-document.getElementById("codigo").innerText="Código: "+(song.code||"---");
-document.getElementById("cover").src=song.cover||"";
-document.getElementById("de").innerText="De: "+(song.de||"---");
-document.getElementById("para").innerText="Para: "+(song.para||"---");
+document.getElementById("titulo").innerText=song.title;
+document.getElementById("codigo").innerText="Código: "+song.code;
+document.getElementById("cover").src=song.cover || "";
+document.getElementById("de").innerText="De: "+song.de;
+document.getElementById("para").innerText="Para: "+song.para;
 
 let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
-if(song.file && !fechas[song.file]){
+if(!fechas[song.file]){
 fechas[song.file]=new Date().toLocaleString();
 localStorage.setItem("fechas",JSON.stringify(fechas));
 }
-
-document.getElementById("fecha").innerText="Agregado: "+(fechas[song.file]||"---");
+document.getElementById("fecha").innerText=fechas[song.file];
 }
 
 /* PLAY */
 function playSong(i){
-if(i<0||i>=playlist.length) return;
-
 currentIndex=i;
 let song=playlist[i];
-
 player.src=song.file;
 player.play();
-
 updateUI(song);
-}
-
-/* PLAY MUSIC */
-function playMusic(file){
-let i=playlist.findIndex(s=>s.file===file);
-if(i!=-1){
-playSong(i);
-}
 }
 
 /* CONTROLES */
 function togglePlay(){
-if(player.paused){
-player.play();
-document.getElementById("playBtn").innerText="⏸";
-}else{
-player.pause();
-document.getElementById("playBtn").innerText="▶";
-}
+player.paused ? player.play() : player.pause();
 }
 
 function next(){
-currentIndex=(currentIndex+1)%playlist.length;
-playSong(currentIndex);
+shuffle ? playSong(Math.floor(Math.random()*playlist.length)) :
+playSong((currentIndex+1)%playlist.length);
 }
 
 function prev(){
-currentIndex=(currentIndex-1+playlist.length)%playlist.length;
-playSong(currentIndex);
+playSong((currentIndex-1+playlist.length)%playlist.length);
 }
 
 function toggleShuffle(){shuffle=!shuffle;}
 function toggleLoop(){loop=!loop;}
 
 /* EVENTOS */
-player.addEventListener("ended",()=>{
-if(loop) playSong(currentIndex);
-else next();
-});
+player.addEventListener("ended",()=>{loop?playSong(currentIndex):next();});
 
 player.addEventListener("timeupdate",()=>{
-if(!player.duration) return;
+if(!player.duration)return;
 let p=(player.currentTime/player.duration)*100;
 document.getElementById("barra").style.width=p+"%";
 });
 
 player.addEventListener("play",()=>{
-document.getElementById("playBtn").innerText="⏸";
-document.getElementById("ondas").classList.remove("pausa");
+playBtn.innerText="⏸";
+ondas.classList.remove("pausa");
 });
 
 player.addEventListener("pause",()=>{
-document.getElementById("playBtn").innerText="▶";
-document.getElementById("ondas").classList.add("pausa");
+playBtn.innerText="▶";
+ondas.classList.add("pausa");
 });
 
-/* TOGGLE */
-function toggle(id){
-document.getElementById(id).classList.toggle("activo");
+/* SEEK */
+function seek(e){
+if(!player.duration)return;
+let rect=e.currentTarget.getBoundingClientRect();
+let x=e.clientX-rect.left;
+player.currentTime=(x/rect.width)*player.duration;
 }
 
 /* VOLUMEN */
 function setVolume(v){player.volume=v;}
 
-actualizarSecciones = ()=>{};
+/* HISTORIAL */
+let reproducciones=JSON.parse(localStorage.getItem("reproducciones"))||{};
+let historial=JSON.parse(localStorage.getItem("historial"))||[];
+
+function registrarReproduccion(file){
+reproducciones[file]=(reproducciones[file]||0)+1;
+historial.unshift(file);
+historial=historial.slice(0,5);
+localStorage.setItem("reproducciones",JSON.stringify(reproducciones));
+localStorage.setItem("historial",JSON.stringify(historial));
+actualizarSecciones();
+}
+
+function actualizarSecciones(){
+const contTop=document.getElementById("mas");
+contTop.innerHTML="";
+Object.entries(reproducciones).sort((a,b)=>b[1]-a[1]).slice(0,3)
+.forEach(([file,count])=>{
+let song=playlist.find(s=>s.file===file);
+if(!song)return;
+let div=document.createElement("div");
+div.className="item";
+div.innerText=`🎵 ${song.title} (${count})`;
+div.onclick=()=>playSong(playlist.indexOf(song));
+contTop.appendChild(div);
+});
+
+const contUlt=document.getElementById("ult");
+contUlt.innerHTML="";
+[...new Set(historial)].forEach(file=>{
+let song=playlist.find(s=>s.file===file);
+if(!song)return;
+let div=document.createElement("div");
+div.className="item";
+div.innerText=`🎵 ${song.title}`;
+div.onclick=()=>playSong(playlist.indexOf(song));
+contUlt.appendChild(div);
+});
+}
+
+function playMusic(file){
+let i=playlist.findIndex(s=>s.file===file);
+if(i!=-1){registrarReproduccion(file);playSong(i);}
+}
+
+function toggle(id){
+document.getElementById(id).classList.toggle("activo");
+}
+
+actualizarSecciones();
 
 </script>
 
