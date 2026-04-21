@@ -154,6 +154,46 @@ body {
   display: block;
 }
 
+/* BARRA PROGRESO */
+.barra-container {
+  width: 100%;
+  height: 6px;
+  background: #444;
+  border-radius: 10px;
+  margin-top: 15px;
+  overflow: hidden;
+}
+
+.barra {
+  width: 0%;
+  height: 100%;
+  background: #00e5ff;
+  box-shadow: 0 0 10px #00e5ff;
+  transition: width 0.2s;
+}
+
+/* BOTONES */
+.controles button {
+  background: linear-gradient(45deg, #00ff88, #00e5ff);
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.controles button:hover {
+  transform: scale(1.1);
+}
+
+/* FECHA */
+.fecha {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+}
+
 </style>
 </head>
 
@@ -166,29 +206,41 @@ body {
 <div class="reproductor">
   <div class="placa">
 
-    <div class="caratula">
-      <img id="cover" src="" alt="cover">
-    </div>
-
-    <div class="titulo" id="titulo">Selecciona una canción</div>
-
-    <div class="dedicatoria">
-      <div id="de">De: ---</div>
-      <div id="para">Para: ---</div>
-    </div>
-
-    <div class="ondas" id="ondas"></div>
-
-    <div class="controles">
-      <button onclick="player.play()">▶</button>
-      <button onclick="player.pause()">⏸</button>
-    </div>
-
-    <div class="codigo" id="codigo">Código: ---</div>
-
-    <audio id="player"></audio>
-
+  <div class="caratula">
+    <img id="cover" src="" alt="cover">
   </div>
+
+  <div class="titulo" id="titulo">---</div>
+
+  <div class="dedicatoria">
+    <div id="de">De: ---</div>
+    <div id="para">Para: ---</div>
+  </div>
+
+  <!-- ONDAS -->
+  <div class="ondas" id="ondas"></div>
+
+  <!-- CONTROLES -->
+  <div class="controles">
+    <button onclick="prevSong()">⏮</button>
+    <button onclick="player.play()">▶</button>
+    <button onclick="player.pause()">⏸</button>
+    <button onclick="nextSong()">⏭</button>
+    <button onclick="toggleLoop()">🔁</button>
+    <button onclick="toggleShuffle()">🔀</button>
+  </div>
+
+  <!-- BARRA PROGRESO -->
+  <div class="barra-container">
+    <div class="barra" id="barra"></div>
+  </div>
+
+  <div class="codigo" id="codigo">Código: ---</div>
+  <div class="fecha" id="fecha">Fecha: ---</div>
+
+  <audio id="player"></audio>
+
+</div>
 </div>
 
 <!-- ===== LISTA ===== -->
@@ -223,6 +275,7 @@ const playlist = [
     cover: "mis-15.jpg",
     de: "Tus Padres Flor de Liz y Vicente",
     para: "Yuliana con amor"
+    fecha: "2026-04-20 11:30"
   },
   {
     file: "Jehová Te Cuide Yuliana.mp3",
@@ -231,6 +284,7 @@ const playlist = [
     cover: "cover2.jpg",
     de: "Tus Padres Flor de Liz y Vicente",
     para: "Yuliana con amor"
+    fecha: "2026-04-20 11:30"
   }
 ];
 
@@ -261,6 +315,7 @@ function updateUI(song) {
 
   document.getElementById("de").innerText = "De: " + (song.de || "---");
   document.getElementById("para").innerText = "Para: " + (song.para || "---");
+  document.getElementById("fecha").innerText = "Fecha: " + (song.fecha || "---");
 }
 
 /* ===== PLAY ===== */
@@ -273,6 +328,16 @@ function playSong(index) {
 
   updateUI(song);
   document.getElementById("ondas").classList.remove("pausa");
+}
+
+function nextSong() {
+  currentIndex = (currentIndex + 1) % playlist.length;
+  playSong(currentIndex);
+}
+
+function prevSong() {
+  currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+  playSong(currentIndex);
 }
 
 function playMusic(file) {
@@ -295,9 +360,39 @@ player.addEventListener("play", () => {
   document.getElementById("ondas").classList.remove("pausa");
 });
 
+player.addEventListener("timeupdate", () => {
+  const progreso = (player.currentTime / player.duration) * 100;
+  document.getElementById("barra").style.width = progreso + "%";
+});
+
 /* ===== UI TOGGLE ===== */
 function toggle(id) {
   document.getElementById(id).classList.toggle("activo");
+}
+
+let shuffle = false;
+
+function toggleShuffle() {
+  shuffle = !shuffle;
+}
+
+function nextSong() {
+  if (shuffle) {
+    currentIndex = Math.floor(Math.random() * playlist.length);
+  } else {
+    currentIndex = (currentIndex + 1) % playlist.length;
+  }
+  playSong(currentIndex);
+}
+
+function nextSong() {
+  currentIndex = (currentIndex + 1) % playlist.length;
+  playSong(currentIndex);
+}
+
+function prevSong() {
+  currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+  playSong(currentIndex);
 }
 
 </script>
