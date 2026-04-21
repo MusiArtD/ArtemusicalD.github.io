@@ -92,11 +92,16 @@ body {
 
 /* PROGRESO */
 .progreso {
-  max-width: 250px;  /* mismo ancho que la carátula */
-  width: calc(100% - 20px);
+  max-width: 250px;              /* mismo ancho que carátula */
+  width: calc(100% - 20px);      /* 10px por lado */
   margin: 10px auto;
+  height: 6px;                   /* 🔥 CLAVE: si no hay altura no se ve */
+  background: #333;              /* 🔥 CLAVE: fondo visible */
+  border-radius: 10px;
+  cursor: pointer;
+  overflow: hidden;              /* limpia bordes */
 }
-
+  
 .barra {
   height: 100%;
   width: 0%;
@@ -360,9 +365,11 @@ player.addEventListener("ended",()=>{
 if(loop){playSong(currentIndex);}else{next();}
 });
 
-player.addEventListener("timeupdate",()=>{
-let p=(player.currentTime/player.duration)*100;
-document.getElementById("barra").style.width=p+"%";
+player.addEventListener("timeupdate", () => {
+  if (!player.duration) return; // 🔥 evita NaN
+
+  let p = (player.currentTime / player.duration) * 100;
+  document.getElementById("barra").style.width = p + "%";
 });
 
 player.addEventListener("play",()=>{
