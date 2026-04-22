@@ -146,14 +146,15 @@ body {
 }
   
 .label {
-  width: 130px;        /* mismo ancho para todos */
-  text-align: left;    /* 🔥 ahora se alinean desde la izquierda */
+  width: 130px;
   display: flex;
-  justify-content: space-between; /* 🔥 empuja el ":" al mismo lugar */
-  display: grid;
-  grid-template-columns: auto 10px; /* 🔥 crea columna para ":" */
+  justify-content: space-between;
   align-items: center;
   color: #1db954;
+}
+
+.dos {
+  margin-left: 5px;
 }
 
 .valor {
@@ -212,27 +213,27 @@ body {
 <div class="info">
 
   <div class="linea">
-    <div class="label">Título:</div>
+<div class="label">Título <span class="dos">:</span></div>
     <div class="valor" id="titulo">---</div>
   </div>
 
   <div class="linea">
-    <div class="label">De:</div>
+    <div class="label">De <span class="dos">:</span></div>
     <div class="valor" id="de">---</div>
   </div>
 
   <div class="linea">
-    <div class="label">Para:</div>
+    <div class="label">Para <span class="dos">:</span></div>
     <div class="valor" id="para">---</div>
   </div>
 
   <div class="linea">
-    <div class="label">Código:</div>
+    <div class="label">Código <span class="dos">:</span></div>
     <div class="valor" id="codigo">---</div>
   </div>
 
   <div class="linea">
-    <div class="label">Agregado:</div>
+    <div class="label">Agregado <span class="dos">:</span></div>
     <div class="valor" id="fecha">---</div>
   </div>
 
