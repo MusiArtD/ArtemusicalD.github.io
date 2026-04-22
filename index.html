@@ -146,12 +146,14 @@ body {
 }
   
 .label {
-  width: 130px;
+  width: 130px;        /* mismo ancho para todos */
+  text-align: left;    /* 🔥 ahora se alinean desde la izquierda */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* 🔥 empuja el ":" al mismo lugar */
+  display: grid;
+  grid-template-columns: auto 10px; /* 🔥 crea columna para ":" */
   align-items: center;
   color: #1db954;
-  gap: 5px;   /* 🔥 separación entre texto y ":" */
 }
 
 .valor {
