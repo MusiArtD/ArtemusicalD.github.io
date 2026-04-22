@@ -140,14 +140,21 @@ body {
 
 .linea {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 10px;   /* 🔥 separación para TODAS */
+  gap: 5px;              /* más controlado */
+  margin-bottom: 10px;   /* lo dejas igual */
 }
   
+.label {
+  width: 130px;        /* mismo ancho para todos */
+  text-align: left;    /* 🔥 ahora se alinean desde la izquierda */
+  display: flex;
+  justify-content: space-between; /* 🔥 empuja el ":" al mismo lugar */
+}
+
 .valor {
   flex: 1;
+  text-align: left;   /* asegura inicio alineado */
 }
 
 /* SECCIONES */
@@ -566,4 +573,4 @@ actualizarSecciones();
 </script>
 
 </body>
-</html>
+</html>>
