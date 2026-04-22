@@ -98,28 +98,48 @@ body {
 .controles {
   display: flex;
   justify-content: center;
+  align-items: center; /* 🔥 clave */
   gap: 15px;
+  margin-top: 15px;
 }
 
 .ctrl {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   cursor: pointer;
-  font-size: 20px;
+  background: #2a2a2a;
   color: #00ff88;
-  text-shadow: 0 0 8px #00ff88;
+  font-size: 18px;
+  transition: 0.2s;
 }
+
+.ctrl:hover {
+  background: #3a3a3a;
+}
+
 .ctrl.main {
-  font-size: 28px;
-  color: #00e5ff;
+  width: 60px;
+  height: 60px;
+  font-size: 26px;
+  background: #00e5ff;
+  color: black;
+  box-shadow: 0 0 10px #00e5ff;
 }
 
 /* INFO */
 .info {
   max-width: 500px;
-  margin: 15px auto;
+  margin: 20px auto;
+  text-align: left;
 }
 
 .linea {
   display: flex;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -444,11 +464,13 @@ playSong(currentIndex);
 }
 function toggleShuffle(){
 shuffle=!shuffle;
-document.getElementById("shuffle").style.color=shuffle?"#00e5ff":"#00ff88";
+document.getElementById("shuffle").style.background = shuffle ? "#00e5ff" : "#2a2a2a";
+document.getElementById("shuffle").style.color = shuffle ? "#000" : "#00ff88";
 }
 function toggleLoop(){
 loop=!loop;
-document.getElementById("loop").style.color=loop?"#00e5ff":"#00ff88";
+document.getElementById("loop").style.background = loop ? "#00e5ff" : "#2a2a2a";
+document.getElementById("loop").style.color = loop ? "#000" : "#00ff88";
 }
 
 /* EVENTOS */
