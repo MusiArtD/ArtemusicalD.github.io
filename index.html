@@ -319,10 +319,12 @@ if(!song)return;
 document.getElementById("titulo").innerText=song.title;
 document.getElementById("cover").src=song.cover;
 
-// 🔥 CORREGIDO SIN DUPLICAR
 document.getElementById("de").innerText=song.de;
 document.getElementById("para").innerText=song.para;
 document.getElementById("codigo").innerText=song.code;
+
+// ✅ AQUÍ ES EL LUGAR CORRECTO
+document.getElementById("mensajeInicial").style.display = "none";
 
 let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
 if(!fechas[song.file]){
@@ -357,14 +359,11 @@ function toggleShuffle(){
 shuffle=!shuffle;
 document.getElementById("shuffle").style.background = shuffle ? "#00e5ff" : "#2a2a2a";
 document.getElementById("shuffle").style.color = shuffle ? "#000" : "#00ff88";
-}
-function toggleLoop(){
+}function toggleLoop(){
 loop=!loop;
 document.getElementById("loop").style.background = loop ? "#00e5ff" : "#2a2a2a";
 document.getElementById("loop").style.color = loop ? "#000" : "#00ff88";
 }
-
-document.getElementById("mensajeInicial").style.display = "none";
 
 /* EVENTOS */
 player.addEventListener("ended",()=>loop?playSong(currentIndex):next());
