@@ -191,27 +191,25 @@ body {
 }  
 
 #mensajeInicial {
-  margin-top: 15px;
-  font-size: 26px;
-  text-align: center;
-  font-weight: bold;
-
-  /* 🎨 gradiente dorado */
   background: linear-gradient(
-    45deg,
-    #d4af37,
+    90deg,
+    #b8962e,
     #ffd700,
-    #fff5b7,
-    #d4af37
+    #fff8dc,
+    #ffd700,
+    #b8962e
   );
+  background-size: 200%;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  /* ✨ brillo */
-  text-shadow:
-    0 0 5px rgba(255, 215, 0, 0.5),
-    0 0 10px rgba(255, 215, 0, 0.3);
+  animation: oro 3s linear infinite;
+}
+
+@keyframes oro {
+  0% { background-position: 0%; }
+  100% { background-position: 200%; }
 }
 
 </style>
