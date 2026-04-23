@@ -129,7 +129,6 @@ body {
   color: #ffffff;
 }
 
-/* 🔥 PLAY/PAUSE SIN FONDO NI RECUADRO */
 .ctrl.main {
   width: 60px;
   height: 60px;
@@ -151,12 +150,11 @@ body {
   gap: 5px;
   margin-bottom: 10px;
 }
-  
+
 .label {
   width: 130px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   color: #1db954;
 }
 
@@ -170,7 +168,6 @@ body {
   transform: translateX(-40px);
 }
 
-/* SECCIONES */
 .seccion {
   color:#1db954;
   margin-top:10px;
@@ -180,15 +177,10 @@ body {
 .contenido { display:none; }
 .contenido.activo { display:block; }
 
-/* TITULO GRANDE */
 .info .linea:first-child .label,
 .info .linea:first-child .valor {
   font-size: 23px;
 }
-
-.info .linea:first-child .valor {
-  font-weight: 450;
-}  
 
 #mensajeInicial {
   margin-top: 15px;
@@ -232,11 +224,9 @@ body {
 
 <div class="controles">
 
-  <button class="ctrl" id="shuffle" onclick="toggleShuffle()">🔀</button>
-
+  <button class="ctrl" onclick="toggleShuffle()">🔀</button>
   <button class="ctrl" onclick="prev()">⏮</button>
 
-  <!-- PLAY / PAUSE -->
   <button class="ctrl main" id="playBtn" onclick="togglePlay()">
     <span id="playIcon">
       <svg viewBox="0 0 24 24">
@@ -246,8 +236,7 @@ body {
   </button>
 
   <button class="ctrl" onclick="next()">⏭</button>
-
-  <button class="ctrl" id="loop" onclick="toggleLoop()">🔁</button>
+  <button class="ctrl" onclick="toggleLoop()">🔁</button>
 
 </div>
 
@@ -312,78 +301,79 @@ para:"Amelia Celeste"
 let currentIndex=0, shuffle=false, loop=false;
 const player=document.getElementById("player");
 
-/* ICONO PLAY/PAUSE */
+/* ICONO ESTABLE */
 function setPlayIcon(isPlaying){
-  const icon = document.getElementById("playIcon");
-  icon.innerHTML = isPlaying
+  document.getElementById("playIcon").innerHTML = isPlaying
     ? `<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z"/></svg>`
     : `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
 }
 
-/* PLAY */
+/* AUDIO ESTABLE */
 function playSong(i){
-currentIndex=i;
-let song=playlist[i];
-player.src=song.file;
-player.play();
-updateUI(song);
+  currentIndex = i;
+  let song = playlist[i];
+
+  player.src = song.file;
+  player.play().catch(()=>{});
+
+  updateUI(song);
+}
+
+function togglePlay(){
+  if(player.paused) player.play().catch(()=>{});
+  else player.pause();
 }
 
 /* UI */
 function updateUI(song){
-if(!song)return;
+  if(!song) return;
 
-document.getElementById("titulo").innerText=song.title;
-document.getElementById("cover").src=song.cover;
-document.getElementById("de").innerText=song.de;
-document.getElementById("para").innerText=song.para;
-document.getElementById("codigo").innerText=song.code;
+  document.getElementById("titulo").innerText = song.title;
+  document.getElementById("cover").src = song.cover;
+  document.getElementById("de").innerText = song.de;
+  document.getElementById("para").innerText = song.para;
+  document.getElementById("codigo").innerText = song.code;
 
-document.getElementById("mensajeInicial").style.display="none";
-
-let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
-if(!fechas[song.file]){
-fechas[song.file]=new Date().toLocaleString();
-localStorage.setItem("fechas",JSON.stringify(fechas));
-}
-document.getElementById("fecha").innerText=fechas[song.file];
+  document.getElementById("mensajeInicial").style.display="none";
 }
 
-/* CONTROLES */
-function togglePlay(){
-player.paused ? player.play() : player.pause();
-}
-function next(){
-currentIndex=shuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length;
-playSong(currentIndex);
-}
-function prev(){
-currentIndex=(currentIndex-1+playlist.length)%playlist.length;
-playSong(currentIndex);
-}
-
-function toggleShuffle(){
-shuffle=!shuffle;
-document.getElementById("shuffle").style.color = shuffle ? "#00ff88" : "#00e5ff";
-}
-
-function toggleLoop(){
-loop=!loop;
-document.getElementById("loop").style.color = loop ? "#00ff88" : "#00e5ff";
-}
-
-/* AUDIO EVENTS */
+/* EVENTOS AUDIO */
 player.addEventListener("play",()=>{
-setPlayIcon(true);
-ondas.classList.remove("pausa");
+  setPlayIcon(true);
+  ondas.classList.remove("pausa");
 });
 
 player.addEventListener("pause",()=>{
-setPlayIcon(false);
-ondas.classList.add("pausa");
+  setPlayIcon(false);
+  ondas.classList.add("pausa");
 });
 
-player.addEventListener("ended",()=>loop?playSong(currentIndex):next());
+player.addEventListener("ended",()=>{
+  loop ? playSong(currentIndex) : next();
+});
+
+/* CONTROLES BÁSICOS */
+function next(){
+  currentIndex = shuffle ? Math.floor(Math.random()*playlist.length) : (currentIndex+1)%playlist.length;
+  playSong(currentIndex);
+}
+
+function prev(){
+  currentIndex = (currentIndex-1+playlist.length)%playlist.length;
+  playSong(currentIndex);
+}
+
+function toggleShuffle(){ shuffle=!shuffle; }
+function toggleLoop(){ loop=!loop; }
+
+function seek(e){
+  let r = e.currentTarget.getBoundingClientRect();
+  player.currentTime = ((e.clientX-r.left)/r.width)*player.duration;
+}
+
+function toggle(id){
+  document.getElementById(id).classList.toggle("activo");
+}
 
 </script>
 
