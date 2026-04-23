@@ -246,11 +246,42 @@ body {
 </div>
 
 <div class="controles">
-<span class="ctrl" onclick="toggleShuffle()" id="shuffle">🔀</span>
-<span class="ctrl" onclick="prev()">⏮</span>
-<span id="playBtn" class="ctrl main" onclick="togglePlay()">▶</span>
-<span class="ctrl" onclick="next()">⏭</span>
-<span class="ctrl" onclick="toggleLoop()" id="loop">🔁</span>
+
+  <!-- shuffle -->
+  <button class="ctrl" id="shuffle" onclick="toggleShuffle()">
+    <svg viewBox="0 0 24 24">
+      <path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/>
+    </svg>
+  </button>
+
+  <!-- prev -->
+  <button class="ctrl" onclick="prev()">
+    <svg viewBox="0 0 24 24">
+      <path d="M6 6h2v12H6V6zm3.5 6l10.5 6V6L9.5 12z"/>
+    </svg>
+  </button>
+
+  <!-- play/pause -->
+  <button class="ctrl main" id="playBtn" onclick="togglePlay()">
+    <svg viewBox="0 0 24 24">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </button>
+
+  <!-- next -->
+  <button class="ctrl" onclick="next()">
+    <svg viewBox="0 0 24 24">
+      <path d="M16.5 12L6 6v12l10.5-6zM18 6h2v12h-2V6z"/>
+    </svg>
+  </button>
+
+  <!-- loop -->
+  <button class="ctrl" id="loop" onclick="toggleLoop()">
+    <svg viewBox="0 0 24 24">
+      <path d="M17 17H7v-3l-4 4 4 4v-3h10v-2zm0-10V4l4 4-4 4V9H7v2h10z"/>
+    </svg>
+  </button>
+
 </div>
 
 <!-- INFO CORRECTO -->
