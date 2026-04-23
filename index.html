@@ -108,20 +108,33 @@ body {
 .ctrl {
   background: transparent;
   border: none;
-  font-size: 22px;
-  color: #00ff88;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
+  height: 50px;
+
+  color: #00e5ff;
   transition: 0.2s;
+}
+
+.ctrl svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor; /* 👈 clave: hereda color */
 }
 
 .ctrl:hover {
   transform: scale(1.2);
-  color: #00e5ff;
+  color: #ffffff;
 }
 
-.ctrl.main {
-  font-size: 32px;
-  color: #00e5ff;
+.ctrl.main svg {
+  width: 34px;
+  height: 34px;
 }
 
 .ctrl:hover {
