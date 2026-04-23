@@ -192,14 +192,26 @@ body {
 
 #mensajeInicial {
   margin-top: 15px;
-  color: #ff3b3b; /* rojo base */
-  font-size: 24px;
+  font-size: 26px;
   text-align: center;
-  font-weight: 500;
+  font-weight: bold;
 
+  /* 🎨 gradiente dorado */
+  background: linear-gradient(
+    45deg,
+    #d4af37,
+    #ffd700,
+    #fff5b7,
+    #d4af37
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* ✨ brillo */
   text-shadow:
-    0 0 5px #ff3b3b,
-    0 0 10px #ff0000;
+    0 0 5px rgba(255, 215, 0, 0.5),
+    0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 </style>
