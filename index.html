@@ -191,25 +191,25 @@ body {
 }  
 
 #mensajeInicial {
+  margin-top: 15px;
+  font-size: 28px; /* 👈 recuperado */
+  text-align: center;
+  font-weight: bold;
+
   background: linear-gradient(
-    90deg,
-    #b8962e,
+    45deg,
+    #d4af37,
     #ffd700,
-    #fff8dc,
-    #ffd700,
-    #b8962e
+    #fff5b7,
+    #d4af37
   );
-  background-size: 200%;
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  animation: oro 3s linear infinite;
-}
-
-@keyframes oro {
-  0% { background-position: 0%; }
-  100% { background-position: 200%; }
+  text-shadow:
+    0 0 5px rgba(255, 215, 0, 0.5),
+    0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 </style>
