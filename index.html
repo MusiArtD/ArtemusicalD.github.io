@@ -122,7 +122,11 @@ body {
 .ctrl svg {
   width: 26px;
   height: 26px;
-  fill: currentColor; /* 👈 clave: hereda color */
+  fill: currentColor;
+}
+
+.ctrl {
+  background: transparent;
 }
 
 .ctrl:hover {
@@ -334,7 +338,19 @@ body {
 <script>
 
 const playlist=[
+const iconPlay = `
+<svg viewBox="0 0 24 24">
+  <path d="M8 5v14l11-7z"/>
+</svg>
+`;
+
+const iconPause = `
+<svg viewBox="0 0 24 24">
+  <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+</svg>
+`;
 {
+
 file:"Amelia Celeste.mp3",
 title:"Amelia Celeste",
 code:"AMU-002",
@@ -431,12 +447,12 @@ document.getElementById("barra").style.width=(player.currentTime/player.duration
 });
 
 player.addEventListener("play",()=>{
-document.getElementById("playBtn").innerText="⏸";
+document.getElementById("playBtn").innerHTML = iconPause;
 ondas.classList.remove("pausa");
 });
 
 player.addEventListener("pause",()=>{
-document.getElementById("playBtn").innerText="▶";
+document.getElementById("playBtn").innerHTML = iconPlay;
 ondas.classList.add("pausa");
 });
 
