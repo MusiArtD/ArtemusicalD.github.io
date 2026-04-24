@@ -2,12 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Panel de Información</title>
+<title>Mi música</title>
 
 <style>
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
-    background: #111;
+    background: #0f0f0f;
     color: #fff;
     display: flex;
     justify-content: center;
@@ -15,51 +16,120 @@ body {
     height: 100vh;
 }
 
-.card {
+/* Contenedor principal */
+.player {
     background: #1c1c1c;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    padding: 25px;
+    border-radius: 15px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0,0,0,0.7);
+}
+
+/* Título */
+h1 {
+    margin-bottom: 20px;
+    color: #00c3ff;
+}
+
+/* Info canción */
+.info {
+    margin-bottom: 20px;
 }
 
 .linea {
     display: flex;
-    margin-bottom: 10px;
+    justify-content: space-between;
+    margin: 5px 0;
 }
 
 .label {
-    width: 80px;
-    font-weight: bold;
     color: #00c3ff;
 }
 
 .valor {
-    flex: 1;
+    font-weight: bold;
+}
+
+/* Botones */
+.controls button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background: #00c3ff;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.controls button:hover {
+    background: #00a2d6;
+}
+
+/* Barra progreso */
+input[type="range"] {
+    width: 100%;
+    margin-top: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-    <div class="linea">
-        <div class="label">Título:</div>
-        <div class="valor" id="titulo">---</div>
-    </div>
-    <div class="linea">
-        <div class="label">De:</div>
-        <div class="valor" id="de">---</div>
+<div class="player">
+    <h1>🎵 Mi música</h1>
+
+    <div class="info">
+        <div class="linea">
+            <div class="label">Título:</div>
+            <div class="valor" id="titulo">---</div>
+        </div>
+        <div class="linea">
+            <div class="label">Artista:</div>
+            <div class="valor" id="artista">---</div>
+        </div>
     </div>
 
-    <button onclick="cargarDatos()">Cargar datos</button>
+    <audio id="audio"></audio>
+
+    <div class="controls">
+        <button onclick="cargar()">Cargar</button>
+        <button onclick="play()">▶️</button>
+        <button onclick="pause()">⏸</button>
+    </div>
+
+    <input type="range" id="progreso" value="0">
 </div>
 
 <script>
-function cargarDatos() {
-    document.getElementById("titulo").textContent = "Mis XV Años";
-    document.getElementById("de").textContent = "Yuliana";
+let audio = document.getElementById("audio");
+let progreso = document.getElementById("progreso");
+
+function cargar() {
+    audio.src = "musica.mp3"; // 🔹 aquí pones tu archivo
+    document.getElementById("titulo").textContent = "Mi canción";
+    document.getElementById("artista").textContent = "Artista";
 }
+
+function play() {
+    audio.play();
+}
+
+function pause() {
+    audio.pause();
+}
+
+/* Actualizar barra */
+audio.addEventListener("timeupdate", () => {
+    progreso.value = (audio.currentTime / audio.duration) * 100;
+});
+
+/* Mover barra */
+progreso.addEventListener("input", () => {
+    audio.currentTime = (progreso.value / 100) * audio.duration;
+});
 </script>
 
 </body>
