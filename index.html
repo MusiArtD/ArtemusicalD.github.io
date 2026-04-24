@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+el html lo tengo con las siguientes mejoras y no encuentro el bloque que comentas "  <span id="playBtn" class="ctrl main" onclick="togglePlay()">▶</span>  " o tal ves no lo he revisado minusiosamente te lo paso para que tu confirmes mi revision y me digas ya mas concretamente si lo debo agregar en que bloque y en que posision "  <html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Saund Music</title>
@@ -96,11 +95,11 @@ body {
   box-shadow: 0 0 8px #00e5ff;
 }
 
-/* CONTROLES (ORIGINAL) */
+/* CONTROLES */
 .controles {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* 🔥 clave */
   gap: 15px;
   margin-top: 15px;
 }
@@ -118,27 +117,36 @@ body {
   height: 50px;
 
   color: #00e5ff;
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition: 0.2s;
 }
 
 .ctrl svg {
   width: 26px;
   height: 26px;
-  fill: currentColor;
+  fill: currentColor; /* 👈 clave: hereda color */
 }
 
 .ctrl:hover {
-  transform: scale(1.15);
+  transform: scale(1.2);
   color: #ffffff;
 }
 
-.ctrl.active {
-  color: #1db954;
+.ctrl.main svg {
+  width: 34px;
+  height: 34px;
+}
+
+.ctrl:hover {
+  background: #3a3a3a;
 }
 
 .ctrl.main {
   width: 60px;
   height: 60px;
+  font-size: 26px;
+  background: #00e5ff;
+  color: black;
+  box-shadow: 0 0 10px #00e5ff;
 }
 
 /* INFO */
@@ -146,26 +154,82 @@ body {
   max-width: 500px;
   margin: 20px auto;
   text-align: left;
+  transform: translateX(40px);  /* 🔥 mueve todo a la derecha */
 }
 
 .linea {
   display: flex;
-  margin-bottom: 10px;
+  align-items: center;
+  gap: 5px;              /* más controlado */
+  margin-bottom: 10px;   /* lo dejas igual */
+}
+  
+.label {
+  width: 130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #1db954;
 }
 
-.label {
-  width: 120px;
-  color: #1db954;
+.dos {
+  margin-left: auto;
+  transform: translateX(-45px);  /* 🔥 mueve 7px a la izquierda */
 }
 
 .valor {
   flex: 1;
+  transform: translateX(-40px);  /* 🔥 se acerca al ":" */
 }
+
+/* SECCIONES */
+.seccion {
+  color:#1db954;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.contenido { display:none; }
+.contenido.activo { display:block; }
+
+/* 🔥 SOLO LA PRIMERA LINEA (TITULO) */
+.info .linea:first-child .label {
+  font-size: 23px;
+}
+
+.info .linea:first-child .valor {
+  font-size: 23px;
+  font-weight: 450;
+}  
+
+#mensajeInicial {
+  margin-top: 15px;
+  font-size: 28px; /* 👈 recuperado */
+  text-align: center;
+  font-weight: bold;
+
+  background: linear-gradient(
+    45deg,
+    #d4af37,
+    #ffd700,
+    #fff5b7,
+    #d4af37
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 5px rgba(255, 215, 0, 0.5),
+    0 0 10px rgba(255, 215, 0, 0.3);
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- REPRODUCTOR -->
 <div class="reproductor">
 <div class="placa">
 
@@ -177,10 +241,9 @@ body {
 <div class="ondas" id="ondas"></div>
 
 <div class="progreso" onclick="seek(event)">
-  <div class="barra" id="barra"></div>
+<div class="barra" id="barra"></div>
 </div>
 
-<!-- CONTROLES ORIGINALES + VOLUMEN -->
 <div class="controles">
 
   <!-- shuffle -->
@@ -197,7 +260,7 @@ body {
     </svg>
   </button>
 
-  <!-- play -->
+  <!-- play/pause -->
   <button class="ctrl main" id="playBtn" onclick="togglePlay()">
     <svg viewBox="0 0 24 24">
       <path d="M8 5v14l11-7z"/>
@@ -218,29 +281,36 @@ body {
     </svg>
   </button>
 
-  <!-- volumen -->
-  <button class="ctrl" id="volDownBtn">
-    <svg viewBox="0 0 24 24">
-      <path d="M5 11h14v2H5z"/>
-    </svg>
-  </button>
-
-  <span style="color:#00e5ff;font-weight:bold;">VOL</span>
-
-  <button class="ctrl" id="volUpBtn">
-    <svg viewBox="0 0 24 24">
-      <path d="M11 5h2v14h-2zM5 11h14v2H5z"/>
-    </svg>
-  </button>
-
 </div>
 
+<!-- INFO CORRECTO -->
 <div class="info">
-  <div class="linea"><div class="label">Título:</div><div class="valor" id="titulo">---</div></div>
-  <div class="linea"><div class="label">De:</div><div class="valor" id="de">---</div></div>
-  <div class="linea"><div class="label">Para:</div><div class="valor" id="para">---</div></div>
-  <div class="linea"><div class="label">Código:</div><div class="valor" id="codigo">---</div></div>
-  <div class="linea"><div class="label">Agregado:</div><div class="valor" id="fecha">---</div></div>
+
+  <div class="linea">
+<div class="label">Título <span class="dos">:</span></div>
+    <div class="valor" id="titulo">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">De <span class="dos">:</span></div>
+    <div class="valor" id="de">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">Para <span class="dos">:</span></div>
+    <div class="valor" id="para">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">Código <span class="dos">:</span></div>
+    <div class="valor" id="codigo">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">Agregado <span class="dos">:</span></div>
+    <div class="valor" id="fecha">---</div>
+  </div>
+
 </div>
 
 <audio id="player"></audio>
@@ -248,9 +318,49 @@ body {
 </div>
 </div>
 
+<!-- LISTA -->
+<div class="lista">
+
+<div class="seccion" onclick="toggle('listaContenido')">📜 Lista de reproducción</div>
+<div id="listaContenido" class="contenido activo"></div>
+
+<div class="seccion" onclick="toggle('mas')">❤️ Más reproducido</div>
+<div id="mas" class="contenido"></div>
+
+<div class="seccion" onclick="toggle('ult')">🔥 Últimas</div>
+<div id="ult" class="contenido"></div>
+
+</div>
+
 <script>
 
+const playlist=[
+{
+file:"Amelia Celeste.mp3",
+title:"Amelia Celeste",
+code:"AMU-002",
+cover:"2-años-Amelia.jpg",
+de:"Flor de Liz y Joaquin tus Padres",
+para:"Amelia Celeste"
+}
+];
+
+let currentIndex=0, shuffle=false, loop=false;
 const player=document.getElementById("player");
+
+/* LISTA DINAMICA */
+function renderLista(){
+let cont=document.getElementById("listaContenido");
+cont.innerHTML="";
+playlist.forEach(song=>{
+let div=document.createElement("div");
+div.className="item";
+div.innerText="🎵 "+song.title;
+div.onclick=()=>playMusic(song.file);
+cont.appendChild(div);
+});
+}
+renderLista();
 
 /* ONDAS */
 let ondas=document.getElementById("ondas");
@@ -260,32 +370,143 @@ s.style.animationDelay=(i*0.05)+"s";
 ondas.appendChild(s);
 }
 
-/* VOLUMEN */
-function changeVolume(step){
-  player.volume=Math.min(1,Math.max(0,player.volume+step));
+/* UI */
+function updateUI(song){
+if(!song)return;
+
+document.getElementById("titulo").innerText=song.title;
+document.getElementById("cover").src=song.cover;
+
+document.getElementById("de").innerText=song.de;
+document.getElementById("para").innerText=song.para;
+document.getElementById("codigo").innerText=song.code;
+
+// ✅ AQUÍ ES EL LUGAR CORRECTO
+document.getElementById("mensajeInicial").style.display = "none";
+
+let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
+if(!fechas[song.file]){
+fechas[song.file]=new Date().toLocaleString();
+localStorage.setItem("fechas",JSON.stringify(fechas));
+}
+document.getElementById("fecha").innerText=fechas[song.file];
 }
 
-volUpBtn.onclick=()=>changeVolume(0.1);
-volDownBtn.onclick=()=>changeVolume(-0.1);
-
-let volInterval;
-
-function startHold(step){
-  volInterval=setInterval(()=>changeVolume(step),100);
+/* PLAY */
+function playSong(i){
+currentIndex=i;
+let song=playlist[i];
+player.src=song.file;
+player.play();
+updateUI(song);
 }
 
-function stopHold(){ clearInterval(volInterval); }
+/* CONTROLES */
+function togglePlay(){
+player.paused ? player.play() : player.pause();
+}
+function next(){
+currentIndex=shuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length;
+playSong(currentIndex);
+}
+function prev(){
+currentIndex=(currentIndex-1+playlist.length)%playlist.length;
+playSong(currentIndex);
+}
+function toggleShuffle(){
+shuffle=!shuffle;
+document.getElementById("shuffle").style.background = shuffle ? "#00e5ff" : "#2a2a2a";
+document.getElementById("shuffle").style.color = shuffle ? "#000" : "#00ff88";
+}function toggleLoop(){
+loop=!loop;
+document.getElementById("loop").style.background = loop ? "#00e5ff" : "#2a2a2a";
+document.getElementById("loop").style.color = loop ? "#000" : "#00ff88";
+}
 
-volUpBtn.onmousedown=()=>startHold(0.02);
-volDownBtn.onmousedown=()=>startHold(-0.02);
+/* EVENTOS */
+player.addEventListener("ended",()=>loop?playSong(currentIndex):next());
 
-volUpBtn.onmouseup=stopHold;
-volDownBtn.onmouseup=stopHold;
+player.addEventListener("timeupdate",()=>{
+if(!player.duration)return;
+document.getElementById("barra").style.width=(player.currentTime/player.duration)*100+"%";
+});
 
-volUpBtn.onmouseleave=stopHold;
-volDownBtn.onmouseleave=stopHold;
+player.addEventListener("play",()=>{
+document.getElementById("playBtn").innerText="⏸";
+ondas.classList.remove("pausa");
+});
+
+player.addEventListener("pause",()=>{
+document.getElementById("playBtn").innerText="▶";
+ondas.classList.add("pausa");
+});
+
+/* SEEK */
+function seek(e){
+let r=e.currentTarget.getBoundingClientRect();
+player.currentTime=((e.clientX-r.left)/r.width)*player.duration;
+}
+
+/* HISTORIAL */
+let reproducciones=JSON.parse(localStorage.getItem("reproducciones"))||{};
+let historial=JSON.parse(localStorage.getItem("historial"))||[];
+
+function registrarReproduccion(file){
+reproducciones[file]=(reproducciones[file]||0)+1;
+historial.unshift(file);
+historial=historial.slice(0,5);
+localStorage.setItem("reproducciones",JSON.stringify(reproducciones));
+localStorage.setItem("historial",JSON.stringify(historial));
+actualizarSecciones();
+}
+
+function actualizarSecciones(){
+
+let contTop=document.getElementById("mas");
+contTop.innerHTML="";
+
+Object.entries(reproducciones)
+.sort((a,b)=>b[1]-a[1])
+.slice(0,3)
+.forEach(([file,count])=>{
+let s=playlist.find(x=>x.file===file);
+if(!s)return;
+let d=document.createElement("div");
+d.className="item";
+d.innerText=`🎵 ${s.title} (${count})`;
+d.onclick=()=>playSong(playlist.indexOf(s));
+contTop.appendChild(d);
+});
+
+let contUlt=document.getElementById("ult");
+contUlt.innerHTML="";
+
+[...new Set(historial)].forEach(file=>{
+let s=playlist.find(x=>x.file===file);
+if(!s)return;
+let d=document.createElement("div");
+d.className="item";
+d.innerText=`🎵 ${s.title}`;
+d.onclick=()=>playSong(playlist.indexOf(s));
+contUlt.appendChild(d);
+});
+}
+
+function playMusic(file){
+let i=playlist.findIndex(s=>s.file===file);
+if(i!=-1){
+registrarReproduccion(file);
+playSong(i);
+}
+}
+
+function toggle(id){
+document.getElementById(id).classList.toggle("activo");
+}
+
+actualizarSecciones();
 
 </script>
 
 </body>
-</html>
+</html>>  " con estos codigo lo tengo asi por decir full pero con esas observaciones que quiero modificar pero sin romper nada y que siga funcional al hacer esas modificaciones
