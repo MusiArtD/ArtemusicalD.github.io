@@ -117,11 +117,10 @@ body {
   height: 50px;
 
   color: #00e5ff;
-
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* ❌ QUITADO: hover con fondo o cambios raros */
+/* ❌ eliminado fondo hover */
 .ctrl:hover {
   transform: scale(1.15);
   color: #ffffff;
@@ -147,7 +146,7 @@ body {
   box-shadow: none;
 }
 
-/* 🔥 ESTADO ACTIVO (SPOTIFY GREEN) */
+/* 🔥 estado activo tipo Spotify */
 .ctrl.active {
   color: #1db954;
 }
@@ -166,7 +165,7 @@ body {
   gap: 5px;
   margin-bottom: 10px;
 }
-  
+
 .label {
   width: 130px;
   display: flex;
@@ -203,7 +202,7 @@ body {
 .info .linea:first-child .valor {
   font-size: 23px;
   font-weight: 450;
-}  
+}
 
 #mensajeInicial {
   margin-top: 15px;
@@ -226,6 +225,7 @@ body {
     0 0 5px rgba(255, 215, 0, 0.5),
     0 0 10px rgba(255, 215, 0, 0.3);
 }
+
 </style>
 </head>
 
@@ -249,7 +249,7 @@ body {
 <div class="controles">
 
   <!-- shuffle -->
-  <button class="ctrl" id="shuffle" onclick="toggleShuffle(this)">
+  <button class="ctrl" id="shuffle" onclick="toggleShuffle()">
     <svg viewBox="0 0 24 24">
       <path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/>
     </svg>
@@ -277,7 +277,7 @@ body {
   </button>
 
   <!-- loop -->
-  <button class="ctrl" id="loop" onclick="toggleLoop(this)">
+  <button class="ctrl" id="loop" onclick="toggleLoop()">
     <svg viewBox="0 0 24 24">
       <path d="M17 17H7v-3l-4 4 4 4v-3h10v-2zm0-10V4l4 4-4 4V9H7v2h10z"/>
     </svg>
@@ -294,24 +294,30 @@ body {
 
 const player=document.getElementById("player");
 
+let shuffle=false;
+let loop=false;
+
 /* PLAY/PAUSE */
 function togglePlay(){
 player.paused ? player.play() : player.pause();
 }
 
 /* SHUFFLE */
-let shuffle=false;
-function toggleShuffle(btn){
+function toggleShuffle(){
 shuffle=!shuffle;
-btn.classList.toggle("active", shuffle);
+document.getElementById("shuffle").classList.toggle("active", shuffle);
 }
 
 /* LOOP */
-let loop=false;
-function toggleLoop(btn){
+function toggleLoop(){
 loop=!loop;
-btn.classList.toggle("active", loop);
+document.getElementById("loop").classList.toggle("active", loop);
 }
+
+/* CONTROLES BASE */
+function next(){}
+function prev(){}
+function seek(){}
 
 </script>
 
