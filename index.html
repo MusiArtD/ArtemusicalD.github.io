@@ -117,7 +117,8 @@ body {
   height: 50px;
 
   color: #00e5ff;
-  transition: 0.2s;
+
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .ctrl svg {
@@ -126,22 +127,15 @@ body {
   fill: currentColor;
 }
 
-.ctrl {
-  background: transparent;
-}
-
 .ctrl:hover {
-  transform: scale(1.2);
+  transform: scale(1.15);
   color: #ffffff;
+  background: transparent; /* 🔥 elimina el bloque gris */
 }
 
 .ctrl.main svg {
   width: 34px;
   height: 34px;
-}
-
-.ctrl:hover {
-  background: #3a3a3a;
 }
 
 .ctrl.main {
