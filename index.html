@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -29,6 +30,7 @@ body {
   cursor: pointer;
   border-radius: 6px;
 }
+
 .item:hover { background: #3a3a3a; }
 
 /* REPRODUCTOR */
@@ -47,7 +49,9 @@ body {
 }
 
 /* CARATULA */
-.caratula { text-align: center; }
+.caratula {
+  text-align: center;
+}
 .caratula img {
   width: 100%;
   max-width: 400px;
@@ -92,7 +96,7 @@ body {
   box-shadow: 0 0 8px #00e5ff;
 }
 
-/* CONTROLES */
+/* CONTROLES (ORIGINAL) */
 .controles {
   display: flex;
   justify-content: center;
@@ -117,33 +121,24 @@ body {
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.ctrl:hover {
-  transform: scale(1.15);
-  color: #ffffff;
-}
-
-/* 🔥 ESTADO ACTIVO SPOTIFY */
-.ctrl.active {
-  color: #1db954;
-}
-
-/* PLAY BUTTON MÁS NATURAL (sin recuadros) */
-.ctrl.main {
-  width: 60px;
-  height: 60px;
-  background: transparent;
-  box-shadow: none;
-}
-
 .ctrl svg {
   width: 26px;
   height: 26px;
   fill: currentColor;
 }
 
-.ctrl.main svg {
-  width: 34px;
-  height: 34px;
+.ctrl:hover {
+  transform: scale(1.15);
+  color: #ffffff;
+}
+
+.ctrl.active {
+  color: #1db954;
+}
+
+.ctrl.main {
+  width: 60px;
+  height: 60px;
 }
 
 /* INFO */
@@ -151,46 +146,21 @@ body {
   max-width: 500px;
   margin: 20px auto;
   text-align: left;
-  transform: translateX(40px);
 }
 
 .linea {
   display: flex;
-  align-items: center;
-  gap: 5px;
   margin-bottom: 10px;
 }
 
 .label {
-  width: 130px;
-  display: flex;
-  justify-content: space-between;
+  width: 120px;
   color: #1db954;
 }
 
-.dos { margin-left: auto; transform: translateX(-45px); }
-.valor { flex: 1; transform: translateX(-40px); }
-
-.seccion {
-  color:#1db954;
-  margin-top:10px;
-  cursor:pointer;
+.valor {
+  flex: 1;
 }
-
-.contenido { display:none; }
-.contenido.activo { display:block; }
-
-#mensajeInicial {
-  margin-top: 15px;
-  font-size: 28px;
-  text-align: center;
-  font-weight: bold;
-
-  background: linear-gradient(45deg,#d4af37,#ffd700,#fff5b7,#d4af37);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 </style>
 </head>
 
@@ -207,13 +177,14 @@ body {
 <div class="ondas" id="ondas"></div>
 
 <div class="progreso" onclick="seek(event)">
-<div class="barra" id="barra"></div>
+  <div class="barra" id="barra"></div>
 </div>
 
+<!-- CONTROLES ORIGINALES + VOLUMEN -->
 <div class="controles">
 
   <!-- shuffle -->
-  <button class="ctrl" id="shuffle" onclick="toggleShuffle(this)">
+  <button class="ctrl" id="shuffle" onclick="toggleShuffle()">
     <svg viewBox="0 0 24 24">
       <path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/>
     </svg>
@@ -241,12 +212,35 @@ body {
   </button>
 
   <!-- loop -->
-  <button class="ctrl" id="loop" onclick="toggleLoop(this)">
+  <button class="ctrl" id="loop" onclick="toggleLoop()">
     <svg viewBox="0 0 24 24">
       <path d="M17 17H7v-3l-4 4 4 4v-3h10v-2zm0-10V4l4 4-4 4V9H7v2h10z"/>
     </svg>
   </button>
 
+  <!-- volumen -->
+  <button class="ctrl" id="volDownBtn">
+    <svg viewBox="0 0 24 24">
+      <path d="M5 11h14v2H5z"/>
+    </svg>
+  </button>
+
+  <span style="color:#00e5ff;font-weight:bold;">VOL</span>
+
+  <button class="ctrl" id="volUpBtn">
+    <svg viewBox="0 0 24 24">
+      <path d="M11 5h2v14h-2zM5 11h14v2H5z"/>
+    </svg>
+  </button>
+
+</div>
+
+<div class="info">
+  <div class="linea"><div class="label">Título:</div><div class="valor" id="titulo">---</div></div>
+  <div class="linea"><div class="label">De:</div><div class="valor" id="de">---</div></div>
+  <div class="linea"><div class="label">Para:</div><div class="valor" id="para">---</div></div>
+  <div class="linea"><div class="label">Código:</div><div class="valor" id="codigo">---</div></div>
+  <div class="linea"><div class="label">Agregado:</div><div class="valor" id="fecha">---</div></div>
 </div>
 
 <audio id="player"></audio>
@@ -258,29 +252,38 @@ body {
 
 const player=document.getElementById("player");
 
-/* PLAY */
-function togglePlay(){
-player.paused ? player.play() : player.pause();
+/* ONDAS */
+let ondas=document.getElementById("ondas");
+for(let i=0;i<25;i++){
+let s=document.createElement("span");
+s.style.animationDelay=(i*0.05)+"s";
+ondas.appendChild(s);
 }
 
-/* SHUFFLE */
-let shuffle=false;
-function toggleShuffle(btn){
-shuffle=!shuffle;
-btn.classList.toggle("active", shuffle);
+/* VOLUMEN */
+function changeVolume(step){
+  player.volume=Math.min(1,Math.max(0,player.volume+step));
 }
 
-/* LOOP */
-let loop=false;
-function toggleLoop(btn){
-loop=!loop;
-btn.classList.toggle("active", loop);
+volUpBtn.onclick=()=>changeVolume(0.1);
+volDownBtn.onclick=()=>changeVolume(-0.1);
+
+let volInterval;
+
+function startHold(step){
+  volInterval=setInterval(()=>changeVolume(step),100);
 }
 
-/* PLACEHOLDERS */
-function next(){}
-function prev(){}
-function seek(){}
+function stopHold(){ clearInterval(volInterval); }
+
+volUpBtn.onmousedown=()=>startHold(0.02);
+volDownBtn.onmousedown=()=>startHold(-0.02);
+
+volUpBtn.onmouseup=stopHold;
+volDownBtn.onmouseup=stopHold;
+
+volUpBtn.onmouseleave=stopHold;
+volDownBtn.onmouseleave=stopHold;
 
 </script>
 
