@@ -151,6 +151,12 @@ body {
   box-shadow: none !important;
 }
 
+/* 🔊 VOLÚMEN AJUSTE (AQUÍ LO PEGAS) */
+#volDownBtn,
+#volUpBtn {
+  margin: 0 -8px;
+}
+
 /* INFO */
 .info {
   max-width: 500px;
@@ -290,24 +296,24 @@ body {
     </svg>
   </button>
 
-    <!-- 🔊 VOLUMEN MENOS -->
-  <button class="ctrl" onclick="volDown()">
-    <svg viewBox="0 0 24 24">
-      <path d="M5 11h14v2H5z"/>
-    </svg>
-  </button>
+<!-- VOLUMEN MENOS -->
+<button class="ctrl" id="volDownBtn">
+  <svg viewBox="0 0 24 24">
+    <path d="M5 11h14v2H5z"/>
+  </svg>
+</button>
 
-  <!-- TEXTO VOL -->
-  <span style="color:#00e5ff; font-weight:bold; font-size:14px;">
-    VOL
-  </span>
+<!-- VOL TEXTO -->
+<span style="color:#00e5ff; font-weight:bold; font-size:14px; margin:0 -5px;">
+  VOL
+</span>
 
-  <!-- 🔊 VOLUMEN MAS -->
-  <button class="ctrl" onclick="volUp()">
-    <svg viewBox="0 0 24 24">
-      <path d="M11 5h2v14h-2zM5 11h14v2H5z"/>
-    </svg>
-  </button>
+<!-- VOLUMEN MAS -->
+<button class="ctrl" id="volUpBtn">
+  <svg viewBox="0 0 24 24">
+    <path d="M11 5h2v14h-2zM5 11h14v2H5z"/>
+  </svg>
+</button>
 
 </div>
 
@@ -493,6 +499,35 @@ function seek(e){
 let r=e.currentTarget.getBoundingClientRect();
 player.currentTime=((e.clientX-r.left)/r.width)*player.duration;
 }
+
+function changeVolume(step){
+  player.volume = Math.min(1, Math.max(0, player.volume + step));
+}
+
+/* CLICK */
+document.getElementById("volUpBtn").onclick = () => changeVolume(0.1);
+document.getElementById("volDownBtn").onclick = () => changeVolume(-0.1);
+
+/* CLICK SOSTENIDO (HOLD) */
+let volInterval;
+
+function startHold(step){
+  volInterval = setInterval(() => changeVolume(step), 100);
+}
+
+function stopHold(){
+  clearInterval(volInterval);
+}
+
+/* EVENTOS HOLD */
+document.getElementById("volUpBtn").onmousedown = () => startHold(0.02);
+document.getElementById("volDownBtn").onmousedown = () => startHold(-0.02);
+
+document.getElementById("volUpBtn").onmouseup = stopHold;
+document.getElementById("volDownBtn").onmouseup = stopHold;
+
+document.getElementById("volUpBtn").onmouseleave = stopHold;
+document.getElementById("volDownBtn").onmouseleave = stopHold;
 
 /* HISTORIAL */
 let reproducciones=JSON.parse(localStorage.getItem("reproducciones"))||{};
