@@ -133,17 +133,22 @@ body {
   background: transparent; /* 🔥 elimina el bloque gris */
 }
 
+/* 🔥 ACTIVO = SOLO COLOR, SIN CUADRO */
+.ctrl.active {
+  color: #1db954;
+}
+
 .ctrl.main svg {
   width: 34px;
   height: 34px;
 }
 
+/* MAIN PLAY BUTTON SIN FONDO */
 .ctrl.main {
   width: 60px;
   height: 60px;
-  background: transparent;   /* 🔥 SIN FONDO */
-  color: #00e5ff;            /* color del icono */
-  box-shadow: none;          /* quita brillo */
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 /* INFO */
@@ -423,13 +428,12 @@ currentIndex=(currentIndex-1+playlist.length)%playlist.length;
 playSong(currentIndex);
 }
 function toggleShuffle(){
-shuffle=!shuffle;
-document.getElementById("shuffle").style.background = shuffle ? "#00e5ff" : "#2a2a2a";
-document.getElementById("shuffle").style.color = shuffle ? "#000" : "#00ff88";
-}function toggleLoop(){
-loop=!loop;
-document.getElementById("loop").style.background = loop ? "#00e5ff" : "#2a2a2a";
-document.getElementById("loop").style.color = loop ? "#000" : "#00ff88";
+  shuffle = !shuffle;
+  document.getElementById("shuffle").classList.toggle("active", shuffle);
+}
+function toggleLoop(){
+  loop = !loop;
+  document.getElementById("loop").classList.toggle("active", loop);
 }
 
 /* EVENTOS */
