@@ -57,7 +57,7 @@ body {
   border-radius: 12px;
 }
 
-/* ONDAS */
+/* ONDAS (RESTAURADAS) */
 .ondas {
   display: flex;
   justify-content: center;
@@ -118,11 +118,6 @@ body {
   flex: 1;
   justify-content: center;
   gap: 12px;
-}
-
-.left-controls,
-.right-controls {
-  flex: 0 0 auto;
 }
 
 .right-controls {
@@ -204,12 +199,20 @@ body {
 .contenido { display:none; }
 .contenido.activo { display:block; }
 
+#mensajeInicial {
+  margin-top: 15px;
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  background: linear-gradient(45deg,#d4af37,#ffd700,#fff5b7,#d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 </style>
 </head>
 
 <body>
 
-<!-- REPRODUCTOR -->
 <div class="reproductor">
 <div class="placa">
 
@@ -224,54 +227,36 @@ body {
 <div class="barra" id="barra"></div>
 </div>
 
-<!-- CONTROLES CORRECTOS -->
+<!-- CONTROLES RESTAURADOS -->
 <div class="controles">
 
-  <div class="left-controls">
-    <button class="ctrl" id="shuffle" onclick="toggleShuffle()">🔀</button>
-  </div>
+  <!-- shuffle -->
+  <button class="ctrl" id="shuffle" onclick="toggleShuffle()">
+    <svg viewBox="0 0 24 24"><path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/></svg>
+  </button>
 
   <div class="center-controls">
-    <button class="ctrl" onclick="prev()">⏮</button>
-    <button class="ctrl main" id="playBtn" onclick="togglePlay()">▶</button>
-    <button class="ctrl" onclick="next()">⏭</button>
-    <button class="ctrl" id="loop" onclick="toggleLoop()">🔁</button>
+    <button class="ctrl" onclick="prev()">
+      <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6V6zm3.5 6l10.5 6V6L9.5 12z"/></svg>
+    </button>
+
+    <button class="ctrl main" id="playBtn" onclick="togglePlay()">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+
+    <button class="ctrl" onclick="next()">
+      <svg viewBox="0 0 24 24"><path d="M16.5 12L6 6v12l10.5-6zM18 6h2v12h-2V6z"/></svg>
+    </button>
+
+    <button class="ctrl" id="loop" onclick="toggleLoop()">
+      <svg viewBox="0 0 24 24"><path d="M17 17H7v-3l-4 4 4 4v-3h10v-2zm0-10V4l4 4-4 4V9H7v2h10z"/></svg>
+    </button>
   </div>
 
   <div class="right-controls">
     <button class="ctrl" onclick="volDown()">-</button>
     <span>VOL</span>
     <button class="ctrl" onclick="volUp()">+</button>
-  </div>
-
-</div>
-
-<!-- INFO -->
-<div class="info">
-
-  <div class="linea">
-    <div class="label">Título <span class="dos">:</span></div>
-    <div class="valor" id="titulo">---</div>
-  </div>
-
-  <div class="linea">
-    <div class="label">De <span class="dos">:</span></div>
-    <div class="valor" id="de">---</div>
-  </div>
-
-  <div class="linea">
-    <div class="label">Para <span class="dos">:</span></div>
-    <div class="valor" id="para">---</div>
-  </div>
-
-  <div class="linea">
-    <div class="label">Código <span class="dos">:</span></div>
-    <div class="valor" id="codigo">---</div>
-  </div>
-
-  <div class="linea">
-    <div class="label">Agregado <span class="dos">:</span></div>
-    <div class="valor" id="fecha">---</div>
   </div>
 
 </div>
@@ -283,7 +268,6 @@ body {
 
 <!-- LISTA -->
 <div class="lista">
-
 <div class="seccion" onclick="toggle('listaContenido')">📜 Lista de reproducción</div>
 <div id="listaContenido" class="contenido activo"></div>
 
@@ -292,11 +276,10 @@ body {
 
 <div class="seccion" onclick="toggle('ult')">🔥 Últimas</div>
 <div id="ult" class="contenido"></div>
-
 </div>
 
 <script>
-// TODO TU JS ORIGINAL SE MANTIENE SIN CAMBIOS
+// TU JS ORIGINAL NO SE ALTERA
 </script>
 
 </body>
