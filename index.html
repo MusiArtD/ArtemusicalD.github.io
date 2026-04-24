@@ -1,8 +1,8 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Mi Música</title>
+<title>Saund Music</title>
+<link rel="icon" href="logo-temporal.png" type="image/png">
 
 <style>
 body {
@@ -53,7 +53,7 @@ body {
 }
 .caratula img {
   width: 100%;
-  max-width: 250px;
+  max-width: 400px;
   border-radius: 12px;
 }
 
@@ -79,14 +79,15 @@ body {
 
 /* PROGRESO */
 .progreso {
-  max-width: 250px;
-  width: calc(100% - 20px);
-  margin: 10px auto;
+  width: 50%;
+  max-width: 600px;
+  margin: 15px auto;
   height: 6px;
   background: #333;
   border-radius: 10px;
   cursor: pointer;
 }
+
 .barra {
   height: 100%;
   width: 0%;
@@ -94,27 +95,45 @@ body {
   box-shadow: 0 0 8px #00e5ff;
 }
 
-/* CONTROLES MEJORADOS */
+/* CONTROLES */
 .controles {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* 🔥 clave */
   gap: 15px;
   margin-top: 15px;
 }
 
 .ctrl {
-  width: 45px;
-  height: 45px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  background: #2a2a2a;
-  color: #00ff88;
-  font-size: 18px;
+
+  width: 50px;
+  height: 50px;
+
+  color: #00e5ff;
   transition: 0.2s;
+}
+
+.ctrl svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor; /* 👈 clave: hereda color */
+}
+
+.ctrl:hover {
+  transform: scale(1.2);
+  color: #ffffff;
+}
+
+.ctrl.main svg {
+  width: 34px;
+  height: 34px;
 }
 
 .ctrl:hover {
@@ -130,26 +149,37 @@ body {
   box-shadow: 0 0 10px #00e5ff;
 }
 
-/* INFO CENTRADA */
+/* INFO */
 .info {
   max-width: 500px;
   margin: 20px auto;
+  text-align: left;
+  transform: translateX(40px);  /* 🔥 mueve todo a la derecha */
 }
 
 .linea {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  align-items: center;
+  gap: 5px;              /* más controlado */
+  margin-bottom: 10px;   /* lo dejas igual */
+}
+  
+.label {
+  width: 130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #1db954;
 }
 
-.label {
-  width: 90px;
-  color: #1db954;
-  font-weight: bold;
+.dos {
+  margin-left: auto;
+  transform: translateX(-45px);  /* 🔥 mueve 7px a la izquierda */
 }
 
 .valor {
   flex: 1;
+  transform: translateX(-40px);  /* 🔥 se acerca al ":" */
 }
 
 /* SECCIONES */
@@ -162,6 +192,38 @@ body {
 .contenido { display:none; }
 .contenido.activo { display:block; }
 
+/* 🔥 SOLO LA PRIMERA LINEA (TITULO) */
+.info .linea:first-child .label {
+  font-size: 23px;
+}
+
+.info .linea:first-child .valor {
+  font-size: 23px;
+  font-weight: 450;
+}  
+
+#mensajeInicial {
+  margin-top: 15px;
+  font-size: 28px; /* 👈 recuperado */
+  text-align: center;
+  font-weight: bold;
+
+  background: linear-gradient(
+    45deg,
+    #d4af37,
+    #ffd700,
+    #fff5b7,
+    #d4af37
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 5px rgba(255, 215, 0, 0.5),
+    0 0 10px rgba(255, 215, 0, 0.3);
+}
+
 </style>
 </head>
 
@@ -172,7 +234,8 @@ body {
 <div class="placa">
 
 <div class="caratula">
-<img id="cover">
+  <img id="cover" src="logo-temporal.png">
+  <p id="mensajeInicial">Elegir canción para empezar</p>
 </div>
 
 <div class="ondas" id="ondas"></div>
@@ -182,38 +245,72 @@ body {
 </div>
 
 <div class="controles">
-<span class="ctrl" onclick="toggleShuffle()" id="shuffle">🔀</span>
-<span class="ctrl" onclick="prev()">⏮</span>
-<span id="playBtn" class="ctrl main" onclick="togglePlay()">▶</span>
-<span class="ctrl" onclick="next()">⏭</span>
-<span class="ctrl" onclick="toggleLoop()" id="loop">🔁</span>
+
+  <!-- shuffle -->
+  <button class="ctrl" id="shuffle" onclick="toggleShuffle()">
+    <svg viewBox="0 0 24 24">
+      <path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/>
+    </svg>
+  </button>
+
+  <!-- prev -->
+  <button class="ctrl" onclick="prev()">
+    <svg viewBox="0 0 24 24">
+      <path d="M6 6h2v12H6V6zm3.5 6l10.5 6V6L9.5 12z"/>
+    </svg>
+  </button>
+
+  <!-- play/pause -->
+  <button class="ctrl main" id="playBtn" onclick="togglePlay()">
+    <svg viewBox="0 0 24 24">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </button>
+
+  <!-- next -->
+  <button class="ctrl" onclick="next()">
+    <svg viewBox="0 0 24 24">
+      <path d="M16.5 12L6 6v12l10.5-6zM18 6h2v12h-2V6z"/>
+    </svg>
+  </button>
+
+  <!-- loop -->
+  <button class="ctrl" id="loop" onclick="toggleLoop()">
+    <svg viewBox="0 0 24 24">
+      <path d="M17 17H7v-3l-4 4 4 4v-3h10v-2zm0-10V4l4 4-4 4V9H7v2h10z"/>
+    </svg>
+  </button>
+
 </div>
 
+<!-- INFO CORRECTO -->
 <div class="info">
+
   <div class="linea">
-    <div class="label">Título:</div>
+<div class="label">Título <span class="dos">:</span></div>
     <div class="valor" id="titulo">---</div>
   </div>
 
   <div class="linea">
-    <div class="label">De:</div>
+    <div class="label">De <span class="dos">:</span></div>
     <div class="valor" id="de">---</div>
   </div>
 
   <div class="linea">
-    <div class="label">Para:</div>
+    <div class="label">Para <span class="dos">:</span></div>
     <div class="valor" id="para">---</div>
   </div>
 
   <div class="linea">
-    <div class="label">Código:</div>
+    <div class="label">Código <span class="dos">:</span></div>
     <div class="valor" id="codigo">---</div>
   </div>
 
   <div class="linea">
-    <div class="label">Agregado:</div>
+    <div class="label">Agregado <span class="dos">:</span></div>
     <div class="valor" id="fecha">---</div>
   </div>
+
 </div>
 
 <audio id="player"></audio>
@@ -237,14 +334,21 @@ body {
 
 <script>
 
-/* TU MISMO JS ORIGINAL (NO SE ROMPE) */
-
-const playlist=[ /* (se mantiene igual tu lista completa) */ ];
+const playlist=[
+{
+file:"Amelia Celeste.mp3",
+title:"Amelia Celeste",
+code:"AMU-002",
+cover:"2-años-Amelia.jpg",
+de:"Flor de Liz y Joaquin tus Padres",
+para:"Amelia Celeste"
+}
+];
 
 let currentIndex=0, shuffle=false, loop=false;
 const player=document.getElementById("player");
 
-/* LISTA */
+/* LISTA DINAMICA */
 function renderLista(){
 let cont=document.getElementById("listaContenido");
 cont.innerHTML="";
@@ -272,9 +376,13 @@ if(!song)return;
 
 document.getElementById("titulo").innerText=song.title;
 document.getElementById("cover").src=song.cover;
+
 document.getElementById("de").innerText=song.de;
 document.getElementById("para").innerText=song.para;
 document.getElementById("codigo").innerText=song.code;
+
+// ✅ AQUÍ ES EL LUGAR CORRECTO
+document.getElementById("mensajeInicial").style.display = "none";
 
 let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
 if(!fechas[song.file]){
@@ -297,29 +405,22 @@ updateUI(song);
 function togglePlay(){
 player.paused ? player.play() : player.pause();
 }
-
 function next(){
 currentIndex=shuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length;
 playSong(currentIndex);
 }
-
 function prev(){
 currentIndex=(currentIndex-1+playlist.length)%playlist.length;
 playSong(currentIndex);
 }
-
 function toggleShuffle(){
 shuffle=!shuffle;
-let btn=document.getElementById("shuffle");
-btn.style.background=shuffle?"#00e5ff":"#2a2a2a";
-btn.style.color=shuffle?"#000":"#00ff88";
-}
-
-function toggleLoop(){
+document.getElementById("shuffle").style.background = shuffle ? "#00e5ff" : "#2a2a2a";
+document.getElementById("shuffle").style.color = shuffle ? "#000" : "#00ff88";
+}function toggleLoop(){
 loop=!loop;
-let btn=document.getElementById("loop");
-btn.style.background=loop?"#00e5ff":"#2a2a2a";
-btn.style.color=loop?"#000":"#00ff88";
+document.getElementById("loop").style.background = loop ? "#00e5ff" : "#2a2a2a";
+document.getElementById("loop").style.color = loop ? "#000" : "#00ff88";
 }
 
 /* EVENTOS */
@@ -346,7 +447,7 @@ let r=e.currentTarget.getBoundingClientRect();
 player.currentTime=((e.clientX-r.left)/r.width)*player.duration;
 }
 
-/* HISTORIAL (igual) */
+/* HISTORIAL */
 let reproducciones=JSON.parse(localStorage.getItem("reproducciones"))||{};
 let historial=JSON.parse(localStorage.getItem("historial"))||[];
 
@@ -408,4 +509,4 @@ actualizarSecciones();
 </script>
 
 </body>
-</html>
+</html>>
