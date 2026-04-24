@@ -269,6 +269,13 @@ body {
     </svg>
   </button>
 
+<!-- play -->
+  <button class="ctrl main" id="playBtn" onclick="togglePlay()">
+    <svg viewBox="0 0 24 24">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </button>
+
   <!-- next -->
   <button class="ctrl" onclick="next()">
     <svg viewBox="0 0 24 24">
@@ -280,6 +287,25 @@ body {
   <button class="ctrl" id="loop" onclick="toggleLoop()">
     <svg viewBox="0 0 24 24">
       <path d="M17 17H7v-3l-4 4 4 4v-3h10v-2zm0-10V4l4 4-4 4V9H7v2h10z"/>
+    </svg>
+  </button>
+
+    <!-- 🔊 VOLUMEN MENOS -->
+  <button class="ctrl" onclick="volDown()">
+    <svg viewBox="0 0 24 24">
+      <path d="M5 11h14v2H5z"/>
+    </svg>
+  </button>
+
+  <!-- TEXTO VOL -->
+  <span style="color:#00e5ff; font-weight:bold; font-size:14px;">
+    VOL
+  </span>
+
+  <!-- 🔊 VOLUMEN MAS -->
+  <button class="ctrl" onclick="volUp()">
+    <svg viewBox="0 0 24 24">
+      <path d="M11 5h2v14h-2zM5 11h14v2H5z"/>
     </svg>
   </button>
 
@@ -404,6 +430,14 @@ fechas[song.file]=new Date().toLocaleString();
 localStorage.setItem("fechas",JSON.stringify(fechas));
 }
 document.getElementById("fecha").innerText=fechas[song.file];
+}
+
+function volUp(){
+  player.volume = Math.min(1, player.volume + 0.1);
+}
+
+function volDown(){
+  player.volume = Math.max(0, player.volume - 0.1);
 }
 
 /* PLAY */
