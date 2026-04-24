@@ -98,47 +98,10 @@ body {
 /* CONTROLES */
 .controles {
   display: flex;
-  justify-content: space-between; /* 🔥 clave del alineado */
-  align-items: center;
-
-  width: 50%;            /* igual que tu barra */
-  max-width: 600px;      /* mismo límite que progreso */
-  margin: 15px auto;    /* centra como la barra */
-
-  padding: 0 5px;
-}
-
-.left-controls,
-.center-controls,
-.right-controls {
-  display: flex;
-  align-items: center;
-}
-
-/* centro ocupa el espacio principal */
-.center-controls {
-  flex: 1;
   justify-content: center;
-  gap: 12px;
-}
-
-/* extremos compactos */
-.left-controls,
-.right-controls {
-  flex: 0 0 auto;
-}
-
-/* volumen compacto */
-.right-controls {
-  gap: 4px;
-}
-
-/* VOL pegado limpio */
-.right-controls span {
-  color: #00e5ff;
-  font-weight: bold;
-  font-size: 14px;
-  margin: 0 -4px;
+  align-items: center; /* 🔥 clave */
+  gap: 15px;
+  margin-top: 15px;
 }
 
 .ctrl {
@@ -186,12 +149,6 @@ body {
   height: 60px;
   background: transparent !important;
   box-shadow: none !important;
-}
-
-/* 🔊 VOLÚMEN AJUSTE (AQUÍ LO PEGAS) */
-#volDownBtn,
-#volUpBtn {
-  margin: 0 -8px;
 }
 
 /* INFO */
@@ -292,69 +249,11 @@ body {
 <div class="controles">
 
   <!-- shuffle -->
-<div class="left-controls">
-
-  <!-- shuffle -->
   <button class="ctrl" id="shuffle" onclick="toggleShuffle()">
-    ...
-  </button>
-
-</div>
-
-<div class="center-controls">
-
-  <!-- prev -->
-  <button class="ctrl" onclick="prev()">...</button>
-
-  <!-- play -->
-  <button class="ctrl main" id="playBtn" onclick="togglePlay()">...</button>
-
-  <!-- next -->
-  <button class="ctrl" onclick="next()">...</button>
-
-  <!-- loop -->
-  <button class="ctrl" id="loop" onclick="toggleLoop()">...</button>
-
-</div>
-
-<div class="right-controls">
-
-  <!-- vol - VOL + -->
-  <button class="ctrl" onclick="volDown()">-</button>
-  <span>VOL</span>
-  <button class="ctrl" onclick="volUp()">+</button>
-
-</div>
-
-  <!-- volumen - -->
-  <button class="ctrl" onclick="volDown()">
     <svg viewBox="0 0 24 24">
-      <path d="M5 11h14v2H5z"/>
+      <path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/>
     </svg>
   </button>
-
-  <!-- VOL -->
-  <span style="color:#00e5ff;font-weight:bold;font-size:14px;">
-    VOL
-  </span>
-
-  <!-- volumen + -->
-  <button class="ctrl" onclick="volUp()">
-    <svg viewBox="0 0 24 24">
-      <path d="M11 5h2v14h-2zM5 11h14v2H5z"/>
-    </svg>
-  </button>
-
-</div>
-.controles {
-  display: flex;
-  justify-content: space-between; /* 🔥 clave del alineado */
-  align-items: center;
-  width: 50%;            /* igual que tu barra */
-  max-width: 600px;      /* mismo límite que progreso */
-  margin: 15px auto;    /* centra como la barra */
-  padding: 0 5px;
-}
 
   <!-- prev -->
   <button class="ctrl" onclick="prev()">
@@ -391,24 +290,24 @@ body {
     </svg>
   </button>
 
-<!-- VOLUMEN MENOS -->
-<button class="ctrl" id="volDownBtn">
-  <svg viewBox="0 0 24 24">
-    <path d="M5 11h14v2H5z"/>
-  </svg>
-</button>
+    <!-- 🔊 VOLUMEN MENOS -->
+  <button class="ctrl" onclick="volDown()">
+    <svg viewBox="0 0 24 24">
+      <path d="M5 11h14v2H5z"/>
+    </svg>
+  </button>
 
-<!-- VOL TEXTO -->
-<span style="color:#00e5ff; font-weight:bold; font-size:14px; margin:0 -5px;">
-  VOL
-</span>
+  <!-- TEXTO VOL -->
+  <span style="color:#00e5ff; font-weight:bold; font-size:14px;">
+    VOL
+  </span>
 
-<!-- VOLUMEN MAS -->
-<button class="ctrl" id="volUpBtn">
-  <svg viewBox="0 0 24 24">
-    <path d="M11 5h2v14h-2zM5 11h14v2H5z"/>
-  </svg>
-</button>
+  <!-- 🔊 VOLUMEN MAS -->
+  <button class="ctrl" onclick="volUp()">
+    <svg viewBox="0 0 24 24">
+      <path d="M11 5h2v14h-2zM5 11h14v2H5z"/>
+    </svg>
+  </button>
 
 </div>
 
@@ -594,35 +493,6 @@ function seek(e){
 let r=e.currentTarget.getBoundingClientRect();
 player.currentTime=((e.clientX-r.left)/r.width)*player.duration;
 }
-
-function changeVolume(step){
-  player.volume = Math.min(1, Math.max(0, player.volume + step));
-}
-
-/* CLICK */
-document.getElementById("volUpBtn").onclick = () => changeVolume(0.1);
-document.getElementById("volDownBtn").onclick = () => changeVolume(-0.1);
-
-/* CLICK SOSTENIDO (HOLD) */
-let volInterval;
-
-function startHold(step){
-  volInterval = setInterval(() => changeVolume(step), 100);
-}
-
-function stopHold(){
-  clearInterval(volInterval);
-}
-
-/* EVENTOS HOLD */
-document.getElementById("volUpBtn").onmousedown = () => startHold(0.02);
-document.getElementById("volDownBtn").onmousedown = () => startHold(-0.02);
-
-document.getElementById("volUpBtn").onmouseup = stopHold;
-document.getElementById("volDownBtn").onmouseup = stopHold;
-
-document.getElementById("volUpBtn").onmouseleave = stopHold;
-document.getElementById("volDownBtn").onmouseleave = stopHold;
 
 /* HISTORIAL */
 let reproducciones=JSON.parse(localStorage.getItem("reproducciones"))||{};
