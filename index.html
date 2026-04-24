@@ -1,170 +1,521 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Audio Player Pro</title>
+<meta charset="UTF-8">
+<title>Saund Music</title>
+<link rel="icon" href="logo-temporal.png" type="image/png">
+
 <style>
-body{
-  background:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-  font-family:Arial;
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #121212;
+  color: white;
+  display: flex;
 }
-.player{
-  width:360px;
-  background:#1c1c1c;
-  border-radius:18px;
-  padding:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
+
+/* LISTA */
+.lista {
+  width: 35%;
+  background: #1e1e1e;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 10px;
 }
-.title{
-  color:#fff;
-  font-size:14px;
-  margin-bottom:10px;
-  opacity:.8;
+
+.item {
+  padding: 12px;
+  margin: 8px 0;
+  background: #2a2a2a;
+  cursor: pointer;
+  border-radius: 6px;
 }
-.controls{
-  display:flex;
-  align-items:center;
-  gap:12px;
+
+.item:hover { background: #3a3a3a; }
+
+/* REPRODUCTOR */
+.reproductor {
+  width: 65%;
+  padding: 20px;
 }
-.play{
-  width:44px;
-  height:44px;
-  border-radius:50%;
-  background:#2b2b2b;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+
+/* PLACA */
+.placa {
+  background: linear-gradient(145deg, #1a1a1a, #222);
+  border-radius: 20px;
+  padding: 25px;
+  width: 80%;
+  margin: auto;
+}
+
+/* CARATULA */
+.caratula {
+  text-align: center;
+}
+.caratula img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+}
+
+/* ONDAS */
+.ondas {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  margin: 10px 0;
+}
+.ondas span {
+  width: 4px;
+  margin: 0 2px;
+  background: #00e5ff;
+  animation: onda 1s infinite;
+}
+@keyframes onda {
+  0%{height:10px;}
+  50%{height:40px;}
+  100%{height:10px;}
+}
+.pausa span { animation:none; height:12px; }
+
+/* PROGRESO */
+.progreso {
+  width: 50%;
+  max-width: 600px;
+  margin: 15px auto;
+  height: 6px;
+  background: #333;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.barra {
+  height: 100%;
+  width: 0%;
+  background: #00e5ff;
+  box-shadow: 0 0 8px #00e5ff;
+}
+
+/* CONTROLES */
+.controles {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 🔥 clave */
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.ctrl {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
+  height: 50px;
+
+  color: #00e5ff;
+
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.ctrl svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
+}
+
+.ctrl:hover {
+  transform: scale(1.15);
+  color: #ffffff;
+  background: transparent; /* 🔥 elimina el bloque gris */
+}
+
+.ctrl.main svg {
+  width: 34px;
+  height: 34px;
+}
+
+.ctrl.main {
+  width: 60px;
+  height: 60px;
+  background: transparent;   /* 🔥 SIN FONDO */
+  color: #00e5ff;            /* color del icono */
+  box-shadow: none;          /* quita brillo */
+}
+
+/* INFO */
+.info {
+  max-width: 500px;
+  margin: 20px auto;
+  text-align: left;
+  transform: translateX(40px);  /* 🔥 mueve todo a la derecha */
+}
+
+.linea {
+  display: flex;
+  align-items: center;
+  gap: 5px;              /* más controlado */
+  margin-bottom: 10px;   /* lo dejas igual */
+}
+  
+.label {
+  width: 130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #1db954;
+}
+
+.dos {
+  margin-left: auto;
+  transform: translateX(-45px);  /* 🔥 mueve 7px a la izquierda */
+}
+
+.valor {
+  flex: 1;
+  transform: translateX(-40px);  /* 🔥 se acerca al ":" */
+}
+
+/* SECCIONES */
+.seccion {
+  color:#1db954;
+  margin-top:10px;
   cursor:pointer;
-  transition:.3s;
-  position:relative;
-  overflow:hidden;
-}
-.play:hover{
-  background:#3a3a3a;
-}
-.play span{
-  color:#fff;
-  font-size:18px;
-  transition:.25s;
 }
 
-/* BARRA INTEGRADA PRO */
-.progress-wrap{
-  flex:1;
-  height:10px;
-  background:#2a2a2a;
-  border-radius:999px;
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-}
-.progress-fill{
-  position:absolute;
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#00d4ff,#7c4dff);
-  border-radius:999px;
-  transition:width .1s linear;
+.contenido { display:none; }
+.contenido.activo { display:block; }
+
+/* 🔥 SOLO LA PRIMERA LINEA (TITULO) */
+.info .linea:first-child .label {
+  font-size: 23px;
 }
 
-/* efecto “fantasma” integrado */
-.progress-glow{
-  position:absolute;
-  width:30px;
-  height:100%;
-  background:rgba(255,255,255,.15);
-  filter:blur(4px);
-  animation:glow 1.2s infinite linear;
+.info .linea:first-child .valor {
+  font-size: 23px;
+  font-weight: 450;
+}  
+
+#mensajeInicial {
+  margin-top: 15px;
+  font-size: 28px; /* 👈 recuperado */
+  text-align: center;
+  font-weight: bold;
+
+  background: linear-gradient(
+    45deg,
+    #d4af37,
+    #ffd700,
+    #fff5b7,
+    #d4af37
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 5px rgba(255, 215, 0, 0.5),
+    0 0 10px rgba(255, 215, 0, 0.3);
 }
 
-@keyframes glow{
-  from{transform:translateX(-30px);}
-  to{transform:translateX(360px);}
-}
-
-.time{
-  color:#aaa;
-  font-size:11px;
-  margin-top:8px;
-  display:flex;
-  justify-content:space-between;
-}
 </style>
 </head>
+
 <body>
 
-<div class="player">
-  <div class="title">Reproduciendo: Demo Track</div>
+<!-- REPRODUCTOR -->
+<div class="reproductor">
+<div class="placa">
 
-  <div class="controls">
-    <div class="play" onclick="togglePlay()">
-      <span id="icon">▶</span>
-    </div>
+<div class="caratula">
+  <img id="cover" src="logo-temporal.png">
+  <p id="mensajeInicial">Elegir canción para empezar</p>
+</div>
 
-    <div class="progress-wrap" onclick="seek(event)">
-      <div class="progress-fill" id="bar"></div>
-      <div class="progress-glow"></div>
-    </div>
+<div class="ondas" id="ondas"></div>
+
+<div class="progreso" onclick="seek(event)">
+<div class="barra" id="barra"></div>
+</div>
+
+<div class="controles">
+
+  <!-- shuffle -->
+  <button class="ctrl" id="shuffle" onclick="toggleShuffle()">
+    <svg viewBox="0 0 24 24">
+      <path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/>
+    </svg>
+  </button>
+
+  <!-- prev -->
+  <button class="ctrl" onclick="prev()">
+    <svg viewBox="0 0 24 24">
+      <path d="M6 6h2v12H6V6zm3.5 6l10.5 6V6L9.5 12z"/>
+    </svg>
+  </button>
+
+  <!-- play/pause -->
+  <button class="ctrl main" id="playBtn" onclick="togglePlay()">
+    <svg viewBox="0 0 24 24">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </button>
+
+  <!-- next -->
+  <button class="ctrl" onclick="next()">
+    <svg viewBox="0 0 24 24">
+      <path d="M16.5 12L6 6v12l10.5-6zM18 6h2v12h-2V6z"/>
+    </svg>
+  </button>
+
+  <!-- loop -->
+  <button class="ctrl" id="loop" onclick="toggleLoop()">
+    <svg viewBox="0 0 24 24">
+      <path d="M17 17H7v-3l-4 4 4 4v-3h10v-2zm0-10V4l4 4-4 4V9H7v2h10z"/>
+    </svg>
+  </button>
+
+</div>
+
+<!-- INFO CORRECTO -->
+<div class="info">
+
+  <div class="linea">
+<div class="label">Título <span class="dos">:</span></div>
+    <div class="valor" id="titulo">---</div>
   </div>
 
-  <div class="time">
-    <span id="current">0:00</span>
-    <span id="total">3:45</span>
+  <div class="linea">
+    <div class="label">De <span class="dos">:</span></div>
+    <div class="valor" id="de">---</div>
   </div>
 
-  <audio id="audio" src="tu-audio.mp3"></audio>
+  <div class="linea">
+    <div class="label">Para <span class="dos">:</span></div>
+    <div class="valor" id="para">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">Código <span class="dos">:</span></div>
+    <div class="valor" id="codigo">---</div>
+  </div>
+
+  <div class="linea">
+    <div class="label">Agregado <span class="dos">:</span></div>
+    <div class="valor" id="fecha">---</div>
+  </div>
+
+</div>
+
+<audio id="player"></audio>
+
+</div>
+</div>
+
+<!-- LISTA -->
+<div class="lista">
+
+<div class="seccion" onclick="toggle('listaContenido')">📜 Lista de reproducción</div>
+<div id="listaContenido" class="contenido activo"></div>
+
+<div class="seccion" onclick="toggle('mas')">❤️ Más reproducido</div>
+<div id="mas" class="contenido"></div>
+
+<div class="seccion" onclick="toggle('ult')">🔥 Últimas</div>
+<div id="ult" class="contenido"></div>
+
 </div>
 
 <script>
-const audio = document.getElementById('audio');
-const bar = document.getElementById('bar');
-const icon = document.getElementById('icon');
-const current = document.getElementById('current');
-const total = document.getElementById('total');
 
-let playing = false;
+const playlist=[
+{
+file:"Amelia Celeste.mp3",
+title:"Amelia Celeste",
+code:"AMU-002",
+cover:"2-años-Amelia.jpg",
+de:"Flor de Liz y Joaquin tus Padres",
+para:"Amelia Celeste"
+}
+];
 
+const iconPlay = `
+<svg viewBox="0 0 24 24">
+  <path d="M8 5v14l11-7z"/>
+</svg>
+`;
+
+const iconPause = `
+<svg viewBox="0 0 24 24">
+  <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+</svg>
+`;
+
+let currentIndex=0, shuffle=false, loop=false;
+const player=document.getElementById("player");
+
+/* LISTA DINAMICA */
+function renderLista(){
+let cont=document.getElementById("listaContenido");
+cont.innerHTML="";
+playlist.forEach(song=>{
+let div=document.createElement("div");
+div.className="item";
+div.innerText="🎵 "+song.title;
+div.onclick=()=>playMusic(song.file);
+cont.appendChild(div);
+});
+}
+renderLista();
+
+/* ONDAS */
+let ondas=document.getElementById("ondas");
+for(let i=0;i<25;i++){
+let s=document.createElement("span");
+s.style.animationDelay=(i*0.05)+"s";
+ondas.appendChild(s);
+}
+
+/* UI */
+function updateUI(song){
+if(!song)return;
+
+document.getElementById("titulo").innerText=song.title;
+document.getElementById("cover").src=song.cover;
+
+document.getElementById("de").innerText=song.de;
+document.getElementById("para").innerText=song.para;
+document.getElementById("codigo").innerText=song.code;
+
+// ✅ AQUÍ ES EL LUGAR CORRECTO
+document.getElementById("mensajeInicial").style.display = "none";
+
+let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
+if(!fechas[song.file]){
+fechas[song.file]=new Date().toLocaleString();
+localStorage.setItem("fechas",JSON.stringify(fechas));
+}
+document.getElementById("fecha").innerText=fechas[song.file];
+}
+
+/* PLAY */
+function playSong(i){
+currentIndex=i;
+let song=playlist[i];
+player.src=song.file;
+player.play();
+updateUI(song);
+}
+
+/* CONTROLES */
 function togglePlay(){
-  if(!playing){
-    audio.play();
-    icon.textContent = '⏸';
-  }else{
-    audio.pause();
-    icon.textContent = '▶';
-  }
-  playing = !playing;
+player.paused ? player.play() : player.pause();
+}
+function next(){
+currentIndex=shuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length;
+playSong(currentIndex);
+}
+function prev(){
+currentIndex=(currentIndex-1+playlist.length)%playlist.length;
+playSong(currentIndex);
+}
+function toggleShuffle(){
+shuffle=!shuffle;
+document.getElementById("shuffle").style.background = shuffle ? "#00e5ff" : "#2a2a2a";
+document.getElementById("shuffle").style.color = shuffle ? "#000" : "#00ff88";
+}function toggleLoop(){
+loop=!loop;
+document.getElementById("loop").style.background = loop ? "#00e5ff" : "#2a2a2a";
+document.getElementById("loop").style.color = loop ? "#000" : "#00ff88";
 }
 
-audio.ontimeupdate = () => {
-  const percent = (audio.currentTime / audio.duration) * 100;
-  bar.style.width = percent + '%';
+/* EVENTOS */
+player.addEventListener("ended",()=>loop?playSong(currentIndex):next());
 
-  current.textContent = format(audio.currentTime);
-};
+player.addEventListener("timeupdate",()=>{
+if(!player.duration)return;
+document.getElementById("barra").style.width=(player.currentTime/player.duration)*100+"%";
+});
 
-audio.onloadedmetadata = () => {
-  total.textContent = format(audio.duration);
-};
+player.addEventListener("play",()=>{
+document.getElementById("playBtn").innerHTML = iconPause;
+ondas.classList.remove("pausa");
+});
 
-function format(s){
-  let m = Math.floor(s/60);
-  let sec = Math.floor(s%60);
-  return m + ':' + (sec<10?'0':'') + sec;
-}
+player.addEventListener("pause",()=>{
+document.getElementById("playBtn").innerHTML = iconPlay;
+ondas.classList.add("pausa");
+});
 
+/* SEEK */
 function seek(e){
-  const rect = e.currentTarget.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const percent = x / rect.width;
-  audio.currentTime = percent * audio.duration;
+let r=e.currentTarget.getBoundingClientRect();
+player.currentTime=((e.clientX-r.left)/r.width)*player.duration;
 }
+
+/* HISTORIAL */
+let reproducciones=JSON.parse(localStorage.getItem("reproducciones"))||{};
+let historial=JSON.parse(localStorage.getItem("historial"))||[];
+
+function registrarReproduccion(file){
+reproducciones[file]=(reproducciones[file]||0)+1;
+historial.unshift(file);
+historial=historial.slice(0,5);
+localStorage.setItem("reproducciones",JSON.stringify(reproducciones));
+localStorage.setItem("historial",JSON.stringify(historial));
+actualizarSecciones();
+}
+
+function actualizarSecciones(){
+
+let contTop=document.getElementById("mas");
+contTop.innerHTML="";
+
+Object.entries(reproducciones)
+.sort((a,b)=>b[1]-a[1])
+.slice(0,3)
+.forEach(([file,count])=>{
+let s=playlist.find(x=>x.file===file);
+if(!s)return;
+let d=document.createElement("div");
+d.className="item";
+d.innerText=`🎵 ${s.title} (${count})`;
+d.onclick=()=>playSong(playlist.indexOf(s));
+contTop.appendChild(d);
+});
+
+let contUlt=document.getElementById("ult");
+contUlt.innerHTML="";
+
+[...new Set(historial)].forEach(file=>{
+let s=playlist.find(x=>x.file===file);
+if(!s)return;
+let d=document.createElement("div");
+d.className="item";
+d.innerText=`🎵 ${s.title}`;
+d.onclick=()=>playSong(playlist.indexOf(s));
+contUlt.appendChild(d);
+});
+}
+
+function playMusic(file){
+let i=playlist.findIndex(s=>s.file===file);
+if(i!=-1){
+registrarReproduccion(file);
+playSong(i);
+}
+}
+
+function toggle(id){
+document.getElementById(id).classList.toggle("activo");
+}
+
+actualizarSecciones();
+
 </script>
 
 </body>
-</html>
+</html>>
