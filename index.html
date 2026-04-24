@@ -29,7 +29,6 @@ body {
   cursor: pointer;
   border-radius: 6px;
 }
-
 .item:hover { background: #3a3a3a; }
 
 /* REPRODUCTOR */
@@ -48,9 +47,7 @@ body {
 }
 
 /* CARATULA */
-.caratula {
-  text-align: center;
-}
+.caratula { text-align: center; }
 .caratula img {
   width: 100%;
   max-width: 400px;
@@ -120,11 +117,22 @@ body {
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* ❌ eliminado fondo hover */
 .ctrl:hover {
   transform: scale(1.15);
   color: #ffffff;
+}
+
+/* 🔥 ESTADO ACTIVO SPOTIFY */
+.ctrl.active {
+  color: #1db954;
+}
+
+/* PLAY BUTTON MÁS NATURAL (sin recuadros) */
+.ctrl.main {
+  width: 60px;
+  height: 60px;
   background: transparent;
+  box-shadow: none;
 }
 
 .ctrl svg {
@@ -136,19 +144,6 @@ body {
 .ctrl.main svg {
   width: 34px;
   height: 34px;
-}
-
-.ctrl.main {
-  width: 60px;
-  height: 60px;
-  background: transparent;
-  color: #00e5ff;
-  box-shadow: none;
-}
-
-/* 🔥 estado activo tipo Spotify */
-.ctrl.active {
-  color: #1db954;
 }
 
 /* INFO */
@@ -170,21 +165,12 @@ body {
   width: 130px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   color: #1db954;
 }
 
-.dos {
-  margin-left: auto;
-  transform: translateX(-45px);
-}
+.dos { margin-left: auto; transform: translateX(-45px); }
+.valor { flex: 1; transform: translateX(-40px); }
 
-.valor {
-  flex: 1;
-  transform: translateX(-40px);
-}
-
-/* SECCIONES */
 .seccion {
   color:#1db954;
   margin-top:10px;
@@ -194,36 +180,15 @@ body {
 .contenido { display:none; }
 .contenido.activo { display:block; }
 
-/* TITULO */
-.info .linea:first-child .label {
-  font-size: 23px;
-}
-
-.info .linea:first-child .valor {
-  font-size: 23px;
-  font-weight: 450;
-}
-
 #mensajeInicial {
   margin-top: 15px;
   font-size: 28px;
   text-align: center;
   font-weight: bold;
 
-  background: linear-gradient(
-    45deg,
-    #d4af37,
-    #ffd700,
-    #fff5b7,
-    #d4af37
-  );
-
+  background: linear-gradient(45deg,#d4af37,#ffd700,#fff5b7,#d4af37);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  text-shadow:
-    0 0 5px rgba(255, 215, 0, 0.5),
-    0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 </style>
@@ -231,7 +196,6 @@ body {
 
 <body>
 
-<!-- REPRODUCTOR -->
 <div class="reproductor">
 <div class="placa">
 
@@ -249,7 +213,7 @@ body {
 <div class="controles">
 
   <!-- shuffle -->
-  <button class="ctrl" id="shuffle" onclick="toggleShuffle()">
+  <button class="ctrl" id="shuffle" onclick="toggleShuffle(this)">
     <svg viewBox="0 0 24 24">
       <path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/>
     </svg>
@@ -277,7 +241,7 @@ body {
   </button>
 
   <!-- loop -->
-  <button class="ctrl" id="loop" onclick="toggleLoop()">
+  <button class="ctrl" id="loop" onclick="toggleLoop(this)">
     <svg viewBox="0 0 24 24">
       <path d="M17 17H7v-3l-4 4 4 4v-3h10v-2zm0-10V4l4 4-4 4V9H7v2h10z"/>
     </svg>
@@ -294,27 +258,26 @@ body {
 
 const player=document.getElementById("player");
 
-let shuffle=false;
-let loop=false;
-
-/* PLAY/PAUSE */
+/* PLAY */
 function togglePlay(){
 player.paused ? player.play() : player.pause();
 }
 
 /* SHUFFLE */
-function toggleShuffle(){
+let shuffle=false;
+function toggleShuffle(btn){
 shuffle=!shuffle;
-document.getElementById("shuffle").classList.toggle("active", shuffle);
+btn.classList.toggle("active", shuffle);
 }
 
 /* LOOP */
-function toggleLoop(){
+let loop=false;
+function toggleLoop(btn){
 loop=!loop;
-document.getElementById("loop").classList.toggle("active", loop);
+btn.classList.toggle("active", loop);
 }
 
-/* CONTROLES BASE */
+/* PLACEHOLDERS */
 function next(){}
 function prev(){}
 function seek(){}
