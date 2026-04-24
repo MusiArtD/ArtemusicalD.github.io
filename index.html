@@ -98,10 +98,47 @@ body {
 /* CONTROLES */
 .controles {
   display: flex;
+  justify-content: space-between; /* 🔥 clave del alineado */
+  align-items: center;
+
+  width: 50%;            /* igual que tu barra */
+  max-width: 600px;      /* mismo límite que progreso */
+  margin: 15px auto;    /* centra como la barra */
+
+  padding: 0 5px;
+}
+
+.left-controls,
+.center-controls,
+.right-controls {
+  display: flex;
+  align-items: center;
+}
+
+/* centro ocupa el espacio principal */
+.center-controls {
+  flex: 1;
   justify-content: center;
-  align-items: center; /* 🔥 clave */
-  gap: 15px;
-  margin-top: 15px;
+  gap: 12px;
+}
+
+/* extremos compactos */
+.left-controls,
+.right-controls {
+  flex: 0 0 auto;
+}
+
+/* volumen compacto */
+.right-controls {
+  gap: 4px;
+}
+
+/* VOL pegado limpio */
+.right-controls span {
+  color: #00e5ff;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0 -4px;
 }
 
 .ctrl {
@@ -255,11 +292,69 @@ body {
 <div class="controles">
 
   <!-- shuffle -->
+<div class="left-controls">
+
+  <!-- shuffle -->
   <button class="ctrl" id="shuffle" onclick="toggleShuffle()">
+    ...
+  </button>
+
+</div>
+
+<div class="center-controls">
+
+  <!-- prev -->
+  <button class="ctrl" onclick="prev()">...</button>
+
+  <!-- play -->
+  <button class="ctrl main" id="playBtn" onclick="togglePlay()">...</button>
+
+  <!-- next -->
+  <button class="ctrl" onclick="next()">...</button>
+
+  <!-- loop -->
+  <button class="ctrl" id="loop" onclick="toggleLoop()">...</button>
+
+</div>
+
+<div class="right-controls">
+
+  <!-- vol - VOL + -->
+  <button class="ctrl" onclick="volDown()">-</button>
+  <span>VOL</span>
+  <button class="ctrl" onclick="volUp()">+</button>
+
+</div>
+
+  <!-- volumen - -->
+  <button class="ctrl" onclick="volDown()">
     <svg viewBox="0 0 24 24">
-      <path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/>
+      <path d="M5 11h14v2H5z"/>
     </svg>
   </button>
+
+  <!-- VOL -->
+  <span style="color:#00e5ff;font-weight:bold;font-size:14px;">
+    VOL
+  </span>
+
+  <!-- volumen + -->
+  <button class="ctrl" onclick="volUp()">
+    <svg viewBox="0 0 24 24">
+      <path d="M11 5h2v14h-2zM5 11h14v2H5z"/>
+    </svg>
+  </button>
+
+</div>
+.controles {
+  display: flex;
+  justify-content: space-between; /* 🔥 clave del alineado */
+  align-items: center;
+  width: 50%;            /* igual que tu barra */
+  max-width: 600px;      /* mismo límite que progreso */
+  margin: 15px auto;    /* centra como la barra */
+  padding: 0 5px;
+}
 
   <!-- prev -->
   <button class="ctrl" onclick="prev()">
