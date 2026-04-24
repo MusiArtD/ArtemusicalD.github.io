@@ -227,6 +227,26 @@ body {
     0 0 10px rgba(255, 215, 0, 0.3);
 }
 
+/* 🔥 animación de cambio de icono */
+.fade-icon {
+  animation: fadeSwitch 0.25s ease;
+}
+
+@keyframes fadeSwitch {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 </style>
 </head>
 
@@ -447,12 +467,26 @@ document.getElementById("barra").style.width=(player.currentTime/player.duration
 });
 
 player.addEventListener("play",()=>{
-document.getElementById("playBtn").innerHTML = iconPause;
+const btn = document.getElementById("playBtn");
+
+btn.classList.remove("fade-icon");
+void btn.offsetWidth; // 🔥 reinicia animación
+btn.classList.add("fade-icon");
+
+btn.innerHTML = iconPause;
+
 ondas.classList.remove("pausa");
 });
 
 player.addEventListener("pause",()=>{
-document.getElementById("playBtn").innerHTML = iconPlay;
+const btn = document.getElementById("playBtn");
+
+btn.classList.remove("fade-icon");
+void btn.offsetWidth; // 🔥 reinicia animación
+btn.classList.add("fade-icon");
+
+btn.innerHTML = iconPlay;
+
 ondas.classList.add("pausa");
 });
 
