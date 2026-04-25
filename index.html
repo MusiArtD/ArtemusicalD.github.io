@@ -380,7 +380,10 @@ const player=document.getElementById("player");
 function renderLista(){
 let cont=document.getElementById("listaContenido");
 cont.innerHTML="";
-playlist.forEach(song=>{
+
+playlist.forEach((song, index)=>{
+  if(index === 0) return; // 🔥 oculta la predeterminada
+
 let div=document.createElement("div");
 div.className="item";
 div.innerText="🎵 "+song.title;
@@ -459,24 +462,6 @@ player.addEventListener("ended",()=>loop?playSong(currentIndex):next());
 player.addEventListener("timeupdate",()=>{
 if(!player.duration)return;
 document.getElementById("barra").style.width=(player.currentTime/player.duration)*100+"%";
-});
-
-const audio = document.querySelector("audio");
-
-const playBtn = document.getElementById("playBtn");
-const playIcon = document.getElementById("playIcon");
-const pauseIcon = document.getElementById("pauseIcon");
-
-playBtn.addEventListener("click", () => {
-  if (audio.paused) {
-    audio.play();
-    playIcon.style.display = "none";
-    pauseIcon.style.display = "block";
-  } else {
-    audio.pause();
-    playIcon.style.display = "block";
-    pauseIcon.style.display = "none";
-  }
 });
 
 player.addEventListener("play",()=>{
