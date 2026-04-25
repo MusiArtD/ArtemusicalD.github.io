@@ -387,7 +387,9 @@ document.getElementById("para").innerText=song.para;
 document.getElementById("codigo").innerText=song.code;
 
 // ✅ AQUÍ ES EL LUGAR CORRECTO
-document.getElementById("mensajeInicial").style.display = "none";
+if(player.currentTime > 0){
+  document.getElementById("mensajeInicial").style.display = "none";
+}
 
 let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
 if(!fechas[song.file]){
