@@ -341,25 +341,24 @@ body {
 
 const playlist=[
 
-  // 🔥 canción predeterminada (NO MOVER)
-  {
-    file:"Intro 2026.mp3",
-    title:"Intro Sound Music 2026",
-    code:"000",
-    cover:"intro.png",
-    de:"J.M.P_3Hermanos",
-    para:"Público en General"
-  },
+// 🔥 canción predeterminada (SIEMPRE índice 0 - NO MOVER - usada por DEFAULT_INDEX)
+{
+file:"Intro 2026.mp3",
+title:"Intro Sound Music 2026",
+code:"000",
+cover:"2-años-Amelia.jpg",
+de:"J.M.P_3Hermanos",
+para:"Público en General"
+},
 
-  {
-    file:"Amelia Celeste.mp3",
-    title:"Amelia Celeste",
-    code:"AMU-002",
-    cover:"2-años-Amelia.jpg",
-    de:"Flor de Liz y Joaquin tus Padres",
-    para:"Amelia Celeste"
-  }
-
+{
+file:"Amelia Celeste.mp3",
+title:"Amelia Celeste",
+code:"AMU-001",
+cover:"2-años-Amelia.jpg",
+de:"tus Padres Flor de Liz y Joaquin",
+para:"Amelia Celeste"
+}
 ];
 
 let currentIndex=0, shuffle=false, loop=false;
@@ -399,6 +398,9 @@ document.getElementById("para").innerText=song.para;
 document.getElementById("codigo").innerText=song.code;
 
 // ✅ AQUÍ ES EL LUGAR CORRECTO
+if(player.currentTime > 0){
+  document.getElementById("mensajeInicial").style.display = "none";
+}
 
 let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
 if(!fechas[song.file]){
