@@ -502,11 +502,18 @@ contUlt.appendChild(d);
 }
 
 function playMusic(file){
-let i=playlist.findIndex(s=>s.file===file);
-if(i!=-1){
-registrarReproduccion(file);
-playSong(i);
-}
+  let i=playlist.findIndex(s=>s.file===file);
+  if(i!=-1){
+    registrarReproduccion(file);
+    playSong(i);
+
+    // 🔥 aquí sí desaparece
+    document.getElementById("mensajeInicial").style.opacity = "0";
+
+    setTimeout(() => {
+      document.getElementById("mensajeInicial").style.display = "none";
+    }, 600);
+  }
 }
 
 function toggle(id){
@@ -518,6 +525,18 @@ actualizarSecciones();
 // 🔥 autoplay inicial
 window.addEventListener("load", () => {
   playSong(0);
+
+let inicioPorTecla = false;
+
+document.addEventListener("keydown", () => {
+
+  if(!inicioPorTecla){
+    playSong(0); // 🔥 mp3 predeterminado
+    inicioPorTecla = true;
+  }
+
+}, { once: true });
+
 });
 
 </script>
