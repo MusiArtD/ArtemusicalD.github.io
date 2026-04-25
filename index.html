@@ -116,19 +116,20 @@ body {
   width: 50px;
   height: 50px;
 
-  color: #00e5ff;
+  color: #888;
   transition: 0.2s;
 }
 
 .ctrl svg {
   width: 26px;
   height: 26px;
-  fill: currentColor; /* 👈 clave: hereda color */
+  fill: currentColor;
 }
 
 .ctrl:hover {
   transform: scale(1.2);
-  color: #ffffff;
+  color: #1db954;
+  background: #3a3a3a;
 }
 
 .ctrl.main svg {
@@ -136,17 +137,13 @@ body {
   height: 34px;
 }
 
-.ctrl:hover {
-  background: #3a3a3a;
-}
-
 .ctrl.main {
   width: 60px;
   height: 60px;
-  font-size: 26px;
-  background: #00e5ff;
+  background: #1db954;
   color: black;
-  box-shadow: 0 0 10px #00e5ff;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #1db954;
 }
 
 /* INFO */
@@ -261,11 +258,19 @@ body {
   </button>
 
   <!-- play/pause -->
-  <button class="ctrl main" id="playBtn" onclick="togglePlay()">
-    <svg viewBox="0 0 24 24">
-      <path d="M8 5v14l11-7z"/>
-    </svg>
-  </button>
+<button class="ctrl main" id="playBtn" onclick="togglePlay()">
+
+  <!-- PLAY -->
+  <svg id="iconPlay" viewBox="0 0 24 24">
+    <path d="M8 5v14l11-7z"/>
+  </svg>
+
+  <!-- PAUSE -->
+  <svg id="iconPause" viewBox="0 0 24 24" style="display:none;">
+    <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
+  </svg>
+
+</button>
 
   <!-- next -->
   <button class="ctrl" onclick="next()">
@@ -432,12 +437,14 @@ document.getElementById("barra").style.width=(player.currentTime/player.duration
 });
 
 player.addEventListener("play",()=>{
-document.getElementById("playBtn").innerText="⏸";
+  document.getElementById("iconPlay").style.display="none";
+  document.getElementById("iconPause").style.display="block";
 ondas.classList.remove("pausa");
 });
 
 player.addEventListener("pause",()=>{
-document.getElementById("playBtn").innerText="▶";
+  document.getElementById("iconPlay").style.display="block";
+  document.getElementById("iconPause").style.display="none";
 ondas.classList.add("pausa");
 });
 
@@ -505,6 +512,11 @@ document.getElementById(id).classList.toggle("activo");
 }
 
 actualizarSecciones();
+
+// 🔥 autoplay inicial
+window.addEventListener("load", () => {
+  playSong(0);
+});
 
 </script>
 
