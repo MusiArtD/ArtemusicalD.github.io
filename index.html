@@ -253,21 +253,21 @@ body {
 <div class="player-controls">
 
   <!-- Shuffle -->
-  <button class="ctrl" id="shuffleBtn">
+  <button class="ctrl" id="shuffleBtn" onclick="toggleShuffle()">
     <svg viewBox="0 0 24 24">
       <path d="M16 3h5v5h-2V6.41l-5.29 5.3-1.42-1.42 5.3-5.29H16V3zM3 6h2l3.29 3.29-1.42 1.42L3 6zm18 12v3h-5v-2h1.59l-5.3-5.29 1.42-1.42 5.29 5.3V18h2zM3 18l4.29-4.29 1.42 1.42L5 18H3z"/>
     </svg>
   </button>
 
   <!-- Previous -->
-  <button class="ctrl" id="prevBtn">
+  <button class="ctrl" id="prevBtn" onclick="prev()">
     <svg viewBox="0 0 24 24">
       <path d="M6 6h2v12H6zm3.5 6L18 18V6z"/>
     </svg>
   </button>
 
   <!-- Play -->
-  <button class="ctrl main" id="playBtn">
+  <button class="ctrl main" id="playBtn" onclick="togglePlay()">
     <svg id="playIcon" viewBox="0 0 24 24">
       <path d="M8 5v14l11-7z"/>
     </svg>
@@ -278,14 +278,14 @@ body {
   </button>
 
   <!-- Next -->
-  <button class="ctrl" id="nextBtn">
+  <button class="ctrl" id="nextBtn" onclick="next()">
     <svg viewBox="0 0 24 24">
       <path d="M16 6h2v12h-2zM6 6v12l8-6z"/>
     </svg>
   </button>
 
   <!-- Loop -->
-  <button class="ctrl" id="loopBtn">
+  <button class="ctrl" id="loopBtn" onclick="toggleLoop()">
     <svg viewBox="0 0 24 24">
       <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v5z"/>
     </svg>
@@ -355,8 +355,8 @@ const playlist=[
 
 // 🔥 canción predeterminada (SIEMPRE índice 0 - NO MOVER - usada por DEFAULT_INDEX)
 {
-file:"Soun Music 2026.mp3",
-title:"Soun Music 2026",
+file:"Intro Sound Music 2026.mp3",
+title:"Intro Sound Music 2026",
 code:"000",
 cover:"intro.png",
 de:"J.M.P_3Hermanos",
