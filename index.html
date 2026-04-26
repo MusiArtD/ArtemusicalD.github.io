@@ -98,42 +98,44 @@ body {
 /* CONTROLES */
 .player-controls {
   display: flex;
-  justify-content: center; /* 🔥 centra horizontal */
   align-items: center;
-  gap: 15px;
-  margin: 15px auto;       /* 🔥 lo alinea con la barra */
-  width: 50%;
-  max-width: 600px;
+  justify-content: center;
+
+  gap: 14px;
+  margin-top: 12px;
 }
 
 .ctrl {
-  background: none;
+  background: transparent;
   border: none;
   cursor: pointer;
-  padding: 6px;
-  color: #aaa;
-  transition: all 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  color: #777;
+  transition: 0.2s;
 }
 
 .ctrl svg {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   fill: currentColor;
-  display: block;
 }
 
+/* hover */
 .ctrl:hover {
   color: #1db954;
   transform: scale(1.15);
 }
 
+/* activo (shuffle / loop) */
 .ctrl.active {
   color: #1db954;
-}
-
-.main svg {
-  width: 28px;
-  height: 28px;
 }
 
 /* Volumen */
@@ -145,17 +147,20 @@ body {
 }
 
 .vol-text {
-  font-size: 12px;
-  color: #aaa;
+  font-size: 13px;
+  color: #1db954;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .ctrl.main {
   width: 60px;
   height: 60px;
-  background: #1db954;
-  color: black;
-  border-radius: 50%;
-  box-shadow: 0 0 12px #1db954;
+}
+
+.ctrl.main svg {
+  width: 30px;
+  height: 30px;
 }
 
 /* INFO */
@@ -492,17 +497,35 @@ const volDown = document.getElementById("volDownBtn");
 
 let interval;
 
-function changeVolume(amount) {
-  player.volume = Math.min(1, Math.max(0, player.volume + amount));
+function changeVolume(amount, btn) {
+  audio.volume = Math.min(1, Math.max(0, audio.volume + amount));
+
+  btn.classList.add("active");
+
+  setTimeout(() => {
+    btn.classList.remove("active");
+  }, 200);
 }
 
 // CLICK
-volUp.onclick = () => changeVolume(0.05);
-volDown.onclick = () => changeVolume(-0.05);
+volUp.onclick = () => changeVolume(0.05, volUp);
+volDown.onclick = () => changeVolume(-0.05, volDown);
 
 // CLICK SOSTENIDO
 volUp.onmousedown = () => {
-  interval = setInterval(() => changeVolume(0.02), 100);
+  volUp.classList.add("active");
+  interval = setInterval(() => changeVolume(0.02, volUp), 100);
+};
+
+volDown.onmousedown = () => {
+  volDown.classList.add("active");
+  interval = setInterval(() => changeVolume(-0.02, volDown), 100);
+};
+
+document.onmouseup = () => {
+  clearInterval(interval);
+  volUp.classList.remove("active");
+  volDown.classList.remove("active");
 };
 
 volDown.onmousedown = () => {
