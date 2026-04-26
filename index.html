@@ -547,16 +547,6 @@ function desbloquearControles() {
   document.getElementById("loopBtn").classList.remove("disabled");
 }
 
-function bloquearControlesIntro() {
-  document.getElementById("prevBtn").classList.add("disabled");
-  document.getElementById("nextBtn").classList.add("disabled");
-}
-
-function desbloquearControles() {
-  document.getElementById("prevBtn").classList.remove("disabled");
-  document.getElementById("nextBtn").classList.remove("disabled");
-}
-
 function toggleShuffle(){
   shuffle = !shuffle;
   document.getElementById("shuffleBtn").classList.toggle("active", shuffle);
@@ -724,12 +714,7 @@ window.addEventListener("load", () => {
 });
 
 document.addEventListener("click", () => {
-
-  if(!sessionStorage.getItem("introPlayed")){
-    playSong(0);
-    sessionStorage.setItem("introPlayed", "true");
-  }
-
+  playSong(0);
 }, { once: true });
 
 </script>
