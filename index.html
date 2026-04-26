@@ -467,18 +467,14 @@ function playSong(i){
     desbloquearControles();
   }
 
-  currentIndex = i;
-  let song = playlist[i];
+  player.pause();
+  player.currentTime = 0;
+  document.getElementById("barra").style.width = "0%";
 
-  player.pause();                 // 🔥 detener anterior
-  player.currentTime = 0;         // 🔥 reset inmediato
-  document.getElementById("barra").style.width = "0%"; // 🔥 limpia barra
-
-  updateUI(song);                 // 🔥 primero UI (evita retraso visual)
+  updateUI(song);
 
   player.src = song.file;
-
-  player.load();                  // 🔥 fuerza carga inmediata
+  player.load();
   player.play();
 }
 
@@ -511,6 +507,20 @@ function prev(){
   }
 
   playSong(currentIndex);
+}
+
+function bloquearControlesIntro() {
+  document.getElementById("prevBtn").classList.add("disabled");
+  document.getElementById("nextBtn").classList.add("disabled");
+  document.getElementById("shuffleBtn").classList.add("disabled");
+  document.getElementById("loopBtn").classList.add("disabled");
+}
+
+function desbloquearControles() {
+  document.getElementById("prevBtn").classList.remove("disabled");
+  document.getElementById("nextBtn").classList.remove("disabled");
+  document.getElementById("shuffleBtn").classList.remove("disabled");
+  document.getElementById("loopBtn").classList.remove("disabled");
 }
 
 function bloquearControlesIntro() {
@@ -663,10 +673,8 @@ actualizarSecciones();
 
 // 🔥 autoplay inicial
 window.addEventListener("load", () => {
-
-  updateUI(playlist[0]);
-  bloquearControlesIntro(); // 🔥 clave
-
+  updateUI(playlist[0]);     // 👈 muestra portada y datos
+  bloquearControlesIntro();  // 👈 bloquea botones
 });
 
 document.addEventListener("click", () => {
