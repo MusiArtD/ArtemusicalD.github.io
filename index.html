@@ -121,6 +121,12 @@ body {
   transition: 0.2s;
 }
 
+.volume-group .ctrl {
+  font-size: 18px;
+  width: 30px;
+  height: 30px;
+}
+
 .ctrl svg {
   width: 24px;
   height: 24px;
@@ -301,9 +307,9 @@ body {
 
   <!-- Volumen -->
   <div class="volume-group">
-    <button class="ctrl" id="volUpBtn">(+)</button>
-    <span class="vol-text">VOL</span>
-    <button class="ctrl" id="volDownBtn">(-)</button>
+    <button class="ctrl" id="volDownBtn">−</button>
+    <span class="vol-text">[VOL]</span>
+    <button class="ctrl" id="volUpBtn">+</button>
   </div>
 
 </div>
@@ -455,15 +461,13 @@ currentIndex=(currentIndex-1+playlist.length)%playlist.length;
 playSong(currentIndex);
 }
 function toggleShuffle(){
-shuffle=!shuffle;
-document.getElementById("shuffleBtn").style.background = shuffle ? "#00e5ff" : "#2a2a2a";
-document.getElementById("shuffleBtn").style.color = shuffle ? "#000" : "#00ff88";
+  shuffle = !shuffle;
+  document.getElementById("shuffleBtn").classList.toggle("active", shuffle);
 }
 
 function toggleLoop(){
-loop=!loop;
-document.getElementById("loopBtn").style.background = loop ? "#00e5ff" : "#2a2a2a";
-document.getElementById("loopBtn").style.color = loop ? "#000" : "#00ff88";
+  loop = !loop;
+  document.getElementById("loopBtn").classList.toggle("active", loop);
 }
 
 /* EVENTOS */
@@ -475,15 +479,15 @@ document.getElementById("barra").style.width=(player.currentTime/player.duration
 });
 
 player.addEventListener("play",()=>{
-  document.getElementById("iconPlay").style.display="none";
-  document.getElementById("iconPause").style.display="block";
-ondas.classList.remove("pausa");
+  document.getElementById("playIcon").style.display="none";
+  document.getElementById("pauseIcon").style.display="block";
+  ondas.classList.remove("pausa");
 });
 
 player.addEventListener("pause",()=>{
-  document.getElementById("iconPlay").style.display="block";
-  document.getElementById("iconPause").style.display="none";
-ondas.classList.add("pausa");
+  document.getElementById("playIcon").style.display="block";
+  document.getElementById("pauseIcon").style.display="none";
+  ondas.classList.add("pausa");
 });
 
 /* SEEK */
@@ -498,7 +502,7 @@ const volDown = document.getElementById("volDownBtn");
 let interval;
 
 function changeVolume(amount, btn) {
-  audio.volume = Math.min(1, Math.max(0, audio.volume + amount));
+  player.volume = Math.min(1, Math.max(0, player.volume + amount));
 
   btn.classList.add("active");
 
@@ -527,12 +531,6 @@ document.onmouseup = () => {
   volUp.classList.remove("active");
   volDown.classList.remove("active");
 };
-
-volDown.onmousedown = () => {
-  interval = setInterval(() => changeVolume(-0.02), 100);
-};
-
-document.onmouseup = () => clearInterval(interval);
 
 /* HISTORIAL */
 let reproducciones=JSON.parse(localStorage.getItem("reproducciones"))||{};
