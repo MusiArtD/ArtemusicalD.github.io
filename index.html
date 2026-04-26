@@ -254,7 +254,7 @@ body {
 <div class="placa">
 
 <div class="caratula">
-  <img id="cover" src="logo-temporal.png">
+  <img id="cover" style="display:none;">
   <p id="mensajeInicial">Elegir canción para empezar</p>
 </div>
 
@@ -420,7 +420,14 @@ function updateUI(song){
 if(!song)return;
 
 document.getElementById("titulo").innerText=song.title;
-document.getElementById("cover").src=song.cover;
+const cover = document.getElementById("cover");
+
+if(song.cover){
+  cover.src = song.cover;
+  cover.style.display = "block";
+}else{
+  cover.style.display = "none";
+}
 
 document.getElementById("de").innerText=song.de;
 document.getElementById("para").innerText=song.para;
