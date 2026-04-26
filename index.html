@@ -441,25 +441,58 @@ document.getElementById("fecha").innerText=fechas[song.file];
 
 /* PLAY */
 function playSong(i){
-currentIndex=i;
-let song=playlist[i];
-player.src=song.file;
-player.play();
-updateUI(song);
+
+  currentIndex = i;
+  let song = playlist[i];
+
+  player.pause();                 // 🔥 detener anterior
+  player.currentTime = 0;         // 🔥 reset inmediato
+  document.getElementById("barra").style.width = "0%"; // 🔥 limpia barra
+
+  updateUI(song);                 // 🔥 primero UI (evita retraso visual)
+
+  player.src = song.file;
+
+  player.load();                  // 🔥 fuerza carga inmediata
+  player.play();
 }
 
 /* CONTROLES */
 function togglePlay(){
 player.paused ? player.play() : player.pause();
 }
+
 function next(){
-currentIndex=shuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length;
-playSong(currentIndex);
+
+  if(shuffle){
+    currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1; // 🔥 nunca 0
+  }else{
+    currentIndex++;
+
+    // 🔥 saltar intro (index 0)
+    if(currentIndex === 0) currentIndex = 1;
+
+    // 🔥 si llega al final, se queda (no vuelve)
+    if(currentIndex >= playlist.length){
+      currentIndex = playlist.length - 1;
+      return;
+    }
+  }
+
+  playSong(currentIndex);
 }
+
 function prev(){
-currentIndex=(currentIndex-1+playlist.length)%playlist.length;
-playSong(currentIndex);
+
+  currentIndex--;
+
+  if(currentIndex <= 0){
+    currentIndex = 1; // 🔥 nunca vuelve al intro
+  }
+
+  playSong(currentIndex);
 }
+
 function toggleShuffle(){
   shuffle = !shuffle;
   document.getElementById("shuffleBtn").classList.toggle("active", shuffle);
@@ -600,7 +633,13 @@ actualizarSecciones();
 
 // 🔥 autoplay inicial
 window.addEventListener("load", () => {
-  playSong(0);
+
+  if(!sessionStorage.getItem("introPlayed")){
+    playSong(0);
+    sessionStorage.setItem("introPlayed", "true");
+  }
+
+});
 
 let inicioPorTecla = false;
 
