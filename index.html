@@ -126,7 +126,8 @@ body {
 
 .ctrl.disabled {
   opacity: 0.3;
-  pointer-events: none;
+  filter: grayscale(100%);
+  cursor: not-allowed;
 }
 
 .volume-group .ctrl {
@@ -485,6 +486,24 @@ player.paused ? player.play() : player.pause();
 
 function next(){
 
+  if(currentIndex === 0){
+    avisoUsuario();
+    return;
+  }
+
+  if(shuffle){
+    currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1;
+  }else{
+    currentIndex++;
+
+    if(currentIndex >= playlist.length){
+      currentIndex = 1;
+    }
+  }
+
+  playSong(currentIndex);
+}
+
   if(shuffle){
     currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1;
   }else{
@@ -500,10 +519,15 @@ function next(){
 
 function prev(){
 
+  if(currentIndex === 0){
+    avisoUsuario();
+    return;
+  }
+
   currentIndex--;
 
   if(currentIndex <= 0){
-    currentIndex = 1; // 🔥 nunca vuelve al intro
+    currentIndex = 1;
   }
 
   playSong(currentIndex);
@@ -541,6 +565,28 @@ function toggleShuffle(){
 function toggleLoop(){
   loop = !loop;
   document.getElementById("loopBtn").classList.toggle("active", loop);
+}
+
+// 🔥 AQUÍ VA PERFECTO
+function avisoUsuario() {
+  const msg = document.getElementById("mensajeInicial");
+
+  msg.style.transition = "0.2s";
+
+  let colores = ["#ff0055", "#ffcc00", "#00e5ff"];
+  let i = 0;
+
+  let efecto = setInterval(() => {
+    msg.style.color = colores[i % colores.length];
+    msg.style.textShadow = "0 0 10px " + colores[i % colores.length];
+    i++;
+  }, 150);
+
+  setTimeout(() => {
+    clearInterval(efecto);
+    msg.style.color = "";
+    msg.style.textShadow = "";
+  }, 800);
 }
 
 /* EVENTOS */
