@@ -55,6 +55,9 @@ body {
   width: 100%;
   max-width: 400px;
   border-radius: 12px;
+
+  display: block;
+  margin: 0 auto;
 }
 
 /* ONDAS */
@@ -472,17 +475,12 @@ player.paused ? player.play() : player.pause();
 function next(){
 
   if(shuffle){
-    currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1; // 🔥 nunca 0
+    currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1;
   }else{
     currentIndex++;
 
-    // 🔥 saltar intro (index 0)
-    if(currentIndex === 0) currentIndex = 1;
-
-    // 🔥 si llega al final, se queda (no vuelve)
     if(currentIndex >= playlist.length){
-      currentIndex = playlist.length - 1;
-      return;
+      currentIndex = 1; // 🔥 vuelve al primero real (NO intro)
     }
   }
 
@@ -641,12 +639,19 @@ actualizarSecciones();
 // 🔥 autoplay inicial
 window.addEventListener("load", () => {
 
+  // 🔥 solo mostrar intro (sin reproducir)
+  updateUI(playlist[0]);
+
+});
+
+document.addEventListener("click", () => {
+
   if(!sessionStorage.getItem("introPlayed")){
     playSong(0);
     sessionStorage.setItem("introPlayed", "true");
   }
 
-});
+}, { once: true });
 
 </script>
 
