@@ -96,66 +96,60 @@ body {
 }
 
 /* CONTROLES */
-.player-controls {
+.controles {
   display: flex;
-  justify-content: center; /* 🔥 centra horizontal */
+  justify-content: center;
   align-items: center;
   gap: 15px;
-  margin: 15px auto;       /* 🔥 lo alinea con la barra */
-  width: 50%;
-  max-width: 600px;
+  margin-top: 15px;
 }
 
 .ctrl {
-  background: none;
+  background: transparent;
   border: none;
   cursor: pointer;
-  padding: 6px;
-  color: #aaa;
-  transition: all 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
+  height: 50px;
+
+  color: #00e5ff;
+
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* ? QUITADO: hover con fondo o cambios raros */
+.ctrl:hover {
+  transform: scale(1.15);
+  color: #ffffff;
+  background: transparent;
 }
 
 .ctrl svg {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   fill: currentColor;
-  display: block;
 }
 
-.ctrl:hover {
-  color: #1db954;
-  transform: scale(1.15);
-}
-
-.ctrl.active {
-  color: #1db954;
-}
-
-.main svg {
-  width: 28px;
-  height: 28px;
-}
-
-/* Volumen */
-.volume-group {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: 10px;
-}
-
-.vol-text {
-  font-size: 12px;
-  color: #aaa;
+.ctrl.main svg {
+  width: 34px;
+  height: 34px;
 }
 
 .ctrl.main {
   width: 60px;
   height: 60px;
-  background: #1db954;
-  color: black;
-  border-radius: 50%;
-  box-shadow: 0 0 12px #1db954;
+  background: transparent;
+  color: #00e5ff;
+  box-shadow: none;
+}
+
+/* ?? ESTADO ACTIVO (SPOTIFY GREEN) */
+.ctrl.active {
+  color: #1db954;
 }
 
 /* INFO */
@@ -163,14 +157,14 @@ body {
   max-width: 500px;
   margin: 20px auto;
   text-align: left;
-  transform: translateX(40px);  /* 🔥 mueve todo a la derecha */
+  transform: translateX(40px);
 }
 
 .linea {
   display: flex;
   align-items: center;
-  gap: 5px;              /* más controlado */
-  margin-bottom: 10px;   /* lo dejas igual */
+  gap: 5px;
+  margin-bottom: 10px;
 }
   
 .label {
@@ -183,12 +177,12 @@ body {
 
 .dos {
   margin-left: auto;
-  transform: translateX(-45px);  /* 🔥 mueve 7px a la izquierda */
+  transform: translateX(-45px);
 }
 
 .valor {
   flex: 1;
-  transform: translateX(-40px);  /* 🔥 se acerca al ":" */
+  transform: translateX(-40px);
 }
 
 /* SECCIONES */
@@ -201,7 +195,7 @@ body {
 .contenido { display:none; }
 .contenido.activo { display:block; }
 
-/* 🔥 SOLO LA PRIMERA LINEA (TITULO) */
+/* TITULO */
 .info .linea:first-child .label {
   font-size: 23px;
 }
@@ -213,7 +207,7 @@ body {
 
 #mensajeInicial {
   margin-top: 15px;
-  font-size: 28px; /* 👈 recuperado */
+  font-size: 28px;
   text-align: center;
   font-weight: bold;
 
@@ -232,7 +226,6 @@ body {
     0 0 5px rgba(255, 215, 0, 0.5),
     0 0 10px rgba(255, 215, 0, 0.3);
 }
-
 </style>
 </head>
 
@@ -253,83 +246,42 @@ body {
 <div class="barra" id="barra"></div>
 </div>
 
-<div class="player-controls">
+<div class="controles">
 
-  <!-- Shuffle -->
-<button class="ctrl" id="shuffleBtn" onclick="toggleShuffle()">
+  <!-- shuffle -->
+  <button class="ctrl" id="shuffle" onclick="toggleShuffle(this)">
     <svg viewBox="0 0 24 24">
-      <path d="M16 3h5v5h-2V6.41l-5.29 5.3-1.42-1.42 5.3-5.29H16V3zM3 6h2l3.29 3.29-1.42 1.42L3 6zm18 12v3h-5v-2h1.59l-5.3-5.29 1.42-1.42 5.29 5.3V18h2zM3 18l4.29-4.29 1.42 1.42L5 18H3z"/>
+      <path d="M16 3h5v5h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H16V3zM3 7h5l6 6-6 6H3v-2h4.59l4.59-4.59L7.59 9H3V7zm13 10h1.59l-2.29 2.29 1.42 1.42L21 14v5h-5v-2z"/>
     </svg>
   </button>
 
-  <!-- Previous -->
-<button class="ctrl" id="prevBtn" onclick="prev()">
+  <!-- prev -->
+  <button class="ctrl" onclick="prev()">
     <svg viewBox="0 0 24 24">
-      <path d="M6 6h2v12H6zm3.5 6L18 18V6z"/>
+      <path d="M6 6h2v12H6V6zm3.5 6l10.5 6V6L9.5 12z"/>
     </svg>
   </button>
 
-  <!-- Play -->
-<button class="ctrl main" id="playBtn" onclick="togglePlay()">
-    <svg id="playIcon" viewBox="0 0 24 24">
+  <!-- play -->
+  <button class="ctrl main" id="playBtn" onclick="togglePlay()">
+    <svg viewBox="0 0 24 24">
       <path d="M8 5v14l11-7z"/>
     </svg>
-
-    <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;">
-      <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
-    </svg>
   </button>
 
-  <!-- Next -->
-<button class="ctrl" id="nextBtn" onclick="next()">
+  <!-- next -->
+  <button class="ctrl" onclick="next()">
     <svg viewBox="0 0 24 24">
-      <path d="M16 6h2v12h-2zM6 6v12l8-6z"/>
+      <path d="M16.5 12L6 6v12l10.5-6zM18 6h2v12h-2V6z"/>
     </svg>
   </button>
 
-  <!-- Loop -->
-<button class="ctrl" id="loopBtn" onclick="toggleLoop()">
+  <!-- loop -->
+  <button class="ctrl" id="loop" onclick="toggleLoop(this)">
     <svg viewBox="0 0 24 24">
-      <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v5z"/>
+      <path d="M17 17H7v-3l-4 4 4 4v-3h10v-2zm0-10V4l4 4-4 4V9H7v2h10z"/>
     </svg>
   </button>
-
-  <!-- Volumen -->
-  <div class="volume-group">
-    <button class="ctrl" id="volUpBtn">(+)</button>
-    <span class="vol-text">VOL</span>
-    <button class="ctrl" id="volDownBtn">(-)</button>
-  </div>
-
-</div>
-
-<!-- INFO CORRECTO -->
-<div class="info">
-
-  <div class="linea">
-<div class="label">Título <span class="dos">:</span></div>
-    <div class="valor" id="titulo">---</div>
-  </div>
-
-  <div class="linea">
-    <div class="label">De <span class="dos">:</span></div>
-    <div class="valor" id="de">---</div>
-  </div>
-
-  <div class="linea">
-    <div class="label">Para <span class="dos">:</span></div>
-    <div class="valor" id="para">---</div>
-  </div>
-
-  <div class="linea">
-    <div class="label">Código <span class="dos">:</span></div>
-    <div class="valor" id="codigo">---</div>
-  </div>
-
-  <div class="linea">
-    <div class="label">Agregado <span class="dos">:</span></div>
-    <div class="valor" id="fecha">---</div>
-  </div>
 
 </div>
 
@@ -338,263 +290,30 @@ body {
 </div>
 </div>
 
-<!-- LISTA -->
-<div class="lista">
-
-<div class="seccion" onclick="toggle('listaContenido')">📜 Lista de reproducción</div>
-<div id="listaContenido" class="contenido activo"></div>
-
-<div class="seccion" onclick="toggle('mas')">❤️ Más reproducido</div>
-<div id="mas" class="contenido"></div>
-
-<div class="seccion" onclick="toggle('ult')">🔥 Últimas</div>
-<div id="ult" class="contenido"></div>
-
-</div>
-
 <script>
 
-const playlist=[
-
-// 🔥 canción predeterminada (SIEMPRE índice 0 - NO MOVER - usada por DEFAULT_INDEX)
-{
-file:"Intro Sound Music 2026.mp3",
-title:"Intro Sound Music 2026",
-code:"000",
-cover:"intro.png",
-de:"J.M.P_3Hermanos",
-para:"Público en General"
-},
-
-{
-file:"Amelia Celeste.mp3",
-title:"Amelia Celeste",
-code:"AMU-001",
-cover:"2-años-Amelia.jpg",
-de:"tus Padres Flor de Liz y Joaquin",
-para:"Amelia Celeste"
-}
-];
-
-let currentIndex=0, shuffle=false, loop=false;
 const player=document.getElementById("player");
 
-/* LISTA DINAMICA */
-function renderLista(){
-let cont=document.getElementById("listaContenido");
-cont.innerHTML="";
-
-playlist.forEach((song, index)=>{
-  if(index === 0) return; // 🔥 oculta la predeterminada
-
-let div=document.createElement("div");
-div.className="item";
-div.innerText="🎵 "+song.title;
-div.onclick=()=>playMusic(song.file);
-cont.appendChild(div);
-});
-}
-renderLista();
-
-/* ONDAS */
-let ondas=document.getElementById("ondas");
-for(let i=0;i<25;i++){
-let s=document.createElement("span");
-s.style.animationDelay=(i*0.05)+"s";
-ondas.appendChild(s);
-}
-
-/* UI */
-function updateUI(song){
-if(!song)return;
-
-document.getElementById("titulo").innerText=song.title;
-document.getElementById("cover").src=song.cover;
-
-document.getElementById("de").innerText=song.de;
-document.getElementById("para").innerText=song.para;
-document.getElementById("codigo").innerText=song.code;
-
-// ✅ AQUÍ ES EL LUGAR CORRECTO
-if(player.currentTime > 0){
-  document.getElementById("mensajeInicial").style.display = "none";
-}
-
-let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
-if(!fechas[song.file]){
-fechas[song.file]=new Date().toLocaleString();
-localStorage.setItem("fechas",JSON.stringify(fechas));
-}
-document.getElementById("fecha").innerText=fechas[song.file];
-}
-
-/* PLAY */
-function playSong(i){
-currentIndex=i;
-let song=playlist[i];
-player.src=song.file;
-player.play();
-updateUI(song);
-}
-
-/* CONTROLES */
+/* PLAY/PAUSE */
 function togglePlay(){
 player.paused ? player.play() : player.pause();
 }
-function next(){
-currentIndex=shuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length;
-playSong(currentIndex);
-}
-function prev(){
-currentIndex=(currentIndex-1+playlist.length)%playlist.length;
-playSong(currentIndex);
-}
-function toggleShuffle(){
+
+/* SHUFFLE */
+let shuffle=false;
+function toggleShuffle(btn){
 shuffle=!shuffle;
-document.getElementById("shuffleBtn").style.background = shuffle ? "#00e5ff" : "#2a2a2a";
-document.getElementById("shuffleBtn").style.color = shuffle ? "#000" : "#00ff88";
+btn.classList.toggle("active", shuffle);
 }
 
-function toggleLoop(){
+/* LOOP */
+let loop=false;
+function toggleLoop(btn){
 loop=!loop;
-document.getElementById("loopBtn").style.background = loop ? "#00e5ff" : "#2a2a2a";
-document.getElementById("loopBtn").style.color = loop ? "#000" : "#00ff88";
+btn.classList.toggle("active", loop);
 }
-
-/* EVENTOS */
-player.addEventListener("ended",()=>loop?playSong(currentIndex):next());
-
-player.addEventListener("timeupdate",()=>{
-if(!player.duration)return;
-document.getElementById("barra").style.width=(player.currentTime/player.duration)*100+"%";
-});
-
-player.addEventListener("play",()=>{
-  document.getElementById("iconPlay").style.display="none";
-  document.getElementById("iconPause").style.display="block";
-ondas.classList.remove("pausa");
-});
-
-player.addEventListener("pause",()=>{
-  document.getElementById("iconPlay").style.display="block";
-  document.getElementById("iconPause").style.display="none";
-ondas.classList.add("pausa");
-});
-
-/* SEEK */
-function seek(e){
-let r=e.currentTarget.getBoundingClientRect();
-player.currentTime=((e.clientX-r.left)/r.width)*player.duration;
-}
-
-const volUp = document.getElementById("volUpBtn");
-const volDown = document.getElementById("volDownBtn");
-
-let interval;
-
-function changeVolume(amount) {
-  player.volume = Math.min(1, Math.max(0, player.volume + amount));
-}
-
-// CLICK
-volUp.onclick = () => changeVolume(0.05);
-volDown.onclick = () => changeVolume(-0.05);
-
-// CLICK SOSTENIDO
-volUp.onmousedown = () => {
-  interval = setInterval(() => changeVolume(0.02), 100);
-};
-
-volDown.onmousedown = () => {
-  interval = setInterval(() => changeVolume(-0.02), 100);
-};
-
-document.onmouseup = () => clearInterval(interval);
-
-/* HISTORIAL */
-let reproducciones=JSON.parse(localStorage.getItem("reproducciones"))||{};
-let historial=JSON.parse(localStorage.getItem("historial"))||[];
-
-function registrarReproduccion(file){
-reproducciones[file]=(reproducciones[file]||0)+1;
-historial.unshift(file);
-historial=historial.slice(0,5);
-localStorage.setItem("reproducciones",JSON.stringify(reproducciones));
-localStorage.setItem("historial",JSON.stringify(historial));
-actualizarSecciones();
-}
-
-function actualizarSecciones(){
-
-let contTop=document.getElementById("mas");
-contTop.innerHTML="";
-
-Object.entries(reproducciones)
-.sort((a,b)=>b[1]-a[1])
-.slice(0,3)
-.forEach(([file,count])=>{
-let s=playlist.find(x=>x.file===file);
-if(!s)return;
-let d=document.createElement("div");
-d.className="item";
-d.innerText=`🎵 ${s.title} (${count})`;
-d.onclick=()=>playSong(playlist.indexOf(s));
-contTop.appendChild(d);
-});
-
-let contUlt=document.getElementById("ult");
-contUlt.innerHTML="";
-
-[...new Set(historial)].forEach(file=>{
-let s=playlist.find(x=>x.file===file);
-if(!s)return;
-let d=document.createElement("div");
-d.className="item";
-d.innerText=`🎵 ${s.title}`;
-d.onclick=()=>playSong(playlist.indexOf(s));
-contUlt.appendChild(d);
-});
-}
-
-function playMusic(file){
-  let i=playlist.findIndex(s=>s.file===file);
-  if(i!=-1){
-    registrarReproduccion(file);
-    playSong(i);
-
-    // 🔥 aquí sí desaparece
-    document.getElementById("mensajeInicial").style.opacity = "0";
-
-    setTimeout(() => {
-      document.getElementById("mensajeInicial").style.display = "none";
-    }, 600);
-  }
-}
-
-function toggle(id){
-document.getElementById(id).classList.toggle("activo");
-}
-
-actualizarSecciones();
-
-// 🔥 autoplay inicial
-window.addEventListener("load", () => {
-  playSong(0);
-
-let inicioPorTecla = false;
-
-document.addEventListener("keydown", () => {
-
-  if(!inicioPorTecla){
-    playSong(0); // 🔥 mp3 predeterminado
-    inicioPorTecla = true;
-  }
-
-}, { once: true });
-
-});
 
 </script>
 
 </body>
-</html>>
+</html>
