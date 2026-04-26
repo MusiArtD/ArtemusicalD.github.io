@@ -124,6 +124,11 @@ body {
   transition: 0.2s;
 }
 
+.ctrl.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
 .volume-group .ctrl {
   font-size: 20px;
   width: 34px;
@@ -455,6 +460,16 @@ function playSong(i){
   currentIndex = i;
   let song = playlist[i];
 
+  // 🔥 bloquear si es intro
+  if(i === 0){
+    bloquearControlesIntro();
+  }else{
+    desbloquearControles();
+  }
+
+  currentIndex = i;
+  let song = playlist[i];
+
   player.pause();                 // 🔥 detener anterior
   player.currentTime = 0;         // 🔥 reset inmediato
   document.getElementById("barra").style.width = "0%"; // 🔥 limpia barra
@@ -496,6 +511,16 @@ function prev(){
   }
 
   playSong(currentIndex);
+}
+
+function bloquearControlesIntro() {
+  document.getElementById("prevBtn").classList.add("disabled");
+  document.getElementById("nextBtn").classList.add("disabled");
+}
+
+function desbloquearControles() {
+  document.getElementById("prevBtn").classList.remove("disabled");
+  document.getElementById("nextBtn").classList.remove("disabled");
 }
 
 function toggleShuffle(){
@@ -639,8 +664,8 @@ actualizarSecciones();
 // 🔥 autoplay inicial
 window.addEventListener("load", () => {
 
-  // 🔥 solo mostrar intro (sin reproducir)
   updateUI(playlist[0]);
+  bloquearControlesIntro(); // 🔥 clave
 
 });
 
