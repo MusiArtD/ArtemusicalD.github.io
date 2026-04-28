@@ -751,7 +751,7 @@ const pantallaInicio = document.getElementById("pantallaInicio");
 const inputNombre = document.getElementById("nombreInput");
 const btnIngresar = document.getElementById("btnIngresar");
 
-// 🔥 BOTÓN aparece al escribir
+// mostrar botón al escribir mínimo 3 letras
 inputNombre.addEventListener("input", () => {
   if(inputNombre.value.length >= 3){
     btnIngresar.classList.add("visible");
@@ -760,15 +760,17 @@ inputNombre.addEventListener("input", () => {
   }
 });
 
-// 🔥 CLICK pantalla inicio
-pantallaInicio.addEventListener("click", () => {
+// 🔥 ÚNICO ACCESO REAL (BOTÓN)
+btnIngresar.addEventListener("click", () => {
 
+  // ocultar pantalla
   pantallaInicio.style.opacity = "0";
 
   setTimeout(() => {
     pantallaInicio.style.display = "none";
   }, 500);
 
+  // reproducir intro
   playSong(0);
 
 });
