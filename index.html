@@ -28,6 +28,52 @@ body {
   cursor: pointer;
 }
 
+/* INPUT INICIO */
+.input-box {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-box input {
+  width: 260px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  text-align: center;
+  color: #333;
+}
+
+.input-box input::placeholder {
+  color: #888;
+}
+
+/* BOTON OCULTO */
+#btnIngresar {
+  margin-top: 12px;
+  padding: 10px 25px;
+  border-radius: 20px;
+  border: none;
+  background: #1db954;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: 0.3s;
+}
+
+#btnIngresar.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
 .inicio-contenido {
   text-align: center;
   color: white;
@@ -302,8 +348,12 @@ body {
 
     <img src="portada 2026.jpg" class="inicio-cover">
 
-    <h1>SOUND MUSIC</h1>
-    <p>Haz click para comenzar</p>
+    <h1>GRACIAS POR SU VISITA</h1>
+
+    <div class="input-box">
+      <input type="text" id="nombreInput" placeholder="Escriba su nombre de pila">
+      <button id="btnIngresar">INGRESAR</button>
+    </div>
 
   </div>
 </div>
@@ -698,17 +748,27 @@ document.getElementById(id).classList.toggle("activo");
 actualizarSecciones();
 
 const pantallaInicio = document.getElementById("pantallaInicio");
+const inputNombre = document.getElementById("nombreInput");
+const btnIngresar = document.getElementById("btnIngresar");
 
+// 🔥 BOTÓN aparece al escribir
+inputNombre.addEventListener("input", () => {
+  if(inputNombre.value.length >= 3){
+    btnIngresar.classList.add("visible");
+  } else {
+    btnIngresar.classList.remove("visible");
+  }
+});
+
+// 🔥 CLICK pantalla inicio
 pantallaInicio.addEventListener("click", () => {
 
-  // ocultar pantalla
   pantallaInicio.style.opacity = "0";
 
   setTimeout(() => {
     pantallaInicio.style.display = "none";
   }, 500);
 
-  // reproducir intro
   playSong(0);
 
 });
