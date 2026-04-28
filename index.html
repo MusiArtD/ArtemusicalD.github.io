@@ -1,4 +1,3 @@
-<html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Saund Music</title>
@@ -55,9 +54,6 @@ body {
   width: 100%;
   max-width: 400px;
   border-radius: 12px;
-
-  display: block;
-  margin: 0 auto;
 }
 
 /* ONDAS */
@@ -122,11 +118,6 @@ body {
 
   color: #777;
   transition: 0.2s;
-}
-
-.ctrl.disabled {
-  opacity: 0.3;
-  pointer-events: none;
 }
 
 .volume-group .ctrl {
@@ -460,16 +451,6 @@ function playSong(i){
   currentIndex = i;
   let song = playlist[i];
 
-  // 🔥 bloquear si es intro
-  if(i === 0){
-    bloquearControlesIntro();
-  }else{
-    desbloquearControles();
-  }
-
-  currentIndex = i;
-  let song = playlist[i];
-
   player.pause();                 // 🔥 detener anterior
   player.currentTime = 0;         // 🔥 reset inmediato
   document.getElementById("barra").style.width = "0%"; // 🔥 limpia barra
@@ -490,12 +471,17 @@ player.paused ? player.play() : player.pause();
 function next(){
 
   if(shuffle){
-    currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1;
+    currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1; // 🔥 nunca 0
   }else{
     currentIndex++;
 
+    // 🔥 saltar intro (index 0)
+    if(currentIndex === 0) currentIndex = 1;
+
+    // 🔥 si llega al final, se queda (no vuelve)
     if(currentIndex >= playlist.length){
-      currentIndex = 1; // 🔥 vuelve al primero real (NO intro)
+      currentIndex = playlist.length - 1;
+      return;
     }
   }
 
@@ -511,16 +497,6 @@ function prev(){
   }
 
   playSong(currentIndex);
-}
-
-function bloquearControlesIntro() {
-  document.getElementById("prevBtn").classList.add("disabled");
-  document.getElementById("nextBtn").classList.add("disabled");
-}
-
-function desbloquearControles() {
-  document.getElementById("prevBtn").classList.remove("disabled");
-  document.getElementById("nextBtn").classList.remove("disabled");
 }
 
 function toggleShuffle(){
@@ -664,19 +640,12 @@ actualizarSecciones();
 // 🔥 autoplay inicial
 window.addEventListener("load", () => {
 
-  updateUI(playlist[0]);
-  bloquearControlesIntro(); // 🔥 clave
-
-});
-
-document.addEventListener("click", () => {
-
   if(!sessionStorage.getItem("introPlayed")){
     playSong(0);
     sessionStorage.setItem("introPlayed", "true");
   }
 
-}, { once: true });
+});
 
 </script>
 
