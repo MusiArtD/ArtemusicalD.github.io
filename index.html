@@ -575,13 +575,7 @@ function playSong(i){
 
 /* CONTROLES */
 function togglePlay(){
-
-  if(currentIndex === 0){
-    avisoUsuario();
-    return;
-  }
-
-  player.paused ? player.play() : player.pause();
+player.paused ? player.play() : player.pause();
 }
 
 function next(){
@@ -595,69 +589,34 @@ function next(){
     if(currentIndex === 0) currentIndex = 1;
 
     // 🔥 si llega al final, se queda (no vuelve)
-  function next(){
-
-  if(currentIndex === 0){
-    avisoUsuario();
-    return;
+    if(currentIndex >= playlist.length){
+      currentIndex = playlist.length - 1;
+      return;
     }
+  }
 
-   playSong(currentIndex);
+  playSong(currentIndex);
 }
 
 function prev(){
 
-  if(currentIndex === 0){
-    avisoUsuario();
-    return;
+  currentIndex--;
+
+  if(currentIndex <= 0){
+    currentIndex = 1; // 🔥 nunca vuelve al intro
   }
 
   playSong(currentIndex);
 }
 
 function toggleShuffle(){
-
-  if(currentIndex === 0){
-    avisoUsuario();
-    return;
-  }
-
   shuffle = !shuffle;
   document.getElementById("shuffleBtn").classList.toggle("active", shuffle);
 }
 
 function toggleLoop(){
-
-  if(currentIndex === 0){
-    avisoUsuario();
-    return;
-  }
-
   loop = !loop;
   document.getElementById("loopBtn").classList.toggle("active", loop);
-}
-
-function avisoUsuario() {
-  const msg = document.getElementById("mensajeInicial");
-
-  msg.style.transition = "0.2s";
-
-  let colores = ["#ff0055", "#ffcc00", "#00e5ff"];
-  let i = 0;
-
-  let efecto = setInterval(() => {
-    msg.style.color = colores[i % colores.length];
-    msg.style.textShadow = "0 0 10px " + colores[i % colores.length];
-    i++;
-  }, 120);
-
-  setTimeout(() => {
-    clearInterval(efecto);
-
-    // vuelve a su estilo original (gradiente)
-    msg.style.color = "";
-    msg.style.textShadow = "";
-  }, 700);
 }
 
 /* EVENTOS */
@@ -692,12 +651,6 @@ const volDown = document.getElementById("volDownBtn");
 let interval;
 
 function changeVolume(amount, btn) {
-
-  if(currentIndex === 0){
-    avisoUsuario();
-    return;
-  }
-
   player.volume = Math.min(1, Math.max(0, player.volume + amount));
 
   btn.classList.add("active");
@@ -705,7 +658,7 @@ function changeVolume(amount, btn) {
   setTimeout(() => {
     btn.classList.remove("active");
   }, 200);
-}}
+}
 
 // CLICK
 volUp.onclick = () => changeVolume(0.05, volUp);
