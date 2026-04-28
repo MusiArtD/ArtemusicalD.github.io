@@ -1,5 +1,3 @@
-base para continuar mejorando
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -184,7 +182,7 @@ body {
   max-width: 500px;
   margin: 20px auto;
   text-align: left;
-  transform: translateX(40px);  /* ?? mueve todo a la derecha */
+  transform: translateX(40px);  /* 🔥 mueve todo a la derecha */
 }
 
 .linea {
@@ -204,12 +202,12 @@ body {
 
 .dos {
   margin-left: auto;
-  transform: translateX(-45px);  /* ?? mueve 7px a la izquierda */
+  transform: translateX(-45px);  /* 🔥 mueve 7px a la izquierda */
 }
 
 .valor {
   flex: 1;
-  transform: translateX(-40px);  /* ?? se acerca al ":" */
+  transform: translateX(-40px);  /* 🔥 se acerca al ":" */
 }
 
 /* SECCIONES */
@@ -222,7 +220,7 @@ body {
 .contenido { display:none; }
 .contenido.activo { display:block; }
 
-/* ?? SOLO LA PRIMERA LINEA (TITULO) */
+/* 🔥 SOLO LA PRIMERA LINEA (TITULO) */
 .info .linea:first-child .label {
   font-size: 23px;
 }
@@ -234,7 +232,7 @@ body {
 
 #mensajeInicial {
   margin-top: 15px;
-  font-size: 28px; /* ?? recuperado */
+  font-size: 28px; /* 👈 recuperado */
   text-align: center;
   font-weight: bold;
 
@@ -317,7 +315,7 @@ body {
 
   <!-- Volumen -->
   <div class="volume-group">
-    <button class="ctrl" id="volDownBtn">-</button>
+    <button class="ctrl" id="volDownBtn">−</button>
     <span class="vol-text">[VOL]</span>
     <button class="ctrl" id="volUpBtn">+</button>
   </div>
@@ -362,13 +360,13 @@ body {
 <!-- LISTA -->
 <div class="lista">
 
-<div class="seccion" onclick="toggle('listaContenido')">?? Lista de reproducción</div>
+<div class="seccion" onclick="toggle('listaContenido')">📜 Lista de reproducción</div>
 <div id="listaContenido" class="contenido activo"></div>
 
-<div class="seccion" onclick="toggle('mas')">?? Más reproducido</div>
+<div class="seccion" onclick="toggle('mas')">❤️ Más reproducido</div>
 <div id="mas" class="contenido"></div>
 
-<div class="seccion" onclick="toggle('ult')">?? Últimas</div>
+<div class="seccion" onclick="toggle('ult')">🔥 Últimas</div>
 <div id="ult" class="contenido"></div>
 
 </div>
@@ -377,7 +375,7 @@ body {
 
 const playlist=[
 
-// ?? canción predeterminada (SIEMPRE índice 0 - NO MOVER - usada por DEFAULT_INDEX)
+// 🔥 canción predeterminada (SIEMPRE índice 0 - NO MOVER - usada por DEFAULT_INDEX)
 {
 file:"Intro Sound Music 2026.mp3",
 title:"Intro Sound Music 2026",
@@ -406,11 +404,11 @@ let cont=document.getElementById("listaContenido");
 cont.innerHTML="";
 
 playlist.forEach((song, index)=>{
-  if(index === 0) return; // ?? oculta la predeterminada
+  if(index === 0) return; // 🔥 oculta la predeterminada
 
 let div=document.createElement("div");
 div.className="item";
-div.innerText="?? "+song.title;
+div.innerText="🎵 "+song.title;
 div.onclick=()=>playMusic(song.file);
 cont.appendChild(div);
 });
@@ -443,7 +441,7 @@ document.getElementById("de").innerText=song.de;
 document.getElementById("para").innerText=song.para;
 document.getElementById("codigo").innerText=song.code;
 
-// ? AQUÍ ES EL LUGAR CORRECTO
+// ✅ AQUÍ ES EL LUGAR CORRECTO
 if(player.currentTime > 0){
   document.getElementById("mensajeInicial").style.display = "none";
 }
@@ -462,21 +460,25 @@ function playSong(i){
   currentIndex = i;
   let song = playlist[i];
 
-  // ?? bloquear si es intro
+  // 🔥 bloquear si es intro
   if(i === 0){
     bloquearControlesIntro();
   }else{
     desbloquearControles();
   }
 
-  player.pause();
-  player.currentTime = 0;
-  document.getElementById("barra").style.width = "0%";
+  currentIndex = i;
+  let song = playlist[i];
 
-  updateUI(song);
+  player.pause();                 // 🔥 detener anterior
+  player.currentTime = 0;         // 🔥 reset inmediato
+  document.getElementById("barra").style.width = "0%"; // 🔥 limpia barra
+
+  updateUI(song);                 // 🔥 primero UI (evita retraso visual)
 
   player.src = song.file;
-  player.load();
+
+  player.load();                  // 🔥 fuerza carga inmediata
   player.play();
 }
 
@@ -493,7 +495,7 @@ function next(){
     currentIndex++;
 
     if(currentIndex >= playlist.length){
-      currentIndex = 1; // ?? vuelve al primero real (NO intro)
+      currentIndex = 1; // 🔥 vuelve al primero real (NO intro)
     }
   }
 
@@ -505,7 +507,7 @@ function prev(){
   currentIndex--;
 
   if(currentIndex <= 0){
-    currentIndex = 1; // ?? nunca vuelve al intro
+    currentIndex = 1; // 🔥 nunca vuelve al intro
   }
 
   playSong(currentIndex);
@@ -514,15 +516,11 @@ function prev(){
 function bloquearControlesIntro() {
   document.getElementById("prevBtn").classList.add("disabled");
   document.getElementById("nextBtn").classList.add("disabled");
-  document.getElementById("shuffleBtn").classList.add("disabled");
-  document.getElementById("loopBtn").classList.add("disabled");
 }
 
 function desbloquearControles() {
   document.getElementById("prevBtn").classList.remove("disabled");
   document.getElementById("nextBtn").classList.remove("disabled");
-  document.getElementById("shuffleBtn").classList.remove("disabled");
-  document.getElementById("loopBtn").classList.remove("disabled");
 }
 
 function toggleShuffle(){
@@ -623,7 +621,7 @@ let s=playlist.find(x=>x.file===file);
 if(!s)return;
 let d=document.createElement("div");
 d.className="item";
-d.innerText=`?? ${s.title} (${count})`;
+d.innerText=`🎵 ${s.title} (${count})`;
 d.onclick=()=>playSong(playlist.indexOf(s));
 contTop.appendChild(d);
 });
@@ -636,7 +634,7 @@ let s=playlist.find(x=>x.file===file);
 if(!s)return;
 let d=document.createElement("div");
 d.className="item";
-d.innerText=`?? ${s.title}`;
+d.innerText=`🎵 ${s.title}`;
 d.onclick=()=>playSong(playlist.indexOf(s));
 contUlt.appendChild(d);
 });
@@ -648,7 +646,7 @@ function playMusic(file){
     registrarReproduccion(file);
     playSong(i);
 
-    // ?? aquí sí desaparece
+    // 🔥 aquí sí desaparece
     document.getElementById("mensajeInicial").style.opacity = "0";
 
     setTimeout(() => {
@@ -663,14 +661,21 @@ document.getElementById(id).classList.toggle("activo");
 
 actualizarSecciones();
 
-// ?? autoplay inicial
+// 🔥 autoplay inicial
 window.addEventListener("load", () => {
-  updateUI(playlist[0]);     // ?? muestra portada y datos
-  bloquearControlesIntro();  // ?? bloquea botones
+
+  updateUI(playlist[0]);
+  bloquearControlesIntro(); // 🔥 clave
+
 });
 
 document.addEventListener("click", () => {
-  playSong(0);
+
+  if(!sessionStorage.getItem("introPlayed")){
+    playSong(0);
+    sessionStorage.setItem("introPlayed", "true");
+  }
+
 }, { once: true });
 
 </script>
