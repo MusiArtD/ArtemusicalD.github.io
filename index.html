@@ -124,11 +124,6 @@ body {
   transition: 0.2s;
 }
 
-.ctrl.disabled {
-  opacity: 0.3;
-  pointer-events: none;
-}
-
 .volume-group .ctrl {
   font-size: 20px;
   width: 34px;
@@ -460,21 +455,15 @@ function playSong(i){
   currentIndex = i;
   let song = playlist[i];
 
-  // ?? bloquear si es intro
-  if(i === 0){
-    bloquearControlesIntro();
-  }else{
-    desbloquearControles();
-  }
+  player.pause();                 // ?? detener anterior
+  player.currentTime = 0;         // ?? reset inmediato
+  document.getElementById("barra").style.width = "0%"; // ?? limpia barra
 
-  player.pause();
-  player.currentTime = 0;
-  document.getElementById("barra").style.width = "0%";
-
-  updateUI(song);
+  updateUI(song);                 // ?? primero UI (evita retraso visual)
 
   player.src = song.file;
-  player.load();
+
+  player.load();                  // ?? fuerza carga inmediata
   player.play();
 }
 
@@ -507,30 +496,6 @@ function prev(){
   }
 
   playSong(currentIndex);
-}
-
-function bloquearControlesIntro() {
-  document.getElementById("prevBtn").classList.add("disabled");
-  document.getElementById("nextBtn").classList.add("disabled");
-  document.getElementById("shuffleBtn").classList.add("disabled");
-  document.getElementById("loopBtn").classList.add("disabled");
-}
-
-function desbloquearControles() {
-  document.getElementById("prevBtn").classList.remove("disabled");
-  document.getElementById("nextBtn").classList.remove("disabled");
-  document.getElementById("shuffleBtn").classList.remove("disabled");
-  document.getElementById("loopBtn").classList.remove("disabled");
-}
-
-function bloquearControlesIntro() {
-  document.getElementById("prevBtn").classList.add("disabled");
-  document.getElementById("nextBtn").classList.add("disabled");
-}
-
-function desbloquearControles() {
-  document.getElementById("prevBtn").classList.remove("disabled");
-  document.getElementById("nextBtn").classList.remove("disabled");
 }
 
 function toggleShuffle(){
@@ -673,8 +638,10 @@ actualizarSecciones();
 
 // ?? autoplay inicial
 window.addEventListener("load", () => {
-  updateUI(playlist[0]);     // ?? muestra portada y datos
-  bloquearControlesIntro();  // ?? bloquea botones
+
+  // ?? solo mostrar intro (sin reproducir)
+  updateUI(playlist[0]);
+
 });
 
 document.addEventListener("click", () => {
