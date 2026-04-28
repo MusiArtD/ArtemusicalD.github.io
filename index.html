@@ -4,12 +4,51 @@
 <link rel="icon" href="logo-temporal.png" type="image/png">
 
 <style>
+
 body {
   margin: 0;
   font-family: Arial;
   background: #121212;
   color: white;
   display: flex;
+}
+
+/* PANTALLA DE INICIO */
+#pantallaInicio {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.inicio-contenido {
+  text-align: center;
+  color: white;
+  animation: fadeIn 1s ease;
+}
+
+.inicio-contenido h1 {
+  font-size: 40px;
+  letter-spacing: 3px;
+  color: #1db954;
+}
+
+.inicio-contenido p {
+  font-size: 18px;
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* LISTA */
@@ -250,6 +289,14 @@ body {
 </head>
 
 <body>
+
+<!-- PANTALLA DE INICIO -->
+<div id="pantallaInicio">
+  <div class="inicio-contenido">
+    <h1>SOUND MUSIC</h1>
+    <p>Haz click para comenzar</p>
+  </div>
+</div>
 
 <!-- REPRODUCTOR -->
 <div class="reproductor">
@@ -640,13 +687,19 @@ document.getElementById(id).classList.toggle("activo");
 
 actualizarSecciones();
 
-// 🔥 autoplay inicial
-window.addEventListener("load", () => {
+const pantallaInicio = document.getElementById("pantallaInicio");
 
-  if(!sessionStorage.getItem("introPlayed")){
-    playSong(0);
-    sessionStorage.setItem("introPlayed", "true");
-  }
+pantallaInicio.addEventListener("click", () => {
+
+  // ocultar pantalla
+  pantallaInicio.style.opacity = "0";
+
+  setTimeout(() => {
+    pantallaInicio.style.display = "none";
+  }, 500);
+
+  // reproducir intro
+  playSong(0);
 
 });
 
