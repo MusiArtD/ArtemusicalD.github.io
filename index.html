@@ -105,12 +105,19 @@ body {
 }
 
 /* ICONOS SECCIONES */
-.icono-seccion{
-  width:18px;
-  height:18px;
-  margin-right:8px;
-  vertical-align:middle;
-  fill:#1db954;
+.icono-seccion {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.seccion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* nota musical */
@@ -524,11 +531,16 @@ body {
 
 <div class="seccion" onclick="toggle('listaContenido')">
 
-<svg class="icono-seccion icono-lista" viewBox="0 0 24 24">
-<path d="M4 6h14v2H4zm0 5h14v2H4zm0 5h14v2H4zm16-10h2v2h-2zm0 5h2v2h-2zm0 5h2v2h-2z"/>
+<svg class="icono-seccion icono-musica"
+viewBox="0 0 24 24"
+fill="currentColor">
+
+<path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+
 </svg>
 
 Lista de reproducción
+
 </div>
 
 <div id="listaContenido" class="contenido activo"></div>
@@ -546,14 +558,25 @@ Más reproducido
 
 <div class="seccion" onclick="toggle('ult')">
 
-<svg class="icono-seccion icono-corazon" viewBox="0 0 24 24">
-<path d="M12 21s-7-4.35-9.33-8A5.39 5.39 0 0112 5.09 5.39 5.39 0 0121.33 13C19 16.65 12 21 12 21z"/>
+<svg class="icono-seccion icono-fuego"
+viewBox="0 0 24 24"
+fill="currentColor">
+
+<path d="M12 2C9 5 8 7 8 10a4 4 0 008 0c0-2-1-4-4-8z"/>
+<path d="M12 12c-2 1.5-3 3-3 5a3 3 0 006 0c0-1.5-.7-3-3-5z"/>
+
 </svg>
 
 Últimas
 </div>
 
-<div id="ult" class="contenido"></div>
+<svg class="icono-seccion icono-corazon"
+viewBox="0 0 24 24"
+fill="currentColor">
+
+<path d="M12 21s-7-4.35-9.33-8A5.39 5.39 0 0112 5.09 5.39 5.39 0 0121.33 13C19 16.65 12 21 12 21z"/>
+
+</svg>
 
 </div>
 
