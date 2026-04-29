@@ -1016,6 +1016,82 @@ btnIngresar.addEventListener("click", () => {
 
 });
 
+const inputCelular = document.getElementById("celularInput");
+const inputCodigo = document.getElementById("codigoInput");
+
+const btnRecibir = document.createElement("button");
+btnRecibir.textContent = "RECIBIR CÓDIGO";
+btnRecibir.style.display = "none";
+btnRecibir.id = "btnRecibirCodigo";
+document.querySelector(".input-box").appendChild(btnRecibir);
+
+let codigoGenerado = "";
+
+/* VALIDAR NOMBRE */
+inputNombre.addEventListener("input", () => {
+  let nombreValido = inputNombre.value.trim().length >= 10 &&
+                     inputNombre.value.includes(" ");
+
+  if (nombreValido) {
+    inputCelular.style.display = "block";
+  } else {
+    inputCelular.style.display = "none";
+    btnRecibir.style.display = "none";
+  }
+});
+
+/* VALIDAR CELULAR */
+inputCelular.addEventListener("input", (e) => {
+  let value = e.target.value.replace(/\D/g, "").slice(0, 8);
+  e.target.value = value;
+
+  if (value.length === 8) {
+    btnRecibir.style.display = "inline-block";
+  } else {
+    btnRecibir.style.display = "none";
+  }
+});
+
+/* GENERAR CODIGO */
+btnRecibir.addEventListener("click", () => {
+  const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const nums = "0123456789";
+
+  let code = "";
+
+  for (let i = 0; i < 3; i++) {
+    code += letras[Math.floor(Math.random() * letras.length)];
+  }
+
+  code += "-";
+
+  for (let i = 0; i < 3; i++) {
+    code += nums[Math.floor(Math.random() * nums.length)];
+  }
+
+  codigoGenerado = code;
+
+  alert("Código enviado: " + codigoGenerado);
+
+  inputCodigo.style.display = "block";
+});
+
+/* VALIDAR CODIGO */
+inputCodigo.addEventListener("input", (e) => {
+  let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+
+  if (value.length > 6) value = value.slice(0, 6);
+
+  if (value.length > 3) {
+    value = value.slice(0, 3) + "-" + value.slice(3);
+  }
+
+  e.target.value = value;
+
+  btnIngresar.style.display =
+    (value === codigoGenerado) ? "block" : "none";
+});
+
 </script>
 
 </body>
