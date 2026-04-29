@@ -574,9 +574,12 @@ function playSong(i){
 }
 
 /* CONTROLES */
+
+let introActiva = true;
+
 function togglePlay(){
 
-  if(currentIndex === 0){
+  if(introActiva){
     avisoUsuario();
     return;
   }
@@ -586,16 +589,35 @@ function togglePlay(){
 
 function next(){
 
-  if(currentIndex === 0){
+  if(introActiva){
     avisoUsuario();
     return;
   }
 
- function prev(){
+  if(shuffle){
+    currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1;
+  }else{
+    currentIndex++;
 
-  if(currentIndex === 0){
+    if(currentIndex >= playlist.length){
+      currentIndex = 1;
+    }
+  }
+
+  playSong(currentIndex);
+}
+
+function prev(){
+
+  if(introActiva){
     avisoUsuario();
     return;
+  }
+
+  currentIndex--;
+
+  if(currentIndex <= 0){
+    currentIndex = 1;
   }
 
   playSong(currentIndex);
@@ -603,47 +625,43 @@ function next(){
 
 function toggleShuffle(){
 
-  if(currentIndex === 0){
+  if(introActiva){
     avisoUsuario();
     return;
   }
 
   shuffle = !shuffle;
-  document.getElementById("shuffleBtn").classList.toggle("active", shuffle);
+
+  document.getElementById("shuffleBtn")
+  .classList.toggle("active", shuffle);
 }
 
 function toggleLoop(){
 
-  if(currentIndex === 0){
+  if(introActiva){
     avisoUsuario();
     return;
   }
 
   loop = !loop;
-  document.getElementById("loopBtn").classList.toggle("active", loop);
+
+  document.getElementById("loopBtn")
+  .classList.toggle("active", loop);
 }
 
-function avisoUsuario() {
+function avisoUsuario(){
+
   const msg = document.getElementById("mensajeInicial");
 
-  msg.style.transition = "0.2s";
+  msg.animate([
+    { opacity: 1, transform: "scale(1)" },
+    { opacity: 0.3, transform: "scale(1.08)" },
+    { opacity: 1, transform: "scale(1)" }
+  ], {
+    duration: 500,
+    iterations: 2
+  });
 
-  let colores = ["#ff0055", "#ffcc00", "#00e5ff"];
-  let i = 0;
-
-  let efecto = setInterval(() => {
-    msg.style.color = colores[i % colores.length];
-    msg.style.textShadow = "0 0 10px " + colores[i % colores.length];
-    i++;
-  }, 120);
-
-  setTimeout(() => {
-    clearInterval(efecto);
-
-    // vuelve a su estilo original (gradiente)
-    msg.style.color = "";
-    msg.style.textShadow = "";
-  }, 700);
 }
 
 /* EVENTOS */
@@ -678,6 +696,12 @@ const volDown = document.getElementById("volDownBtn");
 let interval;
 
 function changeVolume(amount, btn) {
+
+  if(introActiva){
+    avisoUsuario();
+    return;
+  }
+
   player.volume = Math.min(1, Math.max(0, player.volume + amount));
 
   btn.classList.add("active");
@@ -757,6 +781,7 @@ function playMusic(file){
   let i=playlist.findIndex(s=>s.file===file);
   if(i!=-1){
     registrarReproduccion(file);
+    introActiva = false;
     playSong(i);
 
     // ?? aquí sí desaparece
