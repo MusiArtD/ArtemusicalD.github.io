@@ -575,48 +575,75 @@ function playSong(i){
 
 /* CONTROLES */
 function togglePlay(){
-player.paused ? player.play() : player.pause();
+
+  if(currentIndex === 0){
+    avisoUsuario();
+    return;
+  }
+
+  player.paused ? player.play() : player.pause();
 }
 
 function next(){
 
-  if(shuffle){
-    currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1; // ?? nunca 0
-  }else{
-    currentIndex++;
-
-    // ?? saltar intro (index 0)
-    if(currentIndex === 0) currentIndex = 1;
-
-    // ?? si llega al final, se queda (no vuelve)
-    if(currentIndex >= playlist.length){
-      currentIndex = playlist.length - 1;
-      return;
-    }
+  if(currentIndex === 0){
+    avisoUsuario();
+    return;
   }
 
-  playSong(currentIndex);
-}
+ function prev(){
 
-function prev(){
-
-  currentIndex--;
-
-  if(currentIndex <= 0){
-    currentIndex = 1; // ?? nunca vuelve al intro
+  if(currentIndex === 0){
+    avisoUsuario();
+    return;
   }
 
   playSong(currentIndex);
 }
 
 function toggleShuffle(){
+
+  if(currentIndex === 0){
+    avisoUsuario();
+    return;
+  }
+
   shuffle = !shuffle;
   document.getElementById("shuffleBtn").classList.toggle("active", shuffle);
 }
 
 function toggleLoop(){
+
+  if(currentIndex === 0){
+    avisoUsuario();
+    return;
+  }
+
   loop = !loop;
   document.getElementById("loopBtn").classList.toggle("active", loop);
+}
+
+function avisoUsuario() {
+  const msg = document.getElementById("mensajeInicial");
+
+  msg.style.transition = "0.2s";
+
+  let colores = ["#ff0055", "#ffcc00", "#00e5ff"];
+  let i = 0;
+
+  let efecto = setInterval(() => {
+    msg.style.color = colores[i % colores.length];
+    msg.style.textShadow = "0 0 10px " + colores[i % colores.length];
+    i++;
+  }, 120);
+
+  setTimeout(() => {
+    clearInterval(efecto);
+
+    // vuelve a su estilo original (gradiente)
+    msg.style.color = "";
+    msg.style.textShadow = "";
+  }, 700);
 }
 
 /* EVENTOS */
