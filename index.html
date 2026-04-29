@@ -51,6 +51,26 @@ body {
   color: #888;
 }
 
+/* 👇 AQUÍ VAN LOS NUEVOS ESTILOS */
+.input-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+#nombreInput,
+#celularInput {
+  text-align: left;
+}
+
+#codigoInput {
+  text-align: center;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
 /* BOTON OCULTO */
 #btnIngresar {
   margin-top: 12px;
@@ -950,6 +970,20 @@ actualizarSecciones();
 const pantallaInicio = document.getElementById("pantallaInicio");
 const inputNombre = document.getElementById("nombreInput");
 const btnIngresar = document.getElementById("btnIngresar");
+
+const codigoInput = document.getElementById("codigoInput");
+
+codigoInput.addEventListener("input", (e) => {
+  let value = e.target.value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+
+  if (value.length > 6) value = value.slice(0, 6);
+
+  if (value.length > 3) {
+    value = value.slice(0, 3) + "-" + value.slice(3);
+  }
+
+  e.target.value = value;
+});
 
 // mostrar botón al escribir mínimo 3 letras
 inputNombre.addEventListener("input", () => {
