@@ -461,13 +461,13 @@ body {
 <!-- LISTA -->
 <div class="lista">
 
-<div class="seccion" onclick="toggle('listaContenido')">?? Lista de reproducción</div>
+<div class="seccion" onclick="toggle('listaContenido')">🎵 Lista de reproducción</div>
 <div id="listaContenido" class="contenido activo"></div>
 
-<div class="seccion" onclick="toggle('mas')">?? Más reproducido</div>
+<div class="seccion" onclick="toggle('mas')">🔥 Más reproducido</div>
 <div id="mas" class="contenido"></div>
 
-<div class="seccion" onclick="toggle('ult')">?? Últimas</div>
+<div class="seccion" onclick="toggle('ult')">❤️ Últimas</div>
 <div id="ult" class="contenido"></div>
 
 </div>
@@ -509,7 +509,7 @@ playlist.forEach((song, index)=>{
 
 let div=document.createElement("div");
 div.className="item";
-div.innerText="?? "+song.title;
+div.innerText="🎵 "+song.title;
 div.onclick=()=>playMusic(song.file);
 cont.appendChild(div);
 });
@@ -758,7 +758,7 @@ let s=playlist.find(x=>x.file===file);
 if(!s)return;
 let d=document.createElement("div");
 d.className="item";
-d.innerText=`?? ${s.title} (${count})`;
+d.innerText=`🔥 ${s.title} (${count})`;
 d.onclick=()=>playSong(playlist.indexOf(s));
 contTop.appendChild(d);
 });
@@ -771,7 +771,7 @@ let s=playlist.find(x=>x.file===file);
 if(!s)return;
 let d=document.createElement("div");
 d.className="item";
-d.innerText=`?? ${s.title}`;
+d.innerText=`❤️ ${s.title}`;
 d.onclick=()=>playSong(playlist.indexOf(s));
 contUlt.appendChild(d);
 });
