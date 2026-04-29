@@ -978,8 +978,6 @@ const pantallaInicio = document.getElementById("pantallaInicio");
 const inputNombre = document.getElementById("nombreInput");
 const btnIngresar = document.getElementById("btnIngresar");
 
-const codigoInput = document.getElementById("codigoInput");
-
 codigoInput.addEventListener("input", (e) => {
   let value = e.target.value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
 
@@ -1022,14 +1020,21 @@ let codigoGenerado = "";
 
 /* VALIDAR NOMBRE */
 inputNombre.addEventListener("input", () => {
-  let nombreValido = inputNombre.value.trim().length >= 10 &&
-                     inputNombre.value.includes(" ");
 
-  if (nombreValido) {
-    inputCelular.style.display = "block";
-  } else {
-    inputCelular.style.display = "none";
+  const nombre = inputNombre.value.trim();
+
+  const nombreValido =
+    nombre.length >= 10 &&
+    nombre.includes(" ");
+
+  // mostrar celular
+  inputCelular.style.display = nombreValido ? "block" : "none";
+
+  // reset total si falla nombre
+  if (!nombreValido) {
     btnRecibir.style.display = "none";
+    inputCodigo.style.display = "none";
+    btnIngresar.classList.remove("visible");
   }
 });
 
@@ -1067,22 +1072,6 @@ btnRecibir.addEventListener("click", () => {
   alert("Código enviado: " + codigoGenerado);
 
   inputCodigo.style.display = "block";
-});
-
-/* VALIDAR CODIGO */
-inputCodigo.addEventListener("input", (e) => {
-  let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-
-  if (value.length > 6) value = value.slice(0, 6);
-
-  if (value.length > 3) {
-    value = value.slice(0, 3) + "-" + value.slice(3);
-  }
-
-  e.target.value = value;
-
-  btnIngresar.style.display =
-    (value === codigoGenerado) ? "block" : "none";
 });
 
 </script>
