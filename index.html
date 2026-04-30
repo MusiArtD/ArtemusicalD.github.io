@@ -442,12 +442,14 @@ body {
     <div class="input-box">
 
       <input type="text" id="nombreInput" placeholder="Nombre completo">
+      
+      <input type="tel" id="celularInput" placeholder="Número de celular" style="display:none;">
+      
+      <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
 
-      <input type="tel" id="celularInput" placeholder="Número de celular">
+      <button id="btnRecibirCodigo" style="display:none;">RECIBIR CÓDIGO</button>
 
-      <input type="text" id="codigoInput" placeholder="Código de verificación">
-
-      <button id="btnIngresar">INGRESAR</button>
+      <button id="btnIngresar" style="opacity:0; pointer-events:none;">INGRESAR</button>
 
     </div>
 
@@ -972,86 +974,58 @@ function toggle(id){
 document.getElementById(id).classList.toggle("activo");
 }
 
-actualizarSecciones();
-
 const pantallaInicio = document.getElementById("pantallaInicio");
+
 const inputNombre = document.getElementById("nombreInput");
-const btnIngresar = document.getElementById("btnIngresar");
-
-codigoInput.addEventListener("input", (e) => {
-  let value = e.target.value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
-
-  if (value.length > 6) value = value.slice(0, 6);
-
-  if (value.length > 3) {
-    value = value.slice(0, 3) + "-" + value.slice(3);
-  }
-
-  e.target.value = value;
-});
-
-// mostrar botón al escribir mínimo 3 letras
-
-// ?? ÚNICO ACCESO REAL (BOTÓN)
-btnIngresar.addEventListener("click", () => {
-
-  // ocultar pantalla
-  pantallaInicio.style.opacity = "0";
-
-  setTimeout(() => {
-    pantallaInicio.style.display = "none";
-  }, 500);
-
-  // reproducir intro
-  playSong(0);
-
-});
-
 const inputCelular = document.getElementById("celularInput");
 const inputCodigo = document.getElementById("codigoInput");
 
-const btnRecibir = document.createElement("button");
-btnRecibir.textContent = "RECIBIR CÓDIGO";
-btnRecibir.style.display = "none";
-btnRecibir.id = "btnRecibirCodigo";
-document.querySelector(".input-box").appendChild(btnRecibir);
+const btnIngresar = document.getElementById("btnIngresar");
+const btnRecibir = document.getElementById("btnRecibirCodigo");
 
 let codigoGenerado = "";
 
-/* VALIDAR NOMBRE */
+/* RESET INICIAL */
+function resetLogin() {
+  inputCelular.style.display = "none";
+  inputCodigo.style.display = "none";
+  btnRecibir.style.display = "none";
+  btnIngresar.style.opacity = "0";
+  btnIngresar.style.pointerEvents = "none";
+}
+
+resetLogin();
+
+/* NOMBRE */
 inputNombre.addEventListener("input", () => {
 
-  const nombre = inputNombre.value.trim();
+  const ok = inputNombre.value.trim().length >= 10 &&
+             inputNombre.value.includes(" ");
 
-  const nombreValido =
-    nombre.length >= 10 &&
-    nombre.includes(" ");
-
-  // mostrar celular
-  inputCelular.style.display = nombreValido ? "block" : "none";
-
-  // reset total si falla nombre
-  if (!nombreValido) {
-    btnRecibir.style.display = "none";
-    inputCodigo.style.display = "none";
-    btnIngresar.classList.remove("visible");
+  if (ok) {
+    inputCelular.style.display = "block";
+  } else {
+    resetLogin();
   }
 });
 
-/* VALIDAR CELULAR */
+/* CELULAR */
 inputCelular.addEventListener("input", (e) => {
-  let value = e.target.value.replace(/\D/g, "").slice(0, 8);
-  e.target.value = value;
 
-  if (value.length === 8) {
+  let v = e.target.value.replace(/\D/g, "").slice(0, 8);
+  e.target.value = v;
+
+  if (v.length === 8) {
     btnRecibir.style.display = "inline-block";
   } else {
     btnRecibir.style.display = "none";
   }
+
 });
 
-/* GENERAR CODIGO */
+/* GENERAR CÓDIGO */
 btnRecibir.addEventListener("click", () => {
+
   const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const nums = "0123456789";
 
@@ -1072,6 +1046,44 @@ btnRecibir.addEventListener("click", () => {
   alert("Código enviado: " + codigoGenerado);
 
   inputCodigo.style.display = "block";
+});
+
+/* CÓDIGO INPUT */
+inputCodigo.addEventListener("input", () => {
+
+  let value = inputCodigo.value
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .toUpperCase();
+
+  if (value.length > 6) value = value.slice(0, 6);
+
+  if (value.length > 3) {
+    value = value.slice(0, 3) + "-" + value.slice(3);
+  }
+
+  inputCodigo.value = value;
+
+  if (value.length === 7) {
+    btnIngresar.style.opacity = "1";
+    btnIngresar.style.pointerEvents = "auto";
+  } else {
+    btnIngresar.style.opacity = "0";
+    btnIngresar.style.pointerEvents = "none";
+  }
+
+});
+
+/* INGRESO FINAL */
+btnIngresar.addEventListener("click", () => {
+
+  pantallaInicio.style.opacity = "0";
+
+  setTimeout(() => {
+    pantallaInicio.style.display = "none";
+  }, 500);
+
+  playSong(0);
+
 });
 
 </script>
