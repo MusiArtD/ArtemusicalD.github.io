@@ -258,14 +258,12 @@ body {
   width: 4px;
   margin: 0 2px;
   background: #00e5ff;
-  animation: onda 1s infinite;
+
+  height: 12px;
+  transition: height 0.08s linear;
+
+  border-radius: 10px;
 }
-@keyframes onda {
-  0%{height:10px;}
-  50%{height:40px;}
-  100%{height:10px;}
-}
-.pausa span { animation:none; height:12px; }
 
 /* PROGRESO */
 .progreso {
@@ -647,7 +645,26 @@ para:"Amelia Celeste"
 ];
 
 let currentIndex=0, shuffle=false, loop=false;
+
 const player=document.getElementById("player");
+
+/* AUDIO VISUALIZER */
+
+const audioContext = new AudioContext();
+
+const source = audioContext.createMediaElementSource(player);
+
+const analyser = audioContext.createAnalyser();
+
+source.connect(analyser);
+
+analyser.connect(audioContext.destination);
+
+analyser.fftSize = 64;
+
+const bufferLength = analyser.frequencyBinCount;
+
+const dataArray = new Uint8Array(bufferLength);
 
 /* LISTA DINAMICA */
 function renderLista(){
@@ -682,6 +699,28 @@ let s=document.createElement("span");
 s.style.animationDelay=(i*0.05)+"s";
 ondas.appendChild(s);
 }
+
+const bars = ondas.querySelectorAll("span");
+
+function animarOndas(){
+
+  requestAnimationFrame(animarOndas);
+
+  analyser.getByteFrequencyData(dataArray);
+
+  bars.forEach((bar, i) => {
+
+    let value = dataArray[i];
+
+    let height = Math.max(10, value * 0.6);
+
+    bar.style.height = height + "px";
+
+  });
+
+}
+
+animarOndas();
 
 /* UI */
 function updateUI(song){
@@ -729,6 +768,7 @@ function playSong(i){
   player.src = song.file;
 
   player.load();                  // ?? fuerza carga inmediata
+  audioContext.resume();
   player.play();
 }
 
