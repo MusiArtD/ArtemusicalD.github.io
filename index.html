@@ -458,52 +458,6 @@ body {
 
 </div>
 
-<!-- LISTA -->
-<div class="lista">
-
-  <!-- Lista de reproducción -->
-  <div class="seccion" onclick="toggle('listaContenido')">
-
-    <svg class="icono-seccion icono-lista" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M4 6h16v2H4z"/>
-      <path d="M4 11h16v2H4z"/>
-      <path d="M4 16h16v2H4z"/>
-    </svg>
-
-    Lista de reproducción
-  </div>
-
-  <div id="listaContenido" class="contenido activo"></div>
-
-  <!-- Más reproducido -->
-  <div class="seccion" onclick="toggle('mas')">
-
-    <svg class="icono-seccion icono-fuego" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M13 3s1 2 1 4-2 3-2 5a4 4 0 008 0c0-5-5-9-7-9zm-1 8s-4 2-4 6a5 5 0 0010 0c0-2-1-4-3-5 0 2-1 3-3 3s-3-2-3-4z"/>
-    </svg>
-
-    Más reproducido
-  </div>
-
-  <div id="mas" class="contenido"></div>
-
-  <!-- Últimas -->
-  <div class="seccion" onclick="toggle('ult')">
-
-    <svg class="icono-seccion icono-corazon" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 21s-7-4.35-9.33-8A5.39 5.39 0 0112 5.09 5.39 5.39 0 0121.33 13C19 16.65 12 21 12 21z"/>
-    </svg>
-
-    Últimas
-  </div>
-
-  <div id="ult" class="contenido"></div>
-
-</div>
-<script>
-
-const playlist=[
-
 <!-- REPRODUCTOR -->
 <div class="reproductor">
 <div class="placa">
@@ -603,6 +557,52 @@ const playlist=[
 
 </div>
 </div>
+
+<!-- LISTA -->
+<div class="lista">
+
+  <!-- Lista de reproducción -->
+  <div class="seccion" onclick="toggle('listaContenido')">
+
+    <svg class="icono-seccion icono-lista" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4 6h16v2H4z"/>
+      <path d="M4 11h16v2H4z"/>
+      <path d="M4 16h16v2H4z"/>
+    </svg>
+
+    Lista de reproducción
+  </div>
+
+  <div id="listaContenido" class="contenido activo"></div>
+
+  <!-- Más reproducido -->
+  <div class="seccion" onclick="toggle('mas')">
+
+    <svg class="icono-seccion icono-fuego" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M13 3s1 2 1 4-2 3-2 5a4 4 0 008 0c0-5-5-9-7-9zm-1 8s-4 2-4 6a5 5 0 0010 0c0-2-1-4-3-5 0 2-1 3-3 3s-3-2-3-4z"/>
+    </svg>
+
+    Más reproducido
+  </div>
+
+  <div id="mas" class="contenido"></div>
+
+  <!-- Últimas -->
+  <div class="seccion" onclick="toggle('ult')">
+
+    <svg class="icono-seccion icono-corazon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 21s-7-4.35-9.33-8A5.39 5.39 0 0112 5.09 5.39 5.39 0 0121.33 13C19 16.65 12 21 12 21z"/>
+    </svg>
+
+    Últimas
+  </div>
+
+  <div id="ult" class="contenido"></div>
+
+</div>
+<script>
+
+const playlist=[
 
 // ?? canción predeterminada (SIEMPRE índice 0 - NO MOVER - usada por DEFAULT_INDEX)
 {
