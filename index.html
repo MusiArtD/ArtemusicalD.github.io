@@ -251,18 +251,28 @@ body {
 .ondas {
   display: flex;
   justify-content: center;
-  height: 50px;
-  margin: 10px 0;
+  align-items: flex-start;
+
+  height: 35px;
+
+  overflow: hidden;
+
+  margin: 5px 0 12px 0;
 }
 .ondas span {
+
   width: 4px;
   margin: 0 2px;
+
   background: #00e5ff;
 
   height: 12px;
+
   transition: height 0.08s linear;
 
   border-radius: 10px;
+
+  transform-origin: top;
 }
 
 /* PROGRESO */
@@ -712,7 +722,7 @@ function animarOndas(){
 
     let value = dataArray[i];
 
-    let height = Math.max(10, value * 0.6);
+    let height = Math.min(30, Math.max(6, value * 0.35));
 
     bar.style.height = height + "px";
 
