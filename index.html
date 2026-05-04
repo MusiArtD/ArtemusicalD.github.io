@@ -266,19 +266,48 @@ margin: 5px 0 3px 0;
 
   width: 3px;
 
-  margin: 0 2px;
-
-  background: #00e5ff;
+  margin: 0 1px;
 
   height: 8px;
 
-  transition:
-    height 0.08s linear,
-    width 0.08s linear;
-
-  border-radius: 10px;
+  border-radius: 12px;
 
   transform-origin: bottom;
+
+  transition: height 0.08s linear;
+
+  background: linear-gradient(
+    to top,
+    #ff0000,
+    #ffd000,
+    #00ff88
+  );
+
+  box-shadow:
+    0 0 4px #ff0000,
+    0 0 8px #ffd000,
+    0 0 12px #00ff88;
+
+  animation: humoWave 2s infinite ease-in-out;
+}
+
+@keyframes humoWave {
+
+  0%{
+    filter: brightness(1);
+    opacity: 0.8;
+  }
+
+  50%{
+    filter: brightness(1.6);
+    opacity: 1;
+  }
+
+  100%{
+    filter: brightness(1);
+    opacity: 0.8;
+  }
+
 }
 
 /* PROGRESO */
