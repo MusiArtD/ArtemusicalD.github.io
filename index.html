@@ -94,6 +94,33 @@ body {
   transform: translateY(0);
 }
 
+.app{
+  display:flex;
+  width:100%;
+  height:100vh;
+}
+
+/* IZQUIERDA */
+.lista{
+  width:20%;
+  background:#1e1e1e;
+  overflow-y:auto;
+}
+
+/* CENTRO */
+.reproductor{
+  width:60%;
+  padding:20px;
+}
+
+/* DERECHA */
+.comentarios{
+  width:20%;
+  background:#181818;
+  padding:15px;
+  border-left:1px solid #333;
+}
+
 .inicio-contenido {
   text-align: center;
   color: white;
@@ -122,33 +149,6 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
-}
-
-.app{
-  display:flex;
-  width:100%;
-  height:100vh;
-}
-
-/* IZQUIERDA */
-.lista{
-  width:20%;
-  background:#1e1e1e;
-  overflow-y:auto;
-}
-
-/* CENTRO */
-.reproductor{
-  width:60%;
-  padding:20px;
-}
-
-/* DERECHA */
-.comentarios{
-  width:20%;
-  background:#181818;
-  padding:15px;
-  border-left:1px solid #333;
 }
 
 /* ICONOS SECCIONES */
@@ -458,25 +458,6 @@ body {
 
 <body>
 
-<div class="app">
-
-  <!-- 🔵 IZQUIERDA -->
-  <div class="lista">
-    <!-- playlists -->
-  </div>
-
-  <!-- 🟢 CENTRO -->
-  <div class="reproductor">
-    <!-- TODO tu reproductor intacto -->
-  </div>
-
-  <!-- 🟣 DERECHA -->
-  <div class="comentarios">
-    <!-- nuevo módulo -->
-  </div>
-
-</div>
-
 <div id="pantallaInicio">
 
   <div class="inicio-contenido">
@@ -499,6 +480,25 @@ body {
 
     </div>
 
+  </div>
+
+</div>
+
+<div class="app">
+
+  <!-- 🔵 IZQUIERDA -->
+  <div class="lista">
+    <!-- playlists -->
+  </div>
+
+  <!-- 🟢 CENTRO -->
+  <div class="reproductor">
+    <!-- TODO tu reproductor intacto -->
+  </div>
+
+  <!-- 🟣 DERECHA -->
+  <div class="comentarios">
+    <!-- nuevo módulo -->
   </div>
 
 </div>
