@@ -94,33 +94,6 @@ body {
   transform: translateY(0);
 }
 
-.app{
-  display:flex;
-  width:100%;
-  height:100vh;
-}
-
-/* IZQUIERDA */
-.lista{
-  width:20%;
-  background:#1e1e1e;
-  overflow-y:auto;
-}
-
-/* CENTRO */
-.reproductor{
-  width:60%;
-  padding:20px;
-}
-
-/* DERECHA */
-.comentarios{
-  width:20%;
-  background:#181818;
-  padding:15px;
-  border-left:1px solid #333;
-}
-
 .inicio-contenido {
   text-align: center;
   color: white;
@@ -484,15 +457,9 @@ body {
 
 </div>
 
-<div class="app">
-
-<!-- REPRODUCTOR CENTRO -->
+<!-- REPRODUCTOR -->
 <div class="reproductor">
 <div class="placa">
-
-<div class="reproductor">
-    <!-- TODO tu reproductor intacto -->
-  </div>
 
 <div class="caratula">
   <img id="cover" style="display:none;">
@@ -590,12 +557,8 @@ body {
 </div>
 </div>
 
-<!-- LISTA IZQUIERDA -->
+<!-- LISTA -->
 <div class="lista">
-
-  <div class="lista">
-    <!-- playlists -->
-  </div>
 
   <!-- Lista de reproducción -->
   <div class="seccion" onclick="toggle('listaContenido')">
@@ -636,14 +599,6 @@ body {
   <div id="ult" class="contenido"></div>
 
 </div>
-
-  <!-- 🟣 DERECHA -->
-  <div class="comentarios">
-    <!-- nuevo módulo -->
-  </div>
-
-</div>
-
 <script>
 
 const playlist=[
