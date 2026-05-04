@@ -486,26 +486,13 @@ body {
 
 <div class="app">
 
-  <!-- 🔵 IZQUIERDA -->
-  <div class="lista">
-    <!-- playlists -->
-  </div>
-
-  <!-- 🟢 CENTRO -->
-  <div class="reproductor">
-    <!-- TODO tu reproductor intacto -->
-  </div>
-
-  <!-- 🟣 DERECHA -->
-  <div class="comentarios">
-    <!-- nuevo módulo -->
-  </div>
-
-</div>
-
-<!-- REPRODUCTOR -->
+<!-- REPRODUCTOR CENTRO -->
 <div class="reproductor">
 <div class="placa">
+
+<div class="reproductor">
+    <!-- TODO tu reproductor intacto -->
+  </div>
 
 <div class="caratula">
   <img id="cover" style="display:none;">
@@ -603,8 +590,12 @@ body {
 </div>
 </div>
 
-<!-- LISTA -->
+<!-- LISTA IZQUIERDA -->
 <div class="lista">
+
+  <div class="lista">
+    <!-- playlists -->
+  </div>
 
   <!-- Lista de reproducción -->
   <div class="seccion" onclick="toggle('listaContenido')">
@@ -645,6 +636,14 @@ body {
   <div id="ult" class="contenido"></div>
 
 </div>
+
+  <!-- 🟣 DERECHA -->
+  <div class="comentarios">
+    <!-- nuevo módulo -->
+  </div>
+
+</div>
+
 <script>
 
 const playlist=[
