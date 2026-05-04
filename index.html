@@ -951,7 +951,12 @@ let s=playlist.find(x=>x.file===file);
 if(!s)return;
 let d=document.createElement("div");
 d.className="item";
-d.innerText=`?? ${s.title} (${count})`;
+d.innerHTML = `
+<svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
+  <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+</svg>
+${s.title} (${count})
+`;
 d.onclick=()=>playSong(playlist.indexOf(s));
 contTop.appendChild(d);
 });
@@ -964,7 +969,12 @@ let s=playlist.find(x=>x.file===file);
 if(!s)return;
 let d=document.createElement("div");
 d.className="item";
-d.innerText=`?? ${s.title}`;
+d.innerHTML = `
+<svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
+  <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+</svg>
+${s.title}
+`;
 d.onclick=()=>playSong(playlist.indexOf(s));
 contUlt.appendChild(d);
 });
