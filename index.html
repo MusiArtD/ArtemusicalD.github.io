@@ -741,48 +741,6 @@ margin: 5px 0 3px 0;
   }
 }
 
-.celular-box{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  margin-top:10px;
-  width:100%;
-  flex-wrap:nowrap;
-}
-
-/* evita que aparezcan saltos cuando se muestran/ocultan elementos */
-.celular-box > *{
-  flex-shrink:0;
-}
-
-/* control visual estable */
-#codigoPais{
-  width:110px;
-  height:42px;
-}
-
-#celularInput{
-  width:170px;
-  height:42px;
-}
-
-#operadoraDetectada{
-  min-width:65px;
-  text-align:center;
-  font-size:12px;
-  font-weight:bold;
-  transition:0.2s ease;
-}
-
-#btnRecibirCodigo,
-#btnIngresar{
-  height:42px;
-  padding:0 12px;
-  border-radius:18px;
-  white-space:nowrap;
-}
-
 </style>
 </head>
 
@@ -792,36 +750,39 @@ margin: 5px 0 3px 0;
 
 <div class="inicio-contenido">
 
-<!-- INPUT PRINCIPAL -->
 <div class="input-box">
 
   <input type="text" id="nombreInput" placeholder="Nombre completo">
 
-  <!-- SOLO LINEA CELULAR -->
+  <!-- CELULAR + PAÍS + OPERADORA -->
   <div class="celular-box">
 
     <select id="codigoPais">
-      <option value="+591">+591 ▼</option>
+      <option value="+591">+591 (Bolivia)</option>
     </select>
 
-    <input type="tel" id="celularInput" placeholder="Número">
+    <input type="tel" id="celularInput" placeholder="Número de celular">
 
+    <!-- OPERADORA (INVISIBLE INICIALMENTE) -->
     <div id="operadoraDetectada" class="operadora oculto"></div>
 
   </div>
 
-  <!-- BOTÓN (APARECE SOLO CUANDO TOCA) -->
-  <button id="btnRecibirCodigo" style="display:none;">
-    RECIBIR CÓDIGO
-  </button>
+  <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
 
-  <!-- INPUT CODIGO (APARECE DESPUÉS) -->
-  <input type="text" id="codigoInput" style="display:none;" placeholder="Código">
+  <button id="btnRecibirCodigo" style="display:none;">RECIBIR CÓDIGO</button>
 
-  <!-- BOTÓN FINAL -->
-  <button id="btnIngresar" style="opacity:0; pointer-events:none;">
-    INGRESAR
-  </button>
+  <button id="btnIngresar" style="opacity:0; pointer-events:none;">INGRESAR</button>
+
+</div>
+
+    <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
+
+    <button id="btnRecibirCodigo" style="display:none;">RECIBIR CÓDIGO</button>
+
+    <button id="btnIngresar" style="opacity:0; pointer-events:none;">INGRESAR</button>
+
+  </div>
 
 </div>
 
