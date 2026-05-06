@@ -1475,9 +1475,44 @@ function agregarComentario(){
     </div>
   `;
 
-  contenedor.prepend(div);
+contenedor.prepend(div);
 
-  input.value = "";
+input.value = "";
+
+/* RESPUESTA AUTOMÁTICA */
+
+const textoLower = texto.toLowerCase();
+
+if(
+  textoLower.includes("informacion") ||
+  textoLower.includes("contacto") ||
+  textoLower.includes("sound music") ||
+  textoLower.includes("encargado") ||
+  textoLower.includes("consulta")
+){
+
+  const respuesta = document.createElement("div");
+
+  respuesta.className = "comentario-item";
+
+  respuesta.innerHTML = `
+    <div class="comentario-texto">
+      👋 Para consultas directas con SOUND MUSIC,
+      haz clic en el icono de WhatsApp.
+      La flecha animada te indicará dónde escribirnos.
+    </div>
+
+    <div class="comentario-meta">
+      <span class="usuario">SOUND MUSIC</span>
+      <span class="fecha">
+        ${new Date().toLocaleDateString()}
+      </span>
+    </div>
+  `;
+
+  contenedor.prepend(respuesta);
+}
+
 }
 
 /* RESET INICIAL */
