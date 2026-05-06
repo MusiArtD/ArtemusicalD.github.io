@@ -529,6 +529,42 @@ margin: 5px 0 3px 0;
   align-items:center;
 }
 
+/* FORM COMENTARIOS */
+.comentario-form{
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.comentario-form input{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  outline:none;
+
+  background:#2a2a2a;
+  color:white;
+}
+
+.comentario-form button{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+
+  background:#1db954;
+  color:white;
+
+  font-weight:bold;
+  cursor:pointer;
+
+  transition:0.2s;
+}
+
+.comentario-form button:hover{
+  transform:scale(1.05);
+}
+
 /* ICONO WHATSAPP */
 .whatsapp-boton{
   font-size: 22px;
@@ -602,6 +638,46 @@ margin: 5px 0 3px 0;
   display:inline-block;
 
   animation: flechaMove 0.8s infinite alternate;
+}
+
+/* CAJA COMENTARIO */
+.comentario-box{
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.comentario-box input{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  outline:none;
+
+  background:#2a2a2a;
+  color:white;
+}
+
+.comentario-box input::placeholder{
+  color:#888;
+}
+
+.comentario-box button{
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+
+  background:#1db954;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+
+  transition:0.2s;
+}
+
+.comentario-box button:hover{
+  transform:scale(1.05);
+  filter:brightness(1.1);
 }
 
 @keyframes flechaMove{
@@ -817,6 +893,20 @@ margin: 5px 0 3px 0;
     </div>
 
   </div>
+
+<div class="comentario-box">
+
+  <input
+    type="text"
+    id="comentarioInput"
+    placeholder="Escribe un comentario..."
+  >
+
+  <button onclick="agregarComentario()">
+    ENVIAR
+  </button>
+
+</div>
 
   <!-- lista de comentarios -->
   <div id="listaComentarios">
@@ -1278,6 +1368,20 @@ const btnRecibir = document.getElementById("btnRecibirCodigo");
 
 let codigoGenerado = "";
 
+/* CONTADOR VISITAS */
+let visitas = localStorage.getItem("contadorVisitas");
+
+if(!visitas){
+  visitas = 0;
+}
+
+visitas++;
+
+localStorage.setItem("contadorVisitas", visitas);
+
+document.getElementById("contadorVisitas").innerText = visitas;
+
+/* WHATSAPP */
 function abrirWhatsApp(){
 
   const nombre =
@@ -1292,6 +1396,45 @@ function abrirWhatsApp(){
     `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
 
   window.open(url, "_blank");
+}
+
+/* COMENTARIOS */
+function agregarComentario(){
+
+  const input =
+    document.getElementById("comentarioInput");
+
+  const texto = input.value.trim();
+
+  if(!texto) return;
+
+  const nombre =
+    document.getElementById("nombreInput")?.value || "Usuario";
+
+  const fecha =
+    new Date().toLocaleDateString();
+
+  const contenedor =
+    document.getElementById("listaComentarios");
+
+  const div = document.createElement("div");
+
+  div.className = "comentario-item";
+
+  div.innerHTML = `
+    <div class="comentario-texto">
+      ${texto}
+    </div>
+
+    <div class="comentario-meta">
+      <span class="usuario">${nombre}</span>
+      <span class="fecha">${fecha}</span>
+    </div>
+  `;
+
+  contenedor.prepend(div);
+
+  input.value = "";
 }
 
 /* RESET INICIAL */
