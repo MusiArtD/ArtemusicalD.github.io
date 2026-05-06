@@ -100,6 +100,19 @@ body {
   animation: fadeIn 1s ease;
 }
 
+.operadora{
+  margin-top:5px;
+  font-size:13px;
+  font-weight:bold;
+  transition:0.25s ease;
+}
+
+.oculto{
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-3px);
+}
+
 .inicio-cover {
   width: 350px;
   border-radius: 12px;
@@ -734,25 +747,36 @@ margin: 5px 0 3px 0;
 
 <div id="pantallaInicio">
 
-  <div class="inicio-contenido">
+<div class="inicio-contenido">
 
-    <img src="portada 2026.jpg" class="inicio-cover">
+  <img src="portada 2026.jpg" class="inicio-cover">
 
-    <h1>GRACIAS POR SU VISITA</h1>
+  <h1>GRACIAS POR SU VISITA</h1>
 
-    <div class="input-box">
+  <div class="input-box">
 
-      <input type="text" id="nombreInput" placeholder="Nombre completo">
-      
-      <input type="tel" id="celularInput" placeholder="Número de celular" style="display:none;">
-      
-      <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
+    <input type="text" id="nombreInput" placeholder="Nombre completo">
 
-      <button id="btnRecibirCodigo" style="display:none;">RECIBIR CÓDIGO</button>
+    <!-- NUEVO BLOQUE CELULAR + OPERADORA -->
+    <div class="celular-box">
 
-      <button id="btnIngresar" style="opacity:0; pointer-events:none;">INGRESAR</button>
+      <select id="codigoPais">
+        <option value="+591">+591 (Bolivia)</option>
+      </select>
+
+      <input type="tel" id="celularInput" placeholder="Número de celular">
+
+      <div id="operadoraLabel" class="operadora oculto">
+        OPERADORA
+      </div>
 
     </div>
+
+    <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
+
+    <button id="btnRecibirCodigo" style="display:none;">RECIBIR CÓDIGO</button>
+
+    <button id="btnIngresar" style="opacity:0; pointer-events:none;">INGRESAR</button>
 
   </div>
 
@@ -1616,6 +1640,65 @@ btnIngresar.addEventListener("click", () => {
   playSong(0);
 
 });
+
+btnIngresar.addEventListener("click", () => {
+
+  pantallaInicio.style.opacity = "0";
+
+  setTimeout(() => {
+    pantallaInicio.style.display = "none";
+  }, 500);
+
+  playSong(0);
+
+});
+
+/* === OPERADORA (NUEVO BLOQUE) === */
+
+const operadoraBox = document.getElementById("operadoraDetectada");
+
+inputCelular.addEventListener("input", () => {
+  let value = inputCelular.value.replace(/\D/g, "").slice(0, 8);
+  inputCelular.value = value;
+
+  detectarOperadora(value);
+});
+
+function detectarOperadora(numero){
+
+  if(numero.length < 6){
+    operadoraBox.classList.add("oculto");
+    operadoraBox.innerText = "";
+    return;
+  }
+
+  const prefijo = parseInt(numero.substring(0,4));
+
+  let texto = "";
+  let color = "";
+
+  if(prefijo >= 7210 && prefijo <= 7299){
+    texto = "TIGO";
+    color = "#00ff66";
+  }
+  else if(prefijo >= 7100 && prefijo <= 7199){
+    texto = "ENTEL";
+    color = "#00aaff";
+  }
+  else if(prefijo >= 7300 && prefijo <= 7399){
+    texto = "VIVA";
+    color = "#ffcc00";
+  }
+
+  if(!texto){
+    operadoraBox.classList.add("oculto");
+    return;
+  }
+
+  operadoraBox.classList.remove("oculto");
+  operadoraBox.innerText = texto;
+  operadoraBox.style.color = color;
+}
 
 </script>
 
