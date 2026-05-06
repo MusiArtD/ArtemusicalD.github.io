@@ -572,6 +572,18 @@ margin: 5px 0 3px 0;
   color: #1db954;
 }
 
+.icono-whatsapp{
+  color:#25D366;
+  cursor:pointer;
+  transition:0.2s;
+  margin-left:10px;
+}
+
+.icono-whatsapp:hover{
+  transform:scale(1.25);
+  filter:drop-shadow(0 0 6px #25D366);
+}
+
 </style>
 </head>
 
@@ -754,15 +766,21 @@ margin: 5px 0 3px 0;
   <!-- contador + whatsapp -->
   <div class="comentario-header">
 
-    <div class="visitas">
-      VISITAS <span id="contadorVisitas">0</span>
-    </div>
+<div class="visitas">
 
-    <div class="whatsapp-boton" title="Enviar por WhatsApp">
-      📱
-    </div>
+  VISITAS <span id="contadorVisitas">0</span>
+
+  <!-- BOTÓN WHATSAPP -->
+   <svg class="icono-seccion icono-whatsapp"
+        onclick="abrirWhatsApp()"
+        viewBox="0 0 24 24">
+
+      <path d="M20.52 3.48A11.86 11.86 0 0012.07 0C5.43 0 .16 5.27.16 11.77c0 2.07.54 4.08 1.57 5.86L0 24l6.5-1.7a11.7 11.7 0 005.57 1.42h.01c6.63 0 11.9-5.27 11.9-11.77 0-3.16-1.24-6.14-3.46-8.47z"/>
+    </svg>
 
   </div>
+
+</div>
 
   <!-- lista de comentarios -->
   <div id="listaComentarios">
