@@ -105,6 +105,7 @@ body {
   font-size:13px;
   font-weight:bold;
   transition:0.25s ease;
+  text-align:center;
 }
 
 .oculto{
@@ -749,28 +750,31 @@ margin: 5px 0 3px 0;
 
 <div class="inicio-contenido">
 
-  <img src="portada 2026.jpg" class="inicio-cover">
+<div class="input-box">
 
-  <h1>GRACIAS POR SU VISITA</h1>
+  <input type="text" id="nombreInput" placeholder="Nombre completo">
 
-  <div class="input-box">
+  <!-- CELULAR + PAÍS + OPERADORA -->
+  <div class="celular-box">
 
-    <input type="text" id="nombreInput" placeholder="Nombre completo">
+    <select id="codigoPais">
+      <option value="+591">+591 (Bolivia)</option>
+    </select>
 
-    <!-- NUEVO BLOQUE CELULAR + OPERADORA -->
-    <div class="celular-box">
+    <input type="tel" id="celularInput" placeholder="Número de celular">
 
-      <select id="codigoPais">
-        <option value="+591">+591 (Bolivia)</option>
-      </select>
+    <!-- OPERADORA (INVISIBLE INICIALMENTE) -->
+    <div id="operadoraDetectada" class="operadora oculto"></div>
 
-      <input type="tel" id="celularInput" placeholder="Número de celular">
+  </div>
 
-      <div id="operadoraLabel" class="operadora oculto">
-        OPERADORA
-      </div>
+  <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
 
-    </div>
+  <button id="btnRecibirCodigo" style="display:none;">RECIBIR CÓDIGO</button>
+
+  <button id="btnIngresar" style="opacity:0; pointer-events:none;">INGRESAR</button>
+
+</div>
 
     <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
 
@@ -1641,32 +1645,29 @@ btnIngresar.addEventListener("click", () => {
 
 });
 
-btnIngresar.addEventListener("click", () => {
-
-  pantallaInicio.style.opacity = "0";
-
-  setTimeout(() => {
-    pantallaInicio.style.display = "none";
-  }, 500);
-
-  playSong(0);
-
-});
-
 /* === OPERADORA (NUEVO BLOQUE) === */
 
 const operadoraBox = document.getElementById("operadoraDetectada");
 
-inputCelular.addEventListener("input", () => {
-  let value = inputCelular.value.replace(/\D/g, "").slice(0, 8);
-  inputCelular.value = value;
+inputCelular.addEventListener("input", (e) => {
+
+  let value = e.target.value.replace(/\D/g, "").slice(0, 8);
+  e.target.value = value;
 
   detectarOperadora(value);
+
+  // lógica botón recibir código
+  if (value.length === 8) {
+    btnRecibir.style.display = "inline-block";
+  } else {
+    btnRecibir.style.display = "none";
+  }
+
 });
 
 function detectarOperadora(numero){
 
-  if(numero.length < 6){
+  if(numero.length < 4){
     operadoraBox.classList.add("oculto");
     operadoraBox.innerText = "";
     return;
@@ -1692,6 +1693,7 @@ function detectarOperadora(numero){
 
   if(!texto){
     operadoraBox.classList.add("oculto");
+    operadoraBox.innerText = "";
     return;
   }
 
