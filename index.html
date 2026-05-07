@@ -1,4 +1,4 @@
-<head> 
+dale otra auditoria al html para ver si hay error sobre respuesta automatica " <head> 
 <meta charset="UTF-8">
 <title>Saund Music</title>
 <link rel="icon" href="logo-temporal.png" type="image/png">
@@ -108,7 +108,7 @@ body {
 }
 
 .inicio-contenido h1 {
-  font-size: 27;
+  font-size: 27px;
   letter-spacing: 3px;
   color: #1db954;
 }
@@ -250,32 +250,64 @@ body {
 /* ONDAS */
 .ondas {
   display: flex;
+
   justify-content: center;
+
   align-items: flex-end;
 
-  height: 50px;
+  height: 30px;
 
   overflow: hidden;
 
-  margin: 5px 0 3px 0;
+margin: 5px 0 3px 0;
 }
+
 .ondas span {
 
-  width: 6px;
+  width: 3px;
 
-  margin: 0 2px;
-
-  background: #00e5ff;
+  margin: 0 1px;
 
   height: 8px;
 
-  transition:
-    height 0.08s linear,
-    width 0.08s linear;
-
-  border-radius: 10px;
+  border-radius: 12px;
 
   transform-origin: bottom;
+
+  transition: height 0.08s linear;
+
+  background: linear-gradient(
+    to top,
+    #ff0000,
+    #ffd000,
+    #00ff88
+  );
+
+  box-shadow:
+    0 0 4px #ff0000,
+    0 0 8px #ffd000,
+    0 0 12px #00ff88;
+
+  animation: humoWave 2s infinite ease-in-out;
+}
+
+@keyframes humoWave {
+
+  0%{
+    filter: brightness(1);
+    opacity: 0.8;
+  }
+
+  50%{
+    filter: brightness(1.6);
+    opacity: 1;
+  }
+
+  100%{
+    filter: brightness(1);
+    opacity: 0.8;
+  }
+
 }
 
 /* PROGRESO */
@@ -289,7 +321,7 @@ body {
   border-radius: 10px;
   cursor: pointer;
 }
-  
+
 .barra {
   height: 100%;
   width: 0%;
@@ -444,6 +476,255 @@ body {
   text-shadow:
     0 0 5px rgba(255, 215, 0, 0.5),
     0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* ===== BLOQUE COMENTARIOS ===== */
+.comentarios{
+  width: 30%;
+  background: #181818;
+  height: 100vh;
+  padding: 15px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* TÍTULO */
+.comentarios h2{
+  text-align: center;
+  color: #1db954;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+/* HEADER (VISITAS + WHATSAPP) */
+.comentario-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
+
+  margin-bottom: 15px;
+}
+
+.visitas{
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.visitas span{
+  color: #1db954;
+  font-weight: bold;
+}
+
+.wsp-box{
+  display:flex;
+  align-items:center;
+}
+
+/* FORM COMENTARIOS */
+.comentario-form{
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.comentario-form input{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  outline:none;
+
+  background:#2a2a2a;
+  color:white;
+}
+
+.comentario-form button{
+  padding:10px 14px;
+  border:none;
+  border-radius:8px;
+
+  background:#1db954;
+  color:white;
+
+  font-weight:bold;
+  cursor:pointer;
+
+  transition:0.2s;
+}
+
+.comentario-form button:hover{
+  transform:scale(1.05);
+}
+
+/* ICONO WHATSAPP */
+.whatsapp-boton{
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.whatsapp-boton:hover{
+  transform: scale(1.2);
+  filter: brightness(1.3);
+}
+
+/* LISTA DE COMENTARIOS */
+#listaComentarios{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* TARJETA DE COMENTARIO */
+.comentario-item{
+  background: #2a2a2a;
+  padding: 12px;
+  border-radius: 10px;
+
+  box-shadow: 0 0 8px rgba(0,0,0,0.4);
+  transition: 0.2s;
+}
+
+.comentario-item:hover{
+  transform: translateY(-2px);
+  background: #333;
+}
+
+/* TEXTO DEL COMENTARIO */
+.comentario-texto{
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+/* META (USUARIO + FECHA) */
+.comentario-meta{
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.comentario-meta .usuario{
+  color: #1db954;
+}
+
+.icono-whatsapp{
+  color:#25D366;
+  cursor:pointer;
+  transition:0.2s;
+  margin-left:10px;
+}
+
+.icono-whatsapp:hover{
+  transform:scale(1.25);
+  filter:drop-shadow(0 0 6px #25D366);
+}
+
+.flecha-wsp{
+  font-size:20px;
+  color:#25D366;
+  margin-right:8px;
+
+  display:inline-block;
+
+  animation: flechaMove 0.8s infinite alternate;
+}
+
+/* CAJA COMENTARIO */
+.comentario-box{
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.aviso-wsp{
+
+  background:#1f1f1f;
+
+  border-left:3px solid #25D366;
+
+  padding:10px;
+
+  margin-bottom:15px;
+
+  border-radius:8px;
+
+  font-size:13px;
+
+  color:#dcdcdc;
+
+  line-height:1.5;
+
+  animation: brilloAviso 2s infinite alternate;
+}
+
+@keyframes brilloAviso{
+
+  from{
+    opacity:0.7;
+    box-shadow:0 0 0px #25D366;
+  }
+
+  to{
+    opacity:1;
+    box-shadow:0 0 10px rgba(37,211,102,0.35);
+  }
+
+}
+
+.comentario-box input{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  outline:none;
+
+  background:#2a2a2a;
+  color:white;
+}
+
+.comentario-box input::placeholder{
+  color:#888;
+}
+
+.comentario-box button{
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+
+  background:#1db954;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+
+  transition:0.2s;
+}
+
+.comentario-box button:hover{
+  transform:scale(1.05);
+  filter:brightness(1.1);
+}
+
+@keyframes flechaMove{
+  from{
+    transform:translateX(0px);
+    opacity:0.5;
+  }
+
+  to{
+    transform:translateX(6px);
+    opacity:1;
+  }
 }
 
 </style>
@@ -620,13 +901,78 @@ body {
 </div>
 </div>
 
+<!-- Bloque Comentarios -->
 <div class="comentarios">
 
   <h2>Comentarios</h2>
 
-  <p>Aquí irán los mensajes.</p>
+  <!-- contador + whatsapp -->
+  <div class="comentario-header">
+
+    <div class="visitas">
+      VISITAS <span id="contadorVisitas">0</span>
+    </div>
+
+    <div class="wsp-box">
+
+      <span class="flecha-wsp">➜</span>
+
+      <!-- BOTÓN WHATSAPP -->
+      <svg class="icono-seccion icono-whatsapp"
+           onclick="abrirWhatsApp()"
+           viewBox="0 0 24 24">
+
+        <path d="M20.52 3.48A11.86 11.86 0 0012.07 0C5.43 0 .16 5.27.16 11.77c0 2.07.54 4.08 1.57 5.86L0 24l6.5-1.7a11.7 11.7 0 005.57 1.42h.01c6.63 0 11.9-5.27 11.9-11.77 0-3.16-1.24-6.14-3.46-8.47zM12.07 21.5c-1.87 0-3.7-.5-5.28-1.45l-.38-.22-3.86 1.01 1.03-3.76-.25-.39a9.7 9.7 0 01-1.5-5.22c0-5.4 4.39-9.77 9.74-9.77 2.6 0 5.04 1.02 6.87 2.86a9.68 9.68 0 012.86 6.91c0 5.4-4.39 9.77-9.74 9.77zm5.6-7.42c-.3-.15-1.8-.89-2.08-.99-.28-.1-.48-.15-.68.15-.2.3-.78.99-.96 1.19-.18.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.67-2.07-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.03-.53-.07-.15-.68-1.64-.94-2.26-.25-.6-.5-.52-.68-.53h-.58c-.2 0-.53.07-.8.38-.27.3-1.02 1-.02 2.45 1 1.45 2.15 2.86 3.7 4.02 1.55 1.16 2.18 1.26 2.98 1.5.8.25 1.5.22 2.07.13.63-.1 1.8-.73 2.05-1.43.25-.7.25-1.3.18-1.43-.07-.13-.27-.2-.57-.35z"/>
+      </svg>
+
+    </div>
+
+  </div>
+
+<div class="aviso-wsp">
+
+  💬 Para consultas o contacto directo con SOUND MUSIC,
+  haz clic en el icono de WhatsApp.
+  La flecha animada te indica dónde escribirnos.
 
 </div>
+
+<div class="comentario-box">
+
+  <input
+    type="text"
+    id="comentarioInput"
+    placeholder="Escribe un comentario..."
+  >
+
+  <button onclick="agregarComentario()">
+    ENVIAR
+  </button>
+
+</div>
+
+  <!-- lista de comentarios -->
+  <div id="listaComentarios">
+
+    <div class="comentario-item">
+
+      <div class="comentario-texto">
+        Ejemplo de comentario inicial
+      </div>
+
+      <div class="comentario-meta">
+
+        <span class="usuario">Usuario Demo</span>
+        <span class="fecha">04/05/2026</span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
 <script>
 
 const playlist=[
@@ -726,7 +1072,7 @@ function animarOndas(){
 
     let value = dataArray[i];
 
-    let height = Math.min(22, Math.max(4, value * 0.22));
+    let height = Math.min(50, Math.max(1, value * 0.18));
 
     bar.style.height = height + "px";
 
@@ -1065,6 +1411,110 @@ const btnRecibir = document.getElementById("btnRecibirCodigo");
 
 let codigoGenerado = "";
 
+/* CONTADOR VISITAS */
+let visitas = localStorage.getItem("contadorVisitas");
+
+if(!visitas){
+  visitas = 0;
+}
+
+visitas++;
+
+localStorage.setItem("contadorVisitas", visitas);
+
+document.getElementById("contadorVisitas").innerText = visitas;
+
+/* WHATSAPP */
+function abrirWhatsApp(){
+
+  const nombre =
+    document.getElementById("nombreInput")?.value || "Usuario";
+
+  const mensaje =
+    `Hola, soy ${nombre} y estoy usando tu reproductor 🎵`;
+
+  const numero = "59170000000";
+
+  const url =
+    `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+  window.open(url, "_blank");
+}
+
+/* COMENTARIOS */
+function agregarComentario(){
+
+  const input =
+    document.getElementById("comentarioInput");
+
+  const texto = input.value.trim();
+
+  if(!texto) return;
+
+  const nombre =
+    document.getElementById("nombreInput")?.value || "Usuario";
+
+  const fecha =
+    new Date().toLocaleDateString();
+
+  const contenedor =
+    document.getElementById("listaComentarios");
+
+  const div = document.createElement("div");
+
+  div.className = "comentario-item";
+
+  div.innerHTML = `
+    <div class="comentario-texto">
+      ${texto}
+    </div>
+
+    <div class="comentario-meta">
+      <span class="usuario">${nombre}</span>
+      <span class="fecha">${fecha}</span>
+    </div>
+  `;
+
+contenedor.prepend(div);
+
+input.value = "";
+
+/* RESPUESTA AUTOMÁTICA */
+
+const textoLower = texto.toLowerCase();
+
+if(
+  textoLower.includes("informacion") ||
+  textoLower.includes("contacto") ||
+  textoLower.includes("sound music") ||
+  textoLower.includes("encargado") ||
+  textoLower.includes("consulta")
+){
+
+  const respuesta = document.createElement("div");
+
+  respuesta.className = "comentario-item";
+
+  respuesta.innerHTML = `
+    <div class="comentario-texto">
+      👋 Para consultas directas con SOUND MUSIC,
+      haz clic en el icono de WhatsApp.
+      La flecha animada te indicará dónde escribirnos.
+    </div>
+
+    <div class="comentario-meta">
+      <span class="usuario">SOUND MUSIC</span>
+      <span class="fecha">
+        ${new Date().toLocaleDateString()}
+      </span>
+    </div>
+  `;
+
+  contenedor.prepend(respuesta);
+}
+
+}
+
 /* RESET INICIAL */
 function resetLogin() {
   inputCelular.style.display = "none";
@@ -1169,4 +1619,5 @@ btnIngresar.addEventListener("click", () => {
 </script>
 
 </body>
-</html>
+</html>>
+ "
