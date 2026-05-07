@@ -194,7 +194,7 @@ body {
 
 /* LISTA */
 .lista {
-  width: 35%;
+  width: 25%;
   background: #1e1e1e;
   height: 100vh;
   overflow-y: auto;
@@ -213,8 +213,16 @@ body {
 
 /* REPRODUCTOR */
 .reproductor {
-  width: 65%;
+  width: 45%;
   padding: 20px;
+}
+
+.comentarios{
+  width: 30%;
+  background:#181818;
+  height:100vh;
+  padding:10px;
+  overflow-y:auto;
 }
 
 /* PLACA */
@@ -457,6 +465,49 @@ body {
 
 </div>
 
+<!-- LISTA -->
+<div class="lista">
+
+  <!-- Lista de reproducción -->
+  <div class="seccion" onclick="toggle('listaContenido')">
+
+    <svg class="icono-seccion icono-lista" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4 6h16v2H4z"/>
+      <path d="M4 11h16v2H4z"/>
+      <path d="M4 16h16v2H4z"/>
+    </svg>
+
+    Lista de reproducción
+  </div>
+
+  <div id="listaContenido" class="contenido activo"></div>
+
+  <!-- Más reproducido -->
+  <div class="seccion" onclick="toggle('mas')">
+
+    <svg class="icono-seccion icono-fuego" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M13 3s1 2 1 4-2 3-2 5a4 4 0 008 0c0-5-5-9-7-9zm-1 8s-4 2-4 6a5 5 0 0010 0c0-2-1-4-3-5 0 2-1 3-3 3s-3-2-3-4z"/>
+    </svg>
+
+    Más reproducido
+  </div>
+
+  <div id="mas" class="contenido"></div>
+
+  <!-- Últimas -->
+  <div class="seccion" onclick="toggle('ult')">
+
+    <svg class="icono-seccion icono-corazon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 21s-7-4.35-9.33-8A5.39 5.39 0 0112 5.09 5.39 5.39 0 0121.33 13C19 16.65 12 21 12 21z"/>
+    </svg>
+
+    Últimas
+  </div>
+
+  <div id="ult" class="contenido"></div>
+
+</div>
+
 <!-- REPRODUCTOR -->
 <div class="reproductor">
 <div class="placa">
@@ -557,46 +608,11 @@ body {
 </div>
 </div>
 
-<!-- LISTA -->
-<div class="lista">
+<div class="comentarios">
 
-  <!-- Lista de reproducción -->
-  <div class="seccion" onclick="toggle('listaContenido')">
+  <h2>Comentarios</h2>
 
-    <svg class="icono-seccion icono-lista" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M4 6h16v2H4z"/>
-      <path d="M4 11h16v2H4z"/>
-      <path d="M4 16h16v2H4z"/>
-    </svg>
-
-    Lista de reproducción
-  </div>
-
-  <div id="listaContenido" class="contenido activo"></div>
-
-  <!-- Más reproducido -->
-  <div class="seccion" onclick="toggle('mas')">
-
-    <svg class="icono-seccion icono-fuego" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M13 3s1 2 1 4-2 3-2 5a4 4 0 008 0c0-5-5-9-7-9zm-1 8s-4 2-4 6a5 5 0 0010 0c0-2-1-4-3-5 0 2-1 3-3 3s-3-2-3-4z"/>
-    </svg>
-
-    Más reproducido
-  </div>
-
-  <div id="mas" class="contenido"></div>
-
-  <!-- Últimas -->
-  <div class="seccion" onclick="toggle('ult')">
-
-    <svg class="icono-seccion icono-corazon" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 21s-7-4.35-9.33-8A5.39 5.39 0 0112 5.09 5.39 5.39 0 0121.33 13C19 16.65 12 21 12 21z"/>
-    </svg>
-
-    Últimas
-  </div>
-
-  <div id="ult" class="contenido"></div>
+  <p>Aquí irán los mensajes.</p>
 
 </div>
 <script>
@@ -935,7 +951,12 @@ let s=playlist.find(x=>x.file===file);
 if(!s)return;
 let d=document.createElement("div");
 d.className="item";
-d.innerText=`?? ${s.title} (${count})`;
+d.innerHTML = `
+<svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
+  <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+</svg>
+${s.title} (${count})
+`;
 d.onclick=()=>playSong(playlist.indexOf(s));
 contTop.appendChild(d);
 });
@@ -948,7 +969,12 @@ let s=playlist.find(x=>x.file===file);
 if(!s)return;
 let d=document.createElement("div");
 d.className="item";
-d.innerText=`?? ${s.title}`;
+d.innerHTML = `
+<svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
+  <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+</svg>
+${s.title}
+`;
 d.onclick=()=>playSong(playlist.indexOf(s));
 contUlt.appendChild(d);
 });
