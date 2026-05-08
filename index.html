@@ -13,74 +13,6 @@ body {
   display: flex;
 }
 
-/* ICONOS SECCIONES */
-.icono-seccion {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-  vertical-align: middle;
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-.seccion {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* nota musical */
-.icono-musica{
-  animation: campana 1.8s infinite ease-in-out;
-  transform-origin:center;
-}
-
-@keyframes campana{
-  0%{ transform:rotate(0deg); }
-  25%{ transform:rotate(12deg); }
-  50%{ transform:rotate(0deg); }
-  75%{ transform:rotate(-12deg); }
-  100%{ transform:rotate(0deg); }
-}
-
-/* fuego */
-.icono-fuego{
-  animation: fuego 1.2s infinite ease-in-out;
-}
-
-@keyframes fuego{
-  0%{ transform:skewX(0deg) scaleY(1); }
-  25%{ transform:skewX(3deg) scaleY(1.05); }
-  50%{ transform:skewX(-3deg) scaleY(0.95); }
-  75%{ transform:skewX(2deg) scaleY(1.04); }
-  100%{ transform:skewX(0deg) scaleY(1); }
-}
-
-/* corazon */
-.icono-corazon{
-  animation: latido 1s infinite;
-  transform-origin:center;
-}
-
-@keyframes latido{
-  0%{ transform:scale(1); }
-  25%{ transform:scale(1.15); }
-  40%{ transform:scale(1); }
-  60%{ transform:scale(1.15); }
-  100%{ transform:scale(1); }
-}
-
-/* lista */
-.icono-lista{
-  animation: listaMove 2s infinite ease-in-out;
-}
-
-@keyframes listaMove{
-  0%{ transform:translateX(0px); }
-  50%{ transform:translateX(2px); }
-  100%{ transform:translateX(0px); }
-}
-
 /* LISTA */
 .lista {
   width: 25%;
@@ -150,17 +82,14 @@ body {
   margin: 0 1px;
   height: 8px;
   border-radius: 12px;
-  transform-origin: bottom;
-  transition: height 0.08s linear;
   background: linear-gradient(to top,#ff0000,#ffd000,#00ff88);
-  box-shadow:0 0 4px #ff0000,0 0 8px #ffd000,0 0 12px #00ff88;
   animation: humoWave 2s infinite ease-in-out;
 }
 
 @keyframes humoWave {
-  0%{filter:brightness(1);opacity:0.8;}
-  50%{filter:brightness(1.6);opacity:1;}
-  100%{filter:brightness(1);opacity:0.8;}
+  0%{opacity:0.8;}
+  50%{opacity:1;}
+  100%{opacity:0.8;}
 }
 
 /* PROGRESO */
@@ -178,13 +107,11 @@ body {
   height: 100%;
   width: 0%;
   background: #00e5ff;
-  box-shadow: 0 0 8px #00e5ff;
 }
 
 /* CONTROLES */
 .player-controls {
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 14px;
   margin-top: 12px;
@@ -194,77 +121,44 @@ body {
   background: transparent;
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
   color: #777;
-  transition: 0.2s;
 }
 
 .ctrl:hover {
   color: #1db954;
-  transform: scale(1.15);
-}
-
-.ctrl.main {
-  width: 60px;
-  height: 60px;
-}
-
-.ctrl.main svg {
-  width: 30px;
-  height: 30px;
 }
 
 /* INFO */
 .info {
   max-width: 500px;
   margin: 20px auto;
-  text-align: left;
   transform: translateX(40px);
 }
 
 .linea {
   display: flex;
-  align-items: center;
   gap: 5px;
   margin-bottom: 10px;
 }
 
 .label {
   width: 130px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   color: #1db954;
 }
 
-.dos {
-  margin-left: auto;
-  transform: translateX(-45px);
-}
-
-.valor {
-  flex: 1;
-  transform: translateX(-40px);
-}
-
 /* COMENTARIOS */
-.comentarios{
-  width: 30%;
-  background: #181818;
-  height: 100vh;
-  padding: 15px;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
 .comentario-item{
   background:#2a2a2a;
   padding:12px;
   border-radius:10px;
+  margin-bottom:10px;
+}
+
+.comentario-meta{
+  font-size:12px;
+  color:#aaa;
+  display:flex;
+  justify-content:space-between;
 }
 
 </style>
@@ -275,16 +169,9 @@ body {
 <!-- LISTA -->
 <div class="lista">
 
-  <div class="seccion">
-    <svg class="icono-seccion icono-lista" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M4 6h16v2H4z"/>
-      <path d="M4 11h16v2H4z"/>
-      <path d="M4 16h16v2H4z"/>
-    </svg>
-    Lista de reproducción
-  </div>
-
+  <div class="seccion">Lista de reproducción</div>
   <div id="listaContenido"></div>
+
 </div>
 
 <!-- REPRODUCTOR -->
@@ -303,12 +190,12 @@ body {
 
 <div class="player-controls">
   <button class="ctrl" onclick="prev()">⏮</button>
-  <button class="ctrl main" onclick="togglePlay()">▶</button>
+  <button class="ctrl" onclick="togglePlay()">▶/⏸</button>
   <button class="ctrl" onclick="next()">⏭</button>
 </div>
 
 <div class="info">
-  <div class="linea"><div class="label">Título :</div><div class="valor" id="titulo">---</div></div>
+  <div class="linea"><div class="label">Título:</div><div id="titulo">---</div></div>
 </div>
 
 <audio id="player"></audio>
@@ -318,34 +205,100 @@ body {
 
 <!-- COMENTARIOS -->
 <div class="comentarios">
+
   <h2>Comentarios</h2>
+
+  <input id="comentarioInput" placeholder="Escribe un comentario..." style="width:100%;padding:8px;">
+  <button onclick="agregarComentario()">Enviar</button>
+
   <div id="listaComentarios"></div>
+
 </div>
 
 <script>
 
 const playlist=[
-{file:"Intro Sound Music 2026.mp3",title:"Intro Sound Music 2026",cover:"intro.png",de:"J.M.P_3Hermanos",para:"Público en General"},
-{file:"El Cielo se Viste de Fiesta.mp3",title:"El Cielo se Viste de Fiesta",cover:"mis-15.jpg",de:"Flor de Liz",para:"Yuliana"}
+{file:"Intro Sound Music 2026.mp3",title:"Intro Sound Music 2026",cover:"intro.png"},
+{file:"El Cielo se Viste de Fiesta.mp3",title:"El Cielo se Viste de Fiesta",cover:"mis-15.jpg"}
 ];
 
 let currentIndex=0;
 const player=document.getElementById("player");
 
+/* LISTA */
+function render(){
+let cont=document.getElementById("listaContenido");
+cont.innerHTML="";
+
+playlist.forEach((s,i)=>{
+let d=document.createElement("div");
+d.className="item";
+d.innerText=s.title;
+d.onclick=()=>playSong(i);
+cont.appendChild(d);
+});
+}
+render();
+
+/* REPRODUCIR */
 function playSong(i){
 currentIndex=i;
-let song=playlist[i];
-player.src=song.file;
+let s=playlist[i];
+player.src=s.file;
 player.play();
-document.getElementById("titulo").innerText=song.title;
+document.getElementById("titulo").innerText=s.title;
+
+if(s.cover){
+document.getElementById("cover").src=s.cover;
+document.getElementById("cover").style.display="block";
+}
 }
 
+/* CONTROLES */
 function togglePlay(){
-player.paused?player.play():player.pause();
+player.paused ? player.play() : player.pause();
 }
 
-function next(){ playSong((currentIndex+1)%playlist.length); }
-function prev(){ playSong((currentIndex-1+playlist.length)%playlist.length); }
+function next(){
+playSong((currentIndex+1)%playlist.length);
+}
+
+function prev(){
+playSong((currentIndex-1+playlist.length)%playlist.length);
+}
+
+/* PROGRESO */
+function seek(e){
+let r=e.currentTarget.getBoundingClientRect();
+player.currentTime=((e.clientX-r.left)/r.width)*player.duration;
+}
+
+/* UI BAR */
+player.addEventListener("timeupdate",()=>{
+document.getElementById("barra").style.width=
+(player.currentTime/player.duration)*100+"%";
+});
+
+/* COMENTARIOS */
+function agregarComentario(){
+
+let txt=document.getElementById("comentarioInput").value;
+if(!txt)return;
+
+let div=document.createElement("div");
+div.className="comentario-item";
+
+div.innerHTML=`
+<div>${txt}</div>
+<div class="comentario-meta">
+<span>Usuario</span>
+<span>${new Date().toLocaleDateString()}</span>
+</div>
+`;
+
+document.getElementById("listaComentarios").prepend(div);
+document.getElementById("comentarioInput").value="";
+}
 
 </script>
 
