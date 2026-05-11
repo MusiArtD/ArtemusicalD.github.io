@@ -663,6 +663,66 @@ margin: 5px 0 3px 0;
   display:block;
 }
 
+.icono-bombillo{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-right:8px;
+
+  vertical-align:middle;
+}
+
+.bombillo-svg{
+
+  width:18px;
+  height:18px;
+
+  color:#ffd700;
+
+  filter:
+    drop-shadow(0 0 4px rgba(255,215,0,0.8))
+    drop-shadow(0 0 8px rgba(255,215,0,0.5));
+
+  animation:
+    bombilloGlow 1.5s infinite alternate,
+    bombilloPulse 1.2s infinite ease-in-out;
+
+  transform-origin:center;
+}
+
+@keyframes bombilloGlow{
+
+  from{
+    filter:
+      drop-shadow(0 0 4px rgba(255,215,0,0.5))
+      drop-shadow(0 0 8px rgba(255,215,0,0.3));
+  }
+
+  to{
+    filter:
+      drop-shadow(0 0 8px rgba(255,215,0,1))
+      drop-shadow(0 0 16px rgba(255,215,0,0.7));
+  }
+
+}
+
+@keyframes bombilloPulse{
+
+  0%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.12);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+
+}
+
 /* CAJA COMENTARIO */
 .comentario-box{
   display:flex;
@@ -671,24 +731,7 @@ margin: 5px 0 3px 0;
 }
 
 .aviso-wsp{
-
-  background:#1f1f1f;
-
-  border-left:3px solid #25D366;
-
-  padding:10px;
-
-  margin-bottom:15px;
-
-  border-radius:8px;
-
-  font-size:13px;
-
-  color:#dcdcdc;
-
-  line-height:1.5;
-
-  animation: brilloAviso 2s infinite alternate;
+  display:none;
 }
 
 @keyframes brilloAviso{
@@ -1672,11 +1715,26 @@ if(
   respuesta.className = "comentario-item";
 
   respuesta.innerHTML = `
-    <div class="comentario-texto">
-      ?? Para consultas directas con SOUND MUSIC,
-      haz clic en el icono de WhatsApp.
-      La flecha animada te indicará dónde escribirnos.
-    </div>
+<div class="comentario-texto">
+
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="16"
+       height="16"
+       viewBox="0 0 24 24"
+       fill="none"
+       stroke="#ffd700"
+       stroke-width="2"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       style="vertical-align:middle; margin-right:6px;">
+
+    <path d="M9 18h6"></path>
+    <path d="M10 22h4"></path>
+    <path d="M12 2a7 7 0 0 0-4 12c1 1 2 2 2 4h4c0-2 1-3 2-4a7 7 0 0 0-4-12z"></path>
+
+  </svg>
+
+  Para consultas directas con SOUND MUSIC,
 
     <div class="comentario-meta">
       <span class="usuario">SOUND MUSIC</span>
