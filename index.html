@@ -1893,36 +1893,27 @@ btnIngresar.addEventListener("click", () => {
 
 });
 
-</script>
+</script></script>
 
 <script type="module">
-  // 1. IMPORTACIONES (Todas las herramientas juntas al inicio)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getDatabase, ref, push, set, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-  // 2. CONFIGURACIÓN
-  const firebaseConfig = { ... tus credenciales ... };
+  const firebaseConfig = {
+    apiKey: "AIzaSyBFsAf9N6fdIylSR2qKOQzh9HnWaxRLPIY",
+    authDomain: "soundmusicbeta.firebaseapp.com",
+    databaseURL: "https://soundmusicbeta-default-rtdb.firebaseio.com",
+    projectId: "soundmusicbeta",
+    storageBucket: "soundmusicbeta.firebasestorage.app",
+    messagingSenderId: "838858859682",
+    appId: "1:838858859682:web:4e4de34c5a0b9499e1a3fb"
+  };
 
-  // 3. INICIALIZACIÓN
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-  
-  // REFERENCIAS
   const comentariosRef = ref(db, 'comentarios');
-  const visitasRef = ref(db, 'contador_global'); // <-- El contador vive aquí
 
-  // 4. LÓGICA DEL CONTADOR (Se ejecuta solo al cargar la página)
-  runTransaction(visitasRef, (currentValue) => {
-    return (currentValue || 0) + 1;
-  });
-
-  onValue(visitasRef, (snapshot) => {
-    const totalVisitas = snapshot.val() || 0;
-    const display = document.getElementById("contadorVisitas");
-    if(display) display.innerText = totalVisitas;
-  });
-
-  // 5. FUNCIÓN GLOBAL PARA ENVIAR (Independiente)
+  // REENCARNACIÓN: Función global para enviar
   window.agregarComentario = () => {
     const input = document.getElementById('comentarioInput');
     const nombre = document.getElementById('nombreInput').value || "Invitado";
@@ -1938,16 +1929,18 @@ btnIngresar.addEventListener("click", () => {
     }
   };
 
-  // 6. LECTURA DE COMENTARIOS EN TIEMPO REAL
+  // LECTURA EN TIEMPO REAL
   onValue(comentariosRef, (snapshot) => {
     const lista = document.getElementById('listaComentarios');
     lista.innerHTML = "";
-    snapshot.forEach(child => {
-       const data = child.val();
-       const div = document.createElement('div');
-       div.className = 'comentario-globo';
-       div.innerHTML = `<p><strong>${data.usuario}:</strong> ${data.mensaje}</p><small>${data.fecha}</small>`;
-       lista.appendChild(div);
+    let mensajes = [];
+    snapshot.forEach(child => { mensajes.push(child.val()); });
+    
+    mensajes.reverse().forEach(data => {
+      const div = document.createElement('div');
+      div.className = 'comentario-globo';
+      div.innerHTML = `<p><strong>${data.usuario}:</strong> ${data.mensaje}</p><small>${data.fecha}</small>`;
+      lista.appendChild(div);
     });
   });
 </script>
