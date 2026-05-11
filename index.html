@@ -657,6 +657,12 @@ margin: 5px 0 3px 0;
   animation: flechaMove 0.8s infinite alternate;
 }
 
+.flecha-wsp svg{
+  width:20px;
+  height:20px;
+  display:block;
+}
+
 /* CAJA COMENTARIO */
 .comentario-box{
   display:flex;
@@ -932,7 +938,24 @@ margin: 5px 0 3px 0;
 
     <div class="wsp-box">
 
-      <span class="flecha-wsp">?</span>
+      <span class="flecha-wsp">
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="20"
+     height="20"
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="3"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+
+  <line x1="5" y1="12" x2="19" y2="12"></line>
+  <polyline points="12 5 19 12 12 19"></polyline>
+
+</svg>
+
+</span>
 
       <!-- BOTÓN WHATSAPP -->
       <svg class="icono-seccion icono-whatsapp"
