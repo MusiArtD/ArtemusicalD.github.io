@@ -1744,22 +1744,24 @@ btnIngresar.addEventListener("click", () => {
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  // Importa las funciones que necesitas de los SDK que requieras
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  // TODO: Agrega los SDK de los productos de Firebase que quieras usar
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBFsAf9N6fdIylSR2qKOQzh9HnWaxRLPIY",
-  authDomain: "soundmusicbeta.firebaseapp.com",
-  databaseURL: "https://soundmusicbeta-default-rtdb.firebaseio.com",
-  projectId: "soundmusicbeta",
-  storageBucket: "soundmusicbeta.firebasestorage.app",
-  messagingSenderId: "838858859682",
-  appId: "1:838858859682:web:4e4de34c5a0b9499e1a3fb"
-};
+  // Configuración de Firebase de tu aplicación web
+  const firebaseConfig = {
+    apiKey: "AIzaSyBFsAf9N6fdIylSR2qKOQzh9HnWaxRLPIY",
+    authDomain: "soundmusicbeta.firebaseapp.com",
+    databaseURL: "https://soundmusicbeta-default-rtdb.firebaseio.com",
+    projectId: "soundmusicbeta",
+    storageBucket: "soundmusicbeta.firebasestorage.app",
+    messagingSenderId: "838858859682",
+    appId: "1:838858859682:web:4e4de34c5a0b9499e1a3fb"
+  };
 
-const app = initializeApp(firebaseConfig);
-
-console.log("Firebase conectado correctamente");
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
 
 </script>
 
