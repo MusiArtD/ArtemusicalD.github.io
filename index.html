@@ -1492,6 +1492,9 @@ const btnRecibir = document.getElementById("btnRecibirCodigo");
 let codigoGenerado = "";
 
 /* CONTADOR VISITAS */
+
+/*
+
 let visitas = localStorage.getItem("contadorVisitas");
 
 if(!visitas){
@@ -1503,6 +1506,8 @@ visitas++;
 localStorage.setItem("contadorVisitas", visitas);
 
 document.getElementById("contadorVisitas").innerText = visitas;
+
+*/
 
 /* WHATSAPP */
 function abrirWhatsApp(){
@@ -1742,6 +1747,7 @@ btnIngresar.addEventListener("click", () => {
 
 </script>
 
+/* ===== SCRIPT DE ORO coneccion global FIREBASE ===== */
 <script type="module">
 
 import { initializeApp }
@@ -1750,7 +1756,8 @@ from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import {
   getDatabase,
   ref,
-  set
+  set,
+  get
 }
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
@@ -1769,6 +1776,40 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
+
+/* =========================
+   CONTADOR GLOBAL
+========================= */
+
+const visitasRef = ref(db, "contador_global");
+
+get(visitasRef)
+
+.then((snapshot) => {
+
+  if(snapshot.exists()){
+
+    const total = snapshot.val() + 1;
+
+    set(visitasRef, total);
+
+    document.getElementById("contadorVisitas").innerText = total;
+
+  }else{
+
+    set(visitasRef, 1);
+
+    document.getElementById("contadorVisitas").innerText = 1;
+
+  }
+
+})
+
+.catch((error) => {
+
+  console.error("Error visitas:", error);
+
+});
 
 console.log("Firebase conectado correctamente");
 
