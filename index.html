@@ -1849,15 +1849,24 @@ function mostrarComentario(data){
   div.className = "comentario-item";
 
   div.innerHTML = `
-    <div class="comentario-texto">
-      ${data.texto}
-    </div>
 
-    <div class="comentario-meta">
-      <span class="usuario">${data.nombre}</span>
-      <span class="fecha">${data.fecha}</span>
-    </div>
-  `;
+  <div class="comentario-meta">
+
+    <span class="usuario">
+      ${data.nombre}
+    </span>
+
+    <span class="fecha">
+      ${data.fecha}
+    </span>
+
+  </div>
+
+  <div class="comentario-texto">
+    ${data.texto}
+  </div>
+
+`;
 
   contenedor.prepend(div);
 
