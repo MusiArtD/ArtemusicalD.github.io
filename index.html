@@ -1911,6 +1911,85 @@ window.agregarComentario = function(){
 
   input.value = "";
 
+  /* RESPUESTA AUTOMÁTICA */
+
+  const textoLower = texto.toLowerCase();
+
+  if(
+    textoLower.includes("informacion") ||
+    textoLower.includes("contacto") ||
+    textoLower.includes("sound music") ||
+    textoLower.includes("encargado") ||
+    textoLower.includes("consulta")
+  ){
+
+    const contenedor =
+      document.getElementById("listaComentarios");
+
+    const respuesta = document.createElement("div");
+
+    respuesta.className = "comentario-item";
+
+    respuesta.innerHTML = `
+
+      <div class="comentario-meta">
+
+        <span class="usuario">
+          SOUND MUSIC
+        </span>
+
+        <span class="fecha">
+          ${new Date().toLocaleString()}
+        </span>
+
+      </div>
+
+      <div class="comentario-texto">
+
+        <span class="icono-bombillo">
+
+          <svg class="bombillo-svg"
+               xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="1.9"
+               stroke-linecap="round"
+               stroke-linejoin="round">
+
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+
+            <path d="
+              M12 2
+              C8 2 5 5 5 9
+              c0 2.5 1.2 4.2 2.5 5.5
+              C8.4 15.4 9 16.4 9 18
+              h6
+              c0-1.6.6-2.6 1.5-3.5
+              C17.8 13.2 19 11.5 19 9
+              c0-4-3-7-7-7z">
+            </path>
+
+            <path d="M9.5 11.5h5"></path>
+            <path d="M10.5 13h3"></path>
+
+          </svg>
+
+        </span>
+
+        Para consultas directas con SOUND MUSIC,
+        haz clic en el icono de WhatsApp.
+        La flecha animada te indicará dónde escribirnos.
+
+      </div>
+
+    `;
+
+    contenedor.prepend(respuesta);
+
+  }
+
 };
 
 /* PRUEBA DE ESCRITURA */
