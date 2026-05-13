@@ -1860,11 +1860,17 @@ function mostrarComentario(data){
 
   if (data.tipo === "respuesta") return;
 
-  const contenedor =
-    document.getElementById("listaComentarios");
+  const contenedor = document.getElementById("listaComentarios");
+
+  // 🚨 EVITAR DUPLICADOS VISUALES
+  if (document.getElementById(data.timestamp)) return;
 
   // CONTENEDOR PADRE
   const bloque = document.createElement("div");
+
+  // 🔐 ID ÚNICO PARA EVITAR DUPLICADOS
+  bloque.id = data.timestamp;
+
   bloque.className = "comentario-item";
 
   // COMENTARIO PRINCIPAL
