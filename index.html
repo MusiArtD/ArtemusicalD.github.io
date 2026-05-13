@@ -1852,75 +1852,48 @@ onChildAdded(comentariosRef, (snapshot) => {
 
 function mostrarComentario(data){
 
-  const contenedor =
-    document.getElementById("listaComentarios");
+  const contenedor = document.getElementById("listaComentarios");
 
-  const div = document.createElement("div");
+  // 🟢 CASO 1: ES RESPUESTA
+  if(data.tipo === "respuesta"){
 
-  div.className = "comentario-item";
+    const ultimo = contenedor.firstElementChild;
+    if(!ultimo) return;
 
-  /* RESPUESTA AUTOMÁTICA */
+    const respuesta = document.createElement("div");
+    respuesta.className = "respuesta-box";
 
-  let respuestaHTML = "";
-
-  if(data.respuesta){
-
-    respuestaHTML = `
-
-      <div class="respuesta-box">
-
-        <div class="comentario-meta">
-
-          <span class="usuario">
-            SOUND MUSIC
-          </span>
-
-          <span class="fecha">
-            ${data.fechaRespuesta}
-          </span>
-
-        </div>
-
-        <div class="comentario-texto">
-
-          <span class="icono-bombillo">
-            ??
-          </span>
-
-          ${data.respuesta}
-
-        </div>
-
+    respuesta.innerHTML = `
+      <div class="comentario-meta">
+        <span class="usuario">SOUND MUSIC</span>
+        <span class="fecha">${data.fecha}</span>
       </div>
 
+      <div class="comentario-texto">
+        💡 ${data.texto}
+      </div>
     `;
 
+    ultimo.appendChild(respuesta);
+    return;
   }
 
+  // 🟡 CASO 2: ES COMENTARIO
+  const div = document.createElement("div");
+  div.className = "comentario-item";
+
   div.innerHTML = `
-
     <div class="comentario-meta">
-
-      <span class="usuario">
-        ${data.nombre}
-      </span>
-
-      <span class="fecha">
-        ${data.fecha}
-      </span>
-
+      <span class="usuario">${data.nombre}</span>
+      <span class="fecha">${data.fecha}</span>
     </div>
 
     <div class="comentario-texto">
       ${data.texto}
     </div>
-
-    ${respuestaHTML}
-
   `;
 
   contenedor.prepend(div);
-
 }
 
 /* NUEVO AGREGAR COMENTARIO */
