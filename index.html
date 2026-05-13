@@ -1930,46 +1930,25 @@ window.agregarComentario = function(){
   const fecha =
     new Date().toLocaleString()
 
+if (
+  textoLower.includes("informacion") ||
+  textoLower.includes("contacto") ||
+  textoLower.includes("sound music") ||
+  textoLower.includes("encargado") ||
+  textoLower.includes("consulta")
+) {
+
   push(comentariosRef, {
+    texto: "💡 Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp.",
+    nombre: "SOUND MUSIC",
+    fecha: new Date().toLocaleString(),
+    timestamp: Date.now(),
+    tipo: "respuesta"
+  });
 
-  texto,
-  nombre,
-  fecha,
-  timestamp: Date.now(),
-  tipo: "usuario"
-
-});
+}
 
   input.value = "";
-
-  /* RESPUESTA AUTOMÁTICA */
-
-  const textoLower = texto.toLowerCase();
-
-  if(
-    textoLower.includes("informacion") ||
-    textoLower.includes("contacto") ||
-    textoLower.includes("sound music") ||
-    textoLower.includes("encargado") ||
-    textoLower.includes("consulta")
-  ){
-
-    push(comentariosRef, {
-
-  texto: "💡 Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp. La flecha animada te indicará dónde escribirnos.",
-
-  nombre: "SOUND MUSIC",
-
-  fecha: new Date().toLocaleString(),
-
-   timestamp: Date.now(),
-
-  tipo: "respuesta"
-});
-
-  }
-
-};
 
 /* PRUEBA DE ESCRITURA */
 
@@ -2000,4 +1979,3 @@ set(
 </script>
 
 </body>
-</html>
