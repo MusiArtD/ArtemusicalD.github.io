@@ -1836,7 +1836,13 @@ console.log("Firebase conectado correctamente");
    COMENTARIOS REALTIME
 ========================= */
 
-const comentariosRef = ref(db, "comentarios");
+import { query, orderByChild } 
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+
+const comentariosRef = query(
+  ref(db, "comentarios"),
+  orderByChild("timestamp")
+);
 
 /* ESCUCHAR NUEVOS COMENTARIOS */
 
@@ -1919,7 +1925,7 @@ function mostrarComentario(data){
 
   `;
 
-  contenedor.prepend(div);
+  contenedor.appendChild(div);
 
 }
 
@@ -1942,12 +1948,13 @@ window.agregarComentario = function(){
 
   push(comentariosRef, {
 
-    texto,
-    nombre,
-    fecha,
-    timestamp: Date.now()
+  texto,
+  nombre,
+  fecha,
+  timestamp: Date.now(),
+  tipo: "usuario"
 
-  });
+});
 
   input.value = "";
 
@@ -1971,8 +1978,9 @@ window.agregarComentario = function(){
 
   fecha: new Date().toLocaleString(),
 
-  timestamp: Date.now()
+   timestamp: Date.now(),
 
+  tipo: "respuesta"
 });
 
   }
