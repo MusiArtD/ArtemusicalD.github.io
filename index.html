@@ -1861,72 +1861,48 @@ function mostrarComentario(data){
   const contenedor =
     document.getElementById("listaComentarios");
 
-  const div = document.createElement("div");
+  // CONTENEDOR PADRE
+  const bloque = document.createElement("div");
+  bloque.className = "comentario-item";
 
-  div.className = "comentario-item";
-
-  /* RESPUESTA AUTOMÁTICA */
-
-  let respuestaHTML = "";
-
-  if(data.respuesta){
-
-    respuestaHTML = `
-
-      <div class="respuesta-box">
-
-        <div class="comentario-meta">
-
-          <span class="usuario">
-            SOUND MUSIC
-          </span>
-
-          <span class="fecha">
-            ${data.fechaRespuesta}
-          </span>
-
-        </div>
-
-        <div class="comentario-texto">
-
-          <span class="icono-bombillo">
-            💡
-          </span>
-
-          ${data.respuesta}
-
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-  div.innerHTML = `
-
+  // COMENTARIO PRINCIPAL
+  const comentario = `
     <div class="comentario-meta">
-
-      <span class="usuario">
-        ${data.nombre}
-      </span>
-
-      <span class="fecha">
-        ${data.fecha}
-      </span>
-
+      <span class="usuario">${data.nombre}</span>
+      <span class="fecha">${data.fecha}</span>
     </div>
 
     <div class="comentario-texto">
       ${data.texto}
     </div>
-
-    ${respuestaHTML}
-
   `;
 
-  contenedor.appendChild(div);
+  // RESPUESTA (SI EXISTE)
+  let respuestaHTML = "";
 
+  if(data.respuesta){
+
+    respuestaHTML = `
+      <div class="respuesta-box">
+
+        <div class="comentario-meta">
+          <span class="usuario">SOUND MUSIC</span>
+          <span class="fecha">${data.fechaRespuesta}</span>
+        </div>
+
+        <div class="comentario-texto">
+          💡 ${data.respuesta}
+        </div>
+
+      </div>
+    `;
+  }
+
+  // UNIR TODO EN UN SOLO BLOQUE
+  bloque.innerHTML = comentario + respuestaHTML;
+
+  // INSERTAR ARRIBA (ORDEN NUEVO → VIEJO)
+  contenedor.prepend(bloque);
 }
 
 /* NUEVO AGREGAR COMENTARIO */
