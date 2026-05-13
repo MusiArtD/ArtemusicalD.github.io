@@ -1859,7 +1859,69 @@ function mostrarComentario(data){
 
   div.className = "comentario-item";
 
+  /* RESPUESTA AUTOMÁTICA */
+
+  let respuestaHTML = "";
+
+  if(data.respuesta){
+
+    respuestaHTML = `
+
+      <div class="respuesta-box">
+
+        <div class="comentario-meta">
+
+          <span class="usuario">
+            SOUND MUSIC
+          </span>
+
+          <span class="fecha">
+            ${data.fechaRespuesta}
+          </span>
+
+        </div>
+
+        <div class="comentario-texto">
+
+          <span class="icono-bombillo">
+            💡
+          </span>
+
+          ${data.respuesta}
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
   div.innerHTML = `
+
+    <div class="comentario-meta">
+
+      <span class="usuario">
+        ${data.nombre}
+      </span>
+
+      <span class="fecha">
+        ${data.fecha}
+      </span>
+
+    </div>
+
+    <div class="comentario-texto">
+      ${data.texto}
+    </div>
+
+    ${respuestaHTML}
+
+  `;
+
+  contenedor.prepend(div);
+
+}
 
   <div class="comentario-meta">
 
