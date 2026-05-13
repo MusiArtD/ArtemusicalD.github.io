@@ -1527,6 +1527,9 @@ function abrirWhatsApp(){
 }
 
 /* COMENTARIOS */
+
+/* 
+
 function agregarComentario(){
 
   const input =
@@ -1564,7 +1567,7 @@ contenedor.appendChild(div);
 
 input.value = "";
 
-/* RESPUESTA AUTOMÁTICA */
+// RESPUESTA AUTOMÁTICA
 
 const textoLower = texto.toLowerCase();
 
@@ -1643,6 +1646,8 @@ respuesta.innerHTML = `
 }
 
 }
+
+ */
 
 /* RESET INICIAL */
 function resetLogin() {
@@ -1748,6 +1753,7 @@ btnIngresar.addEventListener("click", () => {
 </script>
 
 /* ===== SCRIPT DE ORO coneccion global FIREBASE ===== */
+
 <script type="module">
 
 import { initializeApp }
@@ -1757,7 +1763,9 @@ import {
   getDatabase,
   ref,
   set,
-  get
+  get,
+  push,
+  onChildAdded
 }
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
@@ -1812,6 +1820,78 @@ get(visitasRef)
 });
 
 console.log("Firebase conectado correctamente");
+
+/* =========================
+   COMENTARIOS REALTIME
+========================= */
+
+const comentariosRef = ref(db, "comentarios");
+
+/* ESCUCHAR NUEVOS COMENTARIOS */
+
+onChildAdded(comentariosRef, (snapshot) => {
+
+  const data = snapshot.val();
+
+  mostrarComentario(data);
+
+});
+
+/* MOSTRAR COMENTARIO */
+
+function mostrarComentario(data){
+
+  const contenedor =
+    document.getElementById("listaComentarios");
+
+  const div = document.createElement("div");
+
+  div.className = "comentario-item";
+
+  div.innerHTML = `
+    <div class="comentario-texto">
+      ${data.texto}
+    </div>
+
+    <div class="comentario-meta">
+      <span class="usuario">${data.nombre}</span>
+      <span class="fecha">${data.fecha}</span>
+    </div>
+  `;
+
+  contenedor.appendChild(div);
+
+}
+
+/* NUEVO AGREGAR COMENTARIO */
+
+window.agregarComentario = function(){
+
+  const input =
+    document.getElementById("comentarioInput");
+
+  const texto = input.value.trim();
+
+  if(!texto) return;
+
+  const nombre =
+    document.getElementById("nombreInput")?.value || "Usuario";
+
+  const fecha =
+    new Date().toLocaleDateString();
+
+  push(comentariosRef, {
+
+    texto,
+    nombre,
+    fecha,
+    timestamp: Date.now()
+
+  });
+
+  input.value = "";
+
+};
 
 /* PRUEBA DE ESCRITURA */
 
