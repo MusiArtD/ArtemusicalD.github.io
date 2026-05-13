@@ -1859,7 +1859,7 @@ function mostrarComentario(data){
     </div>
   `;
 
-  contenedor.appendChild(div);
+  contenedor.prepend(div);
 
 }
 
@@ -1878,7 +1878,7 @@ window.agregarComentario = function(){
     document.getElementById("nombreInput")?.value || "Usuario";
 
   const fecha =
-    new Date().toLocaleDateString();
+    new Date().toLocaleString()
 
   push(comentariosRef, {
 
