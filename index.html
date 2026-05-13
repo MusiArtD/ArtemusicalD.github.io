@@ -1765,8 +1765,10 @@ import {
   set,
   get,
   push,
-  onChildAdded
+  onChildAdded,
+  onValue
 }
+
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
 /* FIREBASE */
@@ -1786,10 +1788,12 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 /* =========================
-   CONTADOR GLOBAL
+   CONTADOR GLOBAL REALTIME
 ========================= */
 
 const visitasRef = ref(db, "contador_global");
+
+/* SUMAR VISITA */
 
 get(visitasRef)
 
@@ -1797,17 +1801,11 @@ get(visitasRef)
 
   if(snapshot.exists()){
 
-    const total = snapshot.val() + 1;
-
-    set(visitasRef, total);
-
-    document.getElementById("contadorVisitas").innerText = total;
+    set(visitasRef, snapshot.val() + 1);
 
   }else{
 
     set(visitasRef, 1);
-
-    document.getElementById("contadorVisitas").innerText = 1;
 
   }
 
@@ -1816,6 +1814,19 @@ get(visitasRef)
 .catch((error) => {
 
   console.error("Error visitas:", error);
+
+});
+
+/* ESCUCHAR CAMBIOS EN TIEMPO REAL */
+
+onValue(visitasRef, (snapshot) => {
+
+  if(snapshot.exists()){
+
+    document.getElementById("contadorVisitas")
+      .innerText = snapshot.val();
+
+  }
 
 });
 
