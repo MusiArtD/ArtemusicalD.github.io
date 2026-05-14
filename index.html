@@ -28,14 +28,6 @@ body {
   cursor: pointer;
 }
 
-/* INPUT INICIO */
-.input-box {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .input-box input {
   width: 260px;
   padding: 12px;
@@ -51,6 +43,42 @@ body {
   color: #888;
 }
 
+.celular-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+/* PAÍS */
+#codigoPais{
+  width: 90px;
+  padding: 12px;
+  border-radius: 18px;
+  border: none;
+  outline: none;
+  text-align: center;
+}
+
+/* NÚMERO */
+#celularInput{
+  width: 180px;
+  padding: 12px;
+  border-radius: 18px;
+  border: none;
+  outline: none;
+  text-align: center;
+}
+
+/* OPERADORA */
+.operadora{
+  min-width: 70px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+
 /* ?? AQUÍ VAN LOS NUEVOS ESTILOS */
 .input-box {
   display: flex;
@@ -60,8 +88,7 @@ body {
   margin-top: 20px;
 }
 
-#nombreInput,
-#celularInput {
+#nombreInput {
   text-align: left;
 }
 
@@ -750,36 +777,35 @@ margin: 5px 0 3px 0;
 
 <div class="inicio-contenido">
 
-<div class="input-box">
+  <!-- PORTADA -->
+  <img class="inicio-cover" src="intro.png">
 
-  <input type="text" id="nombreInput" placeholder="Nombre completo">
+  <!-- INPUTS -->
+  <div class="input-box">
 
-  <!-- CELULAR + PAÍS + OPERADORA -->
-  <div class="celular-box">
+    <!-- 1. Nombre -->
+    <input type="text" id="nombreInput" placeholder="Nombre completo">
 
-    <select id="codigoPais">
-      <option value="+591">+591 (Bolivia)</option>
-    </select>
+    <!-- 2. FILA CELULAR (PAÍS + NÚMERO + OPERADORA) -->
+<div class="celular-row">
 
-    <input type="tel" id="celularInput" placeholder="Número de celular">
+  <select id="codigoPais">
+    <option value="+591">+591</option>
+  </select>
 
-    <!-- OPERADORA (INVISIBLE INICIALMENTE) -->
-    <div id="operadoraDetectada" class="operadora oculto"></div>
+  <input type="tel" id="celularInput" placeholder="Número celular">
 
-  </div>
-
-  <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
-
-  <button id="btnRecibirCodigo" style="display:none;">RECIBIR CÓDIGO</button>
-
-  <button id="btnIngresar" style="opacity:0; pointer-events:none;">INGRESAR</button>
+  <div id="operadoraDetectada" class="operadora oculto"></div>
 
 </div>
 
+    <!-- 3. CÓDIGO -->
     <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
 
+    <!-- 4. BOTÓN RECIBIR -->
     <button id="btnRecibirCodigo" style="display:none;">RECIBIR CÓDIGO</button>
 
+    <!-- 5. BOTÓN INGRESAR -->
     <button id="btnIngresar" style="opacity:0; pointer-events:none;">INGRESAR</button>
 
   </div>
