@@ -1851,78 +1851,75 @@ onChildAdded(comentariosRef, (snapshot) => {
 /* MOSTRAR COMENTARIO */
 
 function mostrarComentario(data){
-
   const contenedor = document.getElementById("listaComentarios");
 
-  // 🟢 CASO 1: ES RESPUESTA
-  if(data.tipo === "respuesta"){
-
-    const ultimo = contenedor.firstElementChild;
-    if(!ultimo) return;
-
-    const respuesta = document.createElement("div");
-    respuesta.className = "respuesta-box";
-
-    respuesta.innerHTML = `
-      <div class="comentario-meta">
-        <span class="usuario">SOUND MUSIC</span>
-        <span class="fecha">${data.fecha}</span>
-      </div>
-
-      <div class="comentario-texto">
-        💡 ${data.texto}
-      </div>
-    `;
-
-    ultimo.appendChild(respuesta);
-    return;
-  }
-
-  // 🟡 CASO 2: ES COMENTARIO
   const div = document.createElement("div");
   div.className = "comentario-item";
 
-  div.innerHTML = `
+  // Estructura: Comentario arriba (superior)
+  let contenidoHTML = `
     <div class="comentario-meta">
       <span class="usuario">${data.nombre}</span>
       <span class="fecha">${data.fecha}</span>
     </div>
-
     <div class="comentario-texto">
       ${data.texto}
     </div>
   `;
 
-  contenedor.prepend(div);
+  // Si existe respuesta automática, se añade abajo (inferior)
+  if(data.respuestaAuto){
+    contenidoHTML += `
+      <div class="respuesta-box" style="margin-top: 10px; margin-left: 20px;">
+        <div class="comentario-meta">
+          <span class="usuario">SOUND MUSIC</span>
+        </div>
+        <div class="comentario-texto">
+          💡 ${data.respuestaAuto}
+        </div>
+      </div>
+    `;
+  }
+
+  div.innerHTML = contenidoHTML;
+  contenedor.prepend(div); // El comentario más nuevo aparece arriba de la lista
 }
 
-/* NUEVO AGREGAR COMENTARIO */
-
 window.agregarComentario = function(){
-
-  const input =
-    document.getElementById("comentarioInput");
-
+  const input = document.getElementById("comentarioInput");
   const texto = input.value.trim();
-
   if(!texto) return;
 
-  const nombre =
-    document.getElementById("nombreInput")?.value || "Usuario";
+  const nombre = document.getElementById("nombreInput")?.value || "Usuario";
+  const fecha = new Date().toLocaleString();
+  const textoLower = texto.toLowerCase();
 
-  const fecha =
-    new Date().toLocaleString()
-
-  push(comentariosRef, {
-
+  // Creamos el objeto base del comentario
+  const nuevoComentario = {
     texto,
     nombre,
     fecha,
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    respuestaAuto: null // Por defecto no hay respuesta
+  };
 
-  });
+  // Verificamos si necesita respuesta automática
+  if(
+    textoLower.includes("informacion") ||
+    textoLower.includes("contacto") ||
+    textoLower.includes("sound music") ||
+    textoLower.includes("encargado") ||
+    textoLower.includes("consulta")
+  ){
+    // LA RESPUESTA SE GUARDA DENTRO DEL MISMO COMENTARIO
+    nuevoComentario.respuestaAuto = "Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp. La flecha animada te indicará dónde escribirnos.";
+  }
+
+  // Enviamos TODO en un solo registro
+  push(comentariosRef, nuevoComentario);
 
   input.value = "";
+};
 
   /* RESPUESTA AUTOMÁTICA */
 
