@@ -1991,25 +1991,12 @@ btnIngresar.addEventListener("click", () => {
 
 </script>
 
-<!-- ===== SCRIPT DE ORO conexion global FIREBASE ===== -->
-
+<!-- ===== SCRIPT CORREGIDO ===== -->
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { getDatabase, ref, set, get, push, onChildAdded, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
-import {
-  getDatabase,
-  ref,
-  set,
-  get,
-  push,
-  onChildAdded,
-  onValue
-}
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
-
-/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyBFsAf9N6fdIylSR2qKOQzh9HnWaxRLPIY",
   authDomain: "soundmusicbeta.firebaseapp.com",
@@ -2023,55 +2010,45 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/* =========================
-   CONTADOR GLOBAL REALTIME
-========================= */
+/* CONTADOR */
 const visitasRef = ref(db, "contador_global");
-
-get(visitasRef)
-.then((snapshot) => {
-  if(snapshot.exists()){
-    set(visitasRef, snapshot.val() + 1);
-  }else{
-    set(visitasRef, 1);
-  }
-})
-.catch((error) => {
-  console.error("Error visitas:", error);
+get(visitasRef).then((snapshot) => {
+  set(visitasRef, snapshot.exists() ? snapshot.val() + 1 : 1);
 });
-
 onValue(visitasRef, (snapshot) => {
-  if(snapshot.exists()){
-    const contadorElem = document.getElementById("contadorVisitas");
-    if(contadorElem) contadorElem.innerText = snapshot.val();
-  }
+  const el = document.getElementById("contadorVisitas");
+  if(el && snapshot.exists()) el.innerText = snapshot.val();
 });
 
-console.log("Firebase conectado correctamente");
-
-/* =========================
-   COMENTARIOS REALTIME
-   (PREGUNTA ARRIBA, RESPUESTA DEBAJO)
-========================= */
+/* SISTEMA DE CONVERSACIÓN - VERSIÓN CORRECTA */
 const comentariosRef = ref(db, "comentarios");
+const preguntasMap = new Map(); // Para asociar preguntas con respuestas
 
-/* ESCUCHAR NUEVOS COMENTARIOS */
 onChildAdded(comentariosRef, (snapshot) => {
   const data = snapshot.val();
-  mostrarConversacion(data);
+  
+  if(data.esRespuesta) {
+    // Es una respuesta, buscamos su pregunta
+    if(preguntasMap.has(data.respuestaPara)) {
+      const preguntaDiv = preguntasMap.get(data.respuestaPara);
+      agregarRespuestaADiv(preguntaDiv, data);
+    }
+  } else {
+    // Es una pregunta, la mostramos
+    mostrarPregunta(data, snapshot.key);
+  }
 });
 
-/* FUNCIÓN PRINCIPAL: MUESTRA PREGUNTA + RESPUESTA DEBAJO */
-function mostrarConversacion(data){
+function mostrarPregunta(data, key) {
   const contenedor = document.getElementById("listaComentarios");
+  if(!contenedor) return;
   
-  /* CREAR CONTENEDOR DE CONVERSACIÓN (CADA PAR PREGUNTA-RESPUESTA) */
-  const conversacionDiv = document.createElement("div");
-  conversacionDiv.className = "conversacion-item";
-  conversacionDiv.setAttribute("data-timestamp", data.timestamp || Date.now());
+  const div = document.createElement("div");
+  div.className = "conversacion-item";
+  div.setAttribute("data-id", key);
+  div.setAttribute("data-timestamp", data.timestamp);
   
-  let html = `
-    <!-- PREGUNTA (ARRIBA) -->
+  div.innerHTML = `
     <div class="pregunta-box">
       <div class="comentario-meta">
         <span class="usuario">${escapeHTML(data.nombre)}</span>
@@ -2081,124 +2058,91 @@ function mostrarConversacion(data){
         ${escapeHTML(data.texto)}
       </div>
     </div>
+    <div class="respuesta-container" id="respuesta-${key}">
+      <!-- Aquí irá la respuesta debajo -->
+    </div>
   `;
   
-  /* RESPUESTA (DEBAJO) - SI EXISTE */
-  if(data.respuesta){
-    html += `
-      <div class="respuesta-box">
+  contenedor.prepend(div);
+  preguntasMap.set(key, div);
+}
+
+function agregarRespuestaADiv(preguntaDiv, respuestaData) {
+  const containerId = `respuesta-${preguntaDiv.getAttribute("data-id")}`;
+  const container = document.getElementById(containerId);
+  
+  if(container && !container.innerHTML) {
+    container.innerHTML = `
+      <div class="respuesta-box respuesta-automatica">
         <div class="comentario-meta">
           <span class="usuario">SOUND MUSIC</span>
-          <span class="fecha">${data.fechaRespuesta || data.fecha}</span>
+          <span class="fecha">${respuestaData.fecha}</span>
         </div>
         <div class="comentario-texto respuesta-texto">
           <span class="icono-bombillo">💡</span>
-          ${escapeHTML(data.respuesta)}
-        </div>
-      </div>
-    `;
-  }else if(data.esRespuestaAutomatica){
-    /* CASO ESPECIAL: RESPUESTA AUTOMÁTICA DE SISTEMA */
-    html += `
-      <div class="respuesta-box respuesta-automatica">
-        <div class="comentario-meta">
-          <span class="usuario">🤖 SOUND MUSIC BOT</span>
-          <span class="fecha">${data.fecha}</span>
-        </div>
-        <div class="comentario-texto">
-          ${escapeHTML(data.texto)}
+          ${escapeHTML(respuestaData.texto)}
         </div>
       </div>
     `;
   }
-  
-  conversacionDiv.innerHTML = html;
-  
-  /* INSERTAR AL PRINCIPIO (MÁS RECIENTE PRIMERO) */
-  contenedor.prepend(conversacionDiv);
 }
 
-/* FUNCIÓN PARA AGREGAR PREGUNTA + RESPUESTA AUTOMÁTICA EN PAR */
-function agregarPreguntaYRespuesta(textoPregunta, nombreUsuario, fecha){
-  const preguntaData = {
-    texto: textoPregunta,
-    nombre: nombreUsuario,
-    fecha: fecha,
-    timestamp: Date.now()
-  };
-  
-  /* PRIMERO: SUBIR LA PREGUNTA */
-  push(comentariosRef, preguntaData);
-  
-  /* SEGUNDO: GENERAR RESPUESTA AUTOMÁTICA */
-  const textoLower = textoPregunta.toLowerCase();
-  let respuestaTexto = "";
-  
-  if(textoLower.includes("informacion") || textoLower.includes("info")){
-    respuestaTexto = "📢 Somos SOUND MUSIC - Tu plataforma de música. Información detallada en nuestro sitio web.";
-  }else if(textoLower.includes("contacto") || textoLower.includes("whatsapp")){
-    respuestaTexto = "📱 Contáctanos por WhatsApp al +XX XXX XXX XXX. ¡Estamos para servirte!";
-  }else if(textoLower.includes("sound music") || textoLower.includes("encargado")){
-    respuestaTexto = "🎵 SOUND MUSIC es liderado por un equipo de profesionales apasionados por la música.";
-  }else if(textoLower.includes("consulta") || textoLower.includes("pregunta")){
-    respuestaTexto = "💬 Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp. La flecha animada te indicará dónde escribirnos.";
-  }else if(textoLower.includes("precio") || textoLower.includes("costo")){
-    respuestaTexto = "💰 Para información de precios, contáctanos directamente por WhatsApp.";
-  }else{
-    respuestaTexto = "✅ ¡Gracias por tu consulta! Nuestro equipo te responderá pronto. Mientras, revisa nuestro sitio web.";
-  }
-  
-  const respuestaData = {
-    texto: respuestaTexto,
-    nombre: "SOUND MUSIC",
-    fecha: new Date().toLocaleString(),
-    timestamp: Date.now() + 1, // +1 para que aparezca después
-    esRespuestaAutomatica: true,
-    respuestaPara: preguntaData.timestamp
-  };
-  
-  /* SUBIR RESPUESTA (APARECERÁ DEBAJO POR EL timestamp) */
-  push(comentariosRef, respuestaData);
-}
-
-/* NUEVO AGREGAR COMENTARIO (PREGUNTA) */
-window.agregarComentario = function(){
+/* ENVIAR PREGUNTA */
+window.agregarComentario = function() {
   const input = document.getElementById("comentarioInput");
-  const texto = input.value.trim();
-  
+  const texto = input?.value.trim();
   if(!texto) return;
   
-  const nombreInput = document.getElementById("nombreInput");
-  const nombre = (nombreInput && nombreInput.value.trim()) ? nombreInput.value.trim() : "Usuario";
+  const nombre = document.getElementById("nombreInput")?.value.trim() || "Usuario";
   const fecha = new Date().toLocaleString();
+  const timestamp = Date.now();
   
-  /* LLAMAR FUNCIÓN QUE CREA PREGUNTA + RESPUESTA AUTOMÁTICA */
-  agregarPreguntaYRespuesta(texto, nombre, fecha);
+  // Guardar pregunta
+  const preguntaRef = push(comentariosRef, {
+    texto: texto,
+    nombre: nombre,
+    fecha: fecha,
+    timestamp: timestamp
+  });
   
-  /* LIMPIAR INPUT */
+  // Generar respuesta automática
+  const textoLower = texto.toLowerCase();
+  let respuestaTexto = "";
+  
+  if(textoLower.includes("informacion") || textoLower.includes("info")) {
+    respuestaTexto = "📢 Somos SOUND MUSIC - Plataforma musical. Más info en nuestro sitio web.";
+  } else if(textoLower.includes("contacto") || textoLower.includes("whatsapp")) {
+    respuestaTexto = "📱 Contáctanos por WhatsApp. Icono verde en la parte superior.";
+  } else if(textoLower.includes("precio") || textoLower.includes("costo")) {
+    respuestaTexto = "💰 Consulta precios por WhatsApp, te atenderemos rápido.";
+  } else {
+    respuestaTexto = "💬 Gracias por tu consulta. Para contacto directo, usa el icono de WhatsApp con flecha animada.";
+  }
+  
+  // Guardar respuesta (asociada a la pregunta)
+  setTimeout(() => {
+    push(comentariosRef, {
+      texto: respuestaTexto,
+      nombre: "SOUND MUSIC",
+      fecha: new Date().toLocaleString(),
+      timestamp: timestamp + 1,
+      esRespuesta: true,
+      respuestaPara: preguntaRef.key
+    });
+  }, 300);
+  
   input.value = "";
 };
 
-/* FUNCIÓN PARA ESCAPAR HTML Y EVITAR INYECCIONES */
-function escapeHTML(str){
+function escapeHTML(str) {
   if(!str) return "";
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+  return str.replace(/[&<>]/g, function(m) {
+    if(m === "&") return "&amp;";
+    if(m === "<") return "&lt;";
+    if(m === ">") return "&gt;";
+    return m;
+  });
 }
-
-/* PRUEBA DE ESCRITURA (OPCIONAL - DESCOMENTAR SI ES NECESARIO) */
-/*
-set(ref(db, "prueba"), {
-  mensaje: "Conexión exitosa",
-  fecha: new Date().toLocaleString()
-})
-.then(() => console.log("Dato enviado correctamente"))
-.catch((error) => console.error("Error Firebase:", error));
-*/
 
 </script>
 
