@@ -825,6 +825,91 @@ margin: 5px 0 3px 0;
   }
 }
 
+/* ⬇️⬇️⬇️ NUEVOS ESTILOS - PONLOS JUSTO AQUÍ ⬇️⬇️⬇️ */
+
+/* ============================================= */
+/* NUEVOS ESTILOS PARA PREGUNTA + RESPUESTA ABAJO */
+/* ============================================= */
+
+/* CONTENEDOR DE CONVERSACIÓN (cada pregunta con su respuesta) */
+.conversacion-item {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+    background: #2a2a2a;
+    border-radius: 12px;
+    padding: 12px;
+    transition: 0.2s;
+}
+
+.conversacion-item:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
+
+/* PREGUNTA (ARRIBA) */
+.pregunta-box {
+    background: #1e3a3a;
+    border-left: 4px solid #1db954;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.pregunta-box .comentario-meta .usuario {
+    color: #1db954;
+}
+
+.pregunta-texto {
+    font-weight: 500;
+    color: #fff;
+}
+
+/* RESPUESTA (DEBAJO) */
+.respuesta-box {
+    background: #2a2a2a;
+    border-left: 4px solid #ffd700;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+.respuesta-automatica {
+    background: #2a2a2a;
+    border-left-color: #ff9800;
+}
+
+.respuesta-box .comentario-meta .usuario {
+    color: #ffd700;
+}
+
+.respuesta-texto {
+    color: #ddd;
+}
+
+/* ICONO BOMBILLO (complemento) */
+.icono-bombillo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* RESPONSIVE PARA MÓVILES */
+@media (max-width: 768px) {
+    .respuesta-box {
+        margin-left: 8px;
+    }
+    
+    .conversacion-item {
+        padding: 8px;
+    }
+}
+
+/* ⬆️⬆️⬆️ HASTA AQUÍ LOS NUEVOS ESTILOS ⬆️⬆️⬆️ */
+
 </style>
 </head>
 
@@ -1922,11 +2007,9 @@ import {
   onChildAdded,
   onValue
 }
-
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
-/* FIREBASE */
-
+/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyBFsAf9N6fdIylSR2qKOQzh9HnWaxRLPIY",
   authDomain: "soundmusicbeta.firebaseapp.com",
@@ -1938,225 +2021,183 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getDatabase(app);
 
 /* =========================
    CONTADOR GLOBAL REALTIME
 ========================= */
-
 const visitasRef = ref(db, "contador_global");
 
-/* SUMAR VISITA */
-
 get(visitasRef)
-
 .then((snapshot) => {
-
   if(snapshot.exists()){
-
     set(visitasRef, snapshot.val() + 1);
-
   }else{
-
     set(visitasRef, 1);
-
   }
-
 })
-
 .catch((error) => {
-
   console.error("Error visitas:", error);
-
 });
 
-/* ESCUCHAR CAMBIOS EN TIEMPO REAL */
-
 onValue(visitasRef, (snapshot) => {
-
   if(snapshot.exists()){
-
-    document.getElementById("contadorVisitas")
-      .innerText = snapshot.val();
-
+    const contadorElem = document.getElementById("contadorVisitas");
+    if(contadorElem) contadorElem.innerText = snapshot.val();
   }
-
 });
 
 console.log("Firebase conectado correctamente");
 
 /* =========================
    COMENTARIOS REALTIME
+   (PREGUNTA ARRIBA, RESPUESTA DEBAJO)
 ========================= */
-
 const comentariosRef = ref(db, "comentarios");
 
 /* ESCUCHAR NUEVOS COMENTARIOS */
-
 onChildAdded(comentariosRef, (snapshot) => {
-
   const data = snapshot.val();
-
-  mostrarComentario(data);
-
+  mostrarConversacion(data);
 });
 
-/* MOSTRAR COMENTARIO */
-
-function mostrarComentario(data){
-
-  const contenedor =
-    document.getElementById("listaComentarios");
-
-  const div = document.createElement("div");
-
-  div.className = "comentario-item";
-
-  /* RESPUESTA AUTOMÁTICA */
-
-  let respuestaHTML = "";
-
-  if(data.respuesta){
-
-    respuestaHTML = `
-
-      <div class="respuesta-box">
-
-        <div class="comentario-meta">
-
-          <span class="usuario">
-            SOUND MUSIC
-          </span>
-
-          <span class="fecha">
-            ${data.fechaRespuesta}
-          </span>
-
-        </div>
-
-        <div class="comentario-texto">
-
-          <span class="icono-bombillo">
-            ??
-          </span>
-
-          ${data.respuesta}
-
-        </div>
-
+/* FUNCIÓN PRINCIPAL: MUESTRA PREGUNTA + RESPUESTA DEBAJO */
+function mostrarConversacion(data){
+  const contenedor = document.getElementById("listaComentarios");
+  
+  /* CREAR CONTENEDOR DE CONVERSACIÓN (CADA PAR PREGUNTA-RESPUESTA) */
+  const conversacionDiv = document.createElement("div");
+  conversacionDiv.className = "conversacion-item";
+  conversacionDiv.setAttribute("data-timestamp", data.timestamp || Date.now());
+  
+  let html = `
+    <!-- PREGUNTA (ARRIBA) -->
+    <div class="pregunta-box">
+      <div class="comentario-meta">
+        <span class="usuario">${escapeHTML(data.nombre)}</span>
+        <span class="fecha">${data.fecha}</span>
       </div>
-
-    `;
-
-  }
-
-  div.innerHTML = `
-
-    <div class="comentario-meta">
-
-      <span class="usuario">
-        ${data.nombre}
-      </span>
-
-      <span class="fecha">
-        ${data.fecha}
-      </span>
-
+      <div class="comentario-texto pregunta-texto">
+        ${escapeHTML(data.texto)}
+      </div>
     </div>
-
-    <div class="comentario-texto">
-      ${data.texto}
-    </div>
-
-    ${respuestaHTML}
-
   `;
-
-  contenedor.prepend(div);
-
+  
+  /* RESPUESTA (DEBAJO) - SI EXISTE */
+  if(data.respuesta){
+    html += `
+      <div class="respuesta-box">
+        <div class="comentario-meta">
+          <span class="usuario">SOUND MUSIC</span>
+          <span class="fecha">${data.fechaRespuesta || data.fecha}</span>
+        </div>
+        <div class="comentario-texto respuesta-texto">
+          <span class="icono-bombillo">💡</span>
+          ${escapeHTML(data.respuesta)}
+        </div>
+      </div>
+    `;
+  }else if(data.esRespuestaAutomatica){
+    /* CASO ESPECIAL: RESPUESTA AUTOMÁTICA DE SISTEMA */
+    html += `
+      <div class="respuesta-box respuesta-automatica">
+        <div class="comentario-meta">
+          <span class="usuario">🤖 SOUND MUSIC BOT</span>
+          <span class="fecha">${data.fecha}</span>
+        </div>
+        <div class="comentario-texto">
+          ${escapeHTML(data.texto)}
+        </div>
+      </div>
+    `;
+  }
+  
+  conversacionDiv.innerHTML = html;
+  
+  /* INSERTAR AL PRINCIPIO (MÁS RECIENTE PRIMERO) */
+  contenedor.prepend(conversacionDiv);
 }
 
-/* NUEVO AGREGAR COMENTARIO */
-
-window.agregarComentario = function(){
-
-  const input =
-    document.getElementById("comentarioInput");
-
-  const texto = input.value.trim();
-
-  if(!texto) return;
-
-  const nombre =
-    document.getElementById("nombreInput")?.value || "Usuario";
-
-  const fecha =
-    new Date().toLocaleString()
-
-  push(comentariosRef, {
-
-    texto,
-    nombre,
-    fecha,
+/* FUNCIÓN PARA AGREGAR PREGUNTA + RESPUESTA AUTOMÁTICA EN PAR */
+function agregarPreguntaYRespuesta(textoPregunta, nombreUsuario, fecha){
+  const preguntaData = {
+    texto: textoPregunta,
+    nombre: nombreUsuario,
+    fecha: fecha,
     timestamp: Date.now()
-
-  });
-
-  input.value = "";
-
-  /* RESPUESTA AUTOMÁTICA */
-
-  const textoLower = texto.toLowerCase();
-
-  if(
-    textoLower.includes("informacion") ||
-    textoLower.includes("contacto") ||
-    textoLower.includes("sound music") ||
-    textoLower.includes("encargado") ||
-    textoLower.includes("consulta")
-  ){
-
-    push(comentariosRef, {
-
-  texto: "?? Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp. La flecha animada te indicará dónde escribirnos.",
-
-  nombre: "SOUND MUSIC",
-
-  fecha: new Date().toLocaleString(),
-
-  timestamp: Date.now()
-
-});
-
+  };
+  
+  /* PRIMERO: SUBIR LA PREGUNTA */
+  push(comentariosRef, preguntaData);
+  
+  /* SEGUNDO: GENERAR RESPUESTA AUTOMÁTICA */
+  const textoLower = textoPregunta.toLowerCase();
+  let respuestaTexto = "";
+  
+  if(textoLower.includes("informacion") || textoLower.includes("info")){
+    respuestaTexto = "📢 Somos SOUND MUSIC - Tu plataforma de música. Información detallada en nuestro sitio web.";
+  }else if(textoLower.includes("contacto") || textoLower.includes("whatsapp")){
+    respuestaTexto = "📱 Contáctanos por WhatsApp al +XX XXX XXX XXX. ¡Estamos para servirte!";
+  }else if(textoLower.includes("sound music") || textoLower.includes("encargado")){
+    respuestaTexto = "🎵 SOUND MUSIC es liderado por un equipo de profesionales apasionados por la música.";
+  }else if(textoLower.includes("consulta") || textoLower.includes("pregunta")){
+    respuestaTexto = "💬 Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp. La flecha animada te indicará dónde escribirnos.";
+  }else if(textoLower.includes("precio") || textoLower.includes("costo")){
+    respuestaTexto = "💰 Para información de precios, contáctanos directamente por WhatsApp.";
+  }else{
+    respuestaTexto = "✅ ¡Gracias por tu consulta! Nuestro equipo te responderá pronto. Mientras, revisa nuestro sitio web.";
   }
+  
+  const respuestaData = {
+    texto: respuestaTexto,
+    nombre: "SOUND MUSIC",
+    fecha: new Date().toLocaleString(),
+    timestamp: Date.now() + 1, // +1 para que aparezca después
+    esRespuestaAutomatica: true,
+    respuestaPara: preguntaData.timestamp
+  };
+  
+  /* SUBIR RESPUESTA (APARECERÁ DEBAJO POR EL timestamp) */
+  push(comentariosRef, respuestaData);
+}
 
+/* NUEVO AGREGAR COMENTARIO (PREGUNTA) */
+window.agregarComentario = function(){
+  const input = document.getElementById("comentarioInput");
+  const texto = input.value.trim();
+  
+  if(!texto) return;
+  
+  const nombreInput = document.getElementById("nombreInput");
+  const nombre = (nombreInput && nombreInput.value.trim()) ? nombreInput.value.trim() : "Usuario";
+  const fecha = new Date().toLocaleString();
+  
+  /* LLAMAR FUNCIÓN QUE CREA PREGUNTA + RESPUESTA AUTOMÁTICA */
+  agregarPreguntaYRespuesta(texto, nombre, fecha);
+  
+  /* LIMPIAR INPUT */
+  input.value = "";
 };
 
-/* PRUEBA DE ESCRITURA */
+/* FUNCIÓN PARA ESCAPAR HTML Y EVITAR INYECCIONES */
+function escapeHTML(str){
+  if(!str) return "";
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
+/* PRUEBA DE ESCRITURA (OPCIONAL - DESCOMENTAR SI ES NECESARIO) */
 /*
-
-set(
-  ref(db, "prueba"),
-  {
-    mensaje: "Conexión exitosa",
-    fecha: new Date().toLocaleString()
-  }
-)
-
-.then(() => {
-
-  console.log("Dato enviado correctamente");
-
+set(ref(db, "prueba"), {
+  mensaje: "Conexión exitosa",
+  fecha: new Date().toLocaleString()
 })
-
-.catch((error) => {
-
-  console.error("Error Firebase:", error);
-
-});
-
+.then(() => console.log("Dato enviado correctamente"))
+.catch((error) => console.error("Error Firebase:", error));
 */
 
 </script>
