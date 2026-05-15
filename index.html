@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="Sound Music">
 <meta name="twitter:description" content="El sonido de la Musica">
 <meta name="twitter:image" content="https://musiartd.github.io/ArtemusicalD.github.io/Volante.jpg">
-
+  
 <style>
 
 body {
@@ -1092,9 +1092,49 @@ de:"Flor de Liz y Vicente tus Padres",
 para:"Yuliana"
 },
 {
+file:"Jehová Te Cuide Yuliana.mp3",
+title:"Jehová Te Cuide Yuliana",
+code:"AMU-002",
+cover:"quinseañera.jpg",
+de:"Flor de Liz y Vicente tus Padres",
+para:"Yuliana"
+},
+{
+file:"Mariachi Serenata Yuliana.mp3",
+title:"Mariachi Serenata Yuliana",
+code:"AMU-003",
+cover:"los-15.jpg",
+de:"Flor de Liz y Vicente tus Padres",
+para:"Yuliana"
+},
+{
+file:"Mariachi Serenata de Yuliana.mp3",
+title:"Mariachi Serenata de Yuliana",
+code:"AMU-004",
+cover:"quinseañera.jpg",
+de:"Flor de Liz y Vicente tus Padres",
+para:"Yuliana"
+},
+{
+file:"Tropical Baila Yuliana en tus 15.mp3",
+title:"Tropical Baila Yuliana en tus 15",
+code:"AMU-005",
+cover:"mis-15.jpg",
+de:"Flor de Liz y Vicente tus Padres",
+para:"Yuliana"
+},
+{
+file:"Tropical Desde el Cielo una Luz desendio.mp3",
+title:"Tropical Desde el Cielo una Luz desendio",
+code:"AMU-006",
+cover:"los-15.jpg",
+de:"Flor de Liz y Vicente tus Padres",
+para:"Yuliana"
+},
+{
 file:"Amelia Celeste.mp3",
 title:"Amelia Celeste",
-code:"AMU-001",
+code:"AMU-019",
 cover:"2-años-Amelia.jpg",
 de:"tus Padres Flor de Liz y Joaquin",
 para:"Amelia Celeste"
@@ -1509,9 +1549,6 @@ const btnRecibir = document.getElementById("btnRecibirCodigo");
 let codigoGenerado = "";
 
 /* CONTADOR VISITAS */
-
-/*
-
 let visitas = localStorage.getItem("contadorVisitas");
 
 if(!visitas){
@@ -1523,8 +1560,6 @@ visitas++;
 localStorage.setItem("contadorVisitas", visitas);
 
 document.getElementById("contadorVisitas").innerText = visitas;
-
-*/
 
 /* WHATSAPP */
 function abrirWhatsApp(){
@@ -1544,9 +1579,6 @@ function abrirWhatsApp(){
 }
 
 /* COMENTARIOS */
-
-/* 
-
 function agregarComentario(){
 
   const input =
@@ -1584,7 +1616,7 @@ contenedor.appendChild(div);
 
 input.value = "";
 
-// RESPUESTA AUTOMÁTICA
+/* RESPUESTA AUTOMÁTICA */
 
 const textoLower = texto.toLowerCase();
 
@@ -1663,8 +1695,6 @@ respuesta.innerHTML = `
 }
 
 }
-
- */
 
 /* RESET INICIAL */
 function resetLogin() {
@@ -1766,261 +1796,6 @@ btnIngresar.addEventListener("click", () => {
   playSong(0);
 
 });
-
-</script>
-
-<!-- ===== SCRIPT DE ORO conexion global FIREBASE ===== -->
-
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-
-import {
-  getDatabase,
-  ref,
-  set,
-  get,
-  push,
-  onChildAdded,
-  onValue
-}
-
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
-
-/* FIREBASE */
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBFsAf9N6fdIylSR2qKOQzh9HnWaxRLPIY",
-  authDomain: "soundmusicbeta.firebaseapp.com",
-  databaseURL: "https://soundmusicbeta-default-rtdb.firebaseio.com",
-  projectId: "soundmusicbeta",
-  storageBucket: "soundmusicbeta.firebasestorage.app",
-  messagingSenderId: "838858859682",
-  appId: "1:838858859682:web:4e4de34c5a0b9499e1a3fb"
-};
-
-const app = initializeApp(firebaseConfig);
-
-const db = getDatabase(app);
-
-/* =========================
-   CONTADOR GLOBAL REALTIME
-========================= */
-
-const visitasRef = ref(db, "contador_global");
-
-/* SUMAR VISITA */
-
-get(visitasRef)
-
-.then((snapshot) => {
-
-  if(snapshot.exists()){
-
-    set(visitasRef, snapshot.val() + 1);
-
-  }else{
-
-    set(visitasRef, 1);
-
-  }
-
-})
-
-.catch((error) => {
-
-  console.error("Error visitas:", error);
-
-});
-
-/* ESCUCHAR CAMBIOS EN TIEMPO REAL */
-
-onValue(visitasRef, (snapshot) => {
-
-  if(snapshot.exists()){
-
-    document.getElementById("contadorVisitas")
-      .innerText = snapshot.val();
-
-  }
-
-});
-
-console.log("Firebase conectado correctamente");
-
-/* =========================
-   COMENTARIOS REALTIME
-========================= */
-
-const comentariosRef = ref(db, "comentarios");
-
-/* ESCUCHAR NUEVOS COMENTARIOS */
-
-onChildAdded(comentariosRef, (snapshot) => {
-
-  const data = snapshot.val();
-
-  mostrarComentario(data);
-
-});
-
-/* MOSTRAR COMENTARIO */
-
-function mostrarComentario(data){
-
-  const contenedor =
-    document.getElementById("listaComentarios");
-
-  const div = document.createElement("div");
-
-  div.className = "comentario-item";
-
-  /* RESPUESTA AUTOMÁTICA */
-
-  let respuestaHTML = "";
-
-  if(data.respuesta){
-
-    respuestaHTML = `
-
-      <div class="respuesta-box">
-
-        <div class="comentario-meta">
-
-          <span class="usuario">
-            SOUND MUSIC
-          </span>
-
-          <span class="fecha">
-            ${data.fechaRespuesta}
-          </span>
-
-        </div>
-
-        <div class="comentario-texto">
-
-          <span class="icono-bombillo">
-            ??
-          </span>
-
-          ${data.respuesta}
-
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-  div.innerHTML = `
-
-    <div class="comentario-meta">
-
-      <span class="usuario">
-        ${data.nombre}
-      </span>
-
-      <span class="fecha">
-        ${data.fecha}
-      </span>
-
-    </div>
-
-    <div class="comentario-texto">
-      ${data.texto}
-    </div>
-
-    ${respuestaHTML}
-
-  `;
-
-  contenedor.prepend(div);
-
-}
-
-/* NUEVO AGREGAR COMENTARIO */
-
-window.agregarComentario = function(){
-
-  const input =
-    document.getElementById("comentarioInput");
-
-  const texto = input.value.trim();
-
-  if(!texto) return;
-
-  const nombre =
-    document.getElementById("nombreInput")?.value || "Usuario";
-
-  const fecha =
-    new Date().toLocaleString()
-
-  push(comentariosRef, {
-
-    texto,
-    nombre,
-    fecha,
-    timestamp: Date.now()
-
-  });
-
-  input.value = "";
-
-  /* RESPUESTA AUTOMÁTICA */
-
-  const textoLower = texto.toLowerCase();
-
-  if(
-    textoLower.includes("informacion") ||
-    textoLower.includes("contacto") ||
-    textoLower.includes("sound music") ||
-    textoLower.includes("encargado") ||
-    textoLower.includes("consulta")
-  ){
-
-    push(comentariosRef, {
-
-  texto: "?? Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp. La flecha animada te indicará dónde escribirnos.",
-
-  nombre: "SOUND MUSIC",
-
-  fecha: new Date().toLocaleString(),
-
-  timestamp: Date.now()
-
-});
-
-  }
-
-};
-
-/* PRUEBA DE ESCRITURA */
-
-/*
-
-set(
-  ref(db, "prueba"),
-  {
-    mensaje: "Conexión exitosa",
-    fecha: new Date().toLocaleString()
-  }
-)
-
-.then(() => {
-
-  console.log("Dato enviado correctamente");
-
-})
-
-.catch((error) => {
-
-  console.error("Error Firebase:", error);
-
-});
-
-*/
 
 </script>
 
