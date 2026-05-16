@@ -1893,7 +1893,7 @@ btnIngresar.addEventListener("click", () => {
 <script type="module">
 
 import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import {
   getDatabase,
@@ -1904,11 +1904,9 @@ import {
   onChildAdded,
   onValue
 }
-
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+  from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
 /* FIREBASE */
-
 const firebaseConfig = {
   apiKey: "AIzaSyBFsAf9N6fdIylSR2qKOQzh9HnWaxRLPIY",
   authDomain: "soundmusicbeta.firebaseapp.com",
@@ -1920,226 +1918,147 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
-const db = getDatabase(app);
+const db  = getDatabase(app);
 
 /* =========================
    CONTADOR GLOBAL REALTIME
 ========================= */
-
 const visitasRef = ref(db, "contador_global");
 
-/* SUMAR VISITA */
-
 get(visitasRef)
-
-.then((snapshot) => {
-
-  if(snapshot.exists()){
-
-    set(visitasRef, snapshot.val() + 1);
-
-  }else{
-
-    set(visitasRef, 1);
-
-  }
-
-})
-
-.catch((error) => {
-
-  console.error("Error visitas:", error);
-
-});
-
-/* ESCUCHAR CAMBIOS EN TIEMPO REAL */
+  .then((snapshot) => {
+    set(visitasRef, snapshot.exists() ? snapshot.val() + 1 : 1);
+  })
+  .catch((error) => {
+    console.error("Error visitas:", error);
+  });
 
 onValue(visitasRef, (snapshot) => {
-
-  if(snapshot.exists()){
-
-    document.getElementById("contadorVisitas")
-      .innerText = snapshot.val();
-
+  if (snapshot.exists()) {
+    document.getElementById("contadorVisitas").innerText = snapshot.val();
   }
-
 });
 
 console.log("Firebase conectado correctamente");
 
+
 /* =========================
    COMENTARIOS REALTIME
 ========================= */
-
 const comentariosRef = ref(db, "comentarios");
 
-/* ESCUCHAR NUEVOS COMENTARIOS */
-
+/* ─── ESCUCHAR NUEVOS COMENTARIOS ─────────────────────────
+   onChildAdded dispara por cada nodo hijo.
+   Solo mostramos los que son del usuario (nombre !== "SOUND MUSIC"),
+   porque la respuesta automática ya viaja DENTRO del mismo objeto.
+──────────────────────────────────────────────────────────── */
 onChildAdded(comentariosRef, (snapshot) => {
-
   const data = snapshot.val();
 
-  mostrarComentario(data);
+  // FIX: ignorar los push() sueltos de "SOUND MUSIC" que
+  // quedaron en la base de datos de antes. Solo renderizamos
+  // comentarios reales de usuarios.
+  if (data.nombre === "SOUND MUSIC") return;
 
+  mostrarComentario(data);
 });
 
-/* MOSTRAR COMENTARIO */
 
-function mostrarComentario(data){
-
-  const contenedor =
-    document.getElementById("listaComentarios");
+/* ─── MOSTRAR COMENTARIO ──────────────────────────────────
+   ORDEN CORRECTO:
+     1. Pregunta (usuario)   ← arriba
+     2. Respuesta (bot)      ← abajo
+──────────────────────────────────────────────────────────── */
+function mostrarComentario(data) {
+  const contenedor = document.getElementById("listaComentarios");
 
   const div = document.createElement("div");
-
   div.className = "comentario-item";
 
-  /* RESPUESTA AUTOMÁTICA */
-
-  let respuestaHTML = "";
-
-  if(data.respuesta){
-
-    respuestaHTML = `
-
-      <div class="comentario-meta">
-      
-        <div class="respuesta-box">
-
-            <span class="usuario">
-            SOUND MUSIC
-          </span>
-
-          <span class="fecha">
-            ${data.fechaRespuesta}
-          </span>
-
-        </div>
-
-        <div class="comentario-texto">
-
-          <span class="icono-bombillo">
-            ??
-          </span>
-
-          ${data.respuesta}
-
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-  div.innerHTML = `
-
+  // ── 1. PREGUNTA del usuario (siempre primero) ──
+  let html = `
     <div class="comentario-meta">
-
-      <span class="usuario">
-        ${data.nombre}
-      </span>
-
-      <span class="fecha">
-        ${data.fecha}
-      </span>
-
+      <span class="usuario">${data.nombre}</span>
+      <span class="fecha">${data.fecha}</span>
     </div>
-
     <div class="comentario-texto">
       ${data.texto}
     </div>
-
-    ${respuestaHTML}
-
   `;
 
-  contenedor.prepend(div);
+  // ── 2. RESPUESTA automática (debajo, solo si existe) ──
+  if (data.respuesta) {
+    html += `
+      <div class="comentario-meta" style="margin-top:8px;">
+        <div class="respuesta-box">
+          <span class="usuario">SOUND MUSIC</span>
+          <span class="fecha">${data.fechaRespuesta}</span>
+        </div>
+      </div>
+      <div class="comentario-texto">
+        <span class="icono-bombillo">💡</span>
+        ${data.respuesta}
+      </div>
+    `;
+  }
 
+  div.innerHTML = html;
+
+  // FIX: append (al final) en vez de prepend (al inicio)
+  // porque onChildAdded ya llega en orden cronológico.
+  // Si quieres los más nuevos arriba → usa prepend Y
+  // quita el if de "SOUND MUSIC" arriba. Pero solo uno de los dos.
+  contenedor.prepend(div);
 }
 
-/* NUEVO AGREGAR COMENTARIO */
 
-window.agregarComentario = function(){
+/* ─── AGREGAR COMENTARIO ──────────────────────────────────
+   FIX PRINCIPAL: la respuesta automática ya NO es un push()
+   separado. Viaja dentro del mismo objeto del comentario
+   como los campos  "respuesta" y "fechaRespuesta".
+   Así siempre llegan juntos y en orden.
+──────────────────────────────────────────────────────────── */
+window.agregarComentario = function () {
+  const input  = document.getElementById("comentarioInput");
+  const texto  = input.value.trim();
+  if (!texto) return;
 
-  const input =
-    document.getElementById("comentarioInput");
+  const nombre = document.getElementById("nombreInput")?.value.trim() || "Usuario";
+  const fecha  = new Date().toLocaleString();
 
-  const texto = input.value.trim();
+  // Detectar palabras clave para respuesta automática
+  const textoLower = texto.toLowerCase();
 
-  if(!texto) return;
+  let respuesta      = null;
+  let fechaRespuesta = null;
 
-  const nombre =
-    document.getElementById("nombreInput")?.value || "Usuario";
+  if (
+    textoLower.includes("ref")          ||
+    textoLower.includes("referencia")   ||
+    textoLower.includes("info")         ||    
+    textoLower.includes("informacion")  ||
+    textoLower.includes("información")  ||
+    textoLower.includes("contacto")     ||
+    textoLower.includes("sound music")  ||
+    textoLower.includes("encargado")    ||
+    textoLower.includes("consulta")
+  ) {
+    respuesta = "💡 Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp. La flecha animada te indicará dónde escribirnos.";
+    fechaRespuesta = new Date().toLocaleString();
+  }
 
-  const fecha =
-    new Date().toLocaleString()
-
+  // Un solo push con todo incluido
   push(comentariosRef, {
-
     texto,
     nombre,
     fecha,
-    timestamp: Date.now()
-
+    timestamp:      Date.now(),
+    respuesta,        // null si no hay coincidencia, string si la hay
+    fechaRespuesta    // null si no hay coincidencia
   });
 
   input.value = "";
-
-  /* RESPUESTA AUTOMÁTICA */
-
-  const textoLower = texto.toLowerCase();
-
-  if(
-    textoLower.includes("informacion") ||
-    textoLower.includes("contacto") ||
-    textoLower.includes("sound music") ||
-    textoLower.includes("encargado") ||
-    textoLower.includes("consulta")
-  ){
-
-    push(comentariosRef, {
-
-  texto: "?? Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp. La flecha animada te indicará dónde escribirnos.",
-
-  nombre: "SOUND MUSIC",
-
-  fecha: new Date().toLocaleString(),
-
-  timestamp: Date.now()
-
-});
-
-  }
-
 };
-
-/* PRUEBA DE ESCRITURA */
-
-/*
-
-set(
-  ref(db, "prueba"),
-  {
-    mensaje: "Conexión exitosa",
-    fecha: new Date().toLocaleString()
-  }
-)
-
-.then(() => {
-
-  console.log("Dato enviado correctamente");
-
-})
-
-.catch((error) => {
-
-  console.error("Error Firebase:", error);
-
-});
-
-*/
 
 </script>
 
