@@ -3,6 +3,26 @@
   <title>Sound Music</title>
   <link rel="icon" href="icono pagina.png" type="image/png">
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- -- Open Graph (WhatsApp, Facebook, etc.) ------- -->
+<meta property="og:type"             content="website">
+<meta property="og:url"              content="https://musiartd.github.io/ArtemusicalD.github.io/">
+<meta property="og:site_name"        content="Sound Music">
+<meta property="og:title"            content="Tienes una invitación especial ??">
+<meta property="og:description"      content="Esta invitación llegó especialmente para ti — toca para Aceptar Invitación">
+<meta property="og:image"            content="https://musiartd.github.io/ArtemusicalD.github.io/afiche.jpg">
+<meta property="og:image:secure_url" content="https://musiartd.github.io/ArtemusicalD.github.io/afiche.jpg">
+<meta property="og:image:type"       content="image/jpeg">
+<meta property="og:image:width"      content="1024">
+<meta property="og:image:height"     content="1536">
+
+<!-- -- Twitter / X Card --------------------------- -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Tienes una invitación especial ??">
+<meta name="twitter:description" content="Esta invitación llegó especialmente para ti — toca para Aceptar Invitación">
+<meta name="twitter:image"       content="https://musiartd.github.io/ArtemusicalD.github.io/afiche.jpg">
+
 <style>
 
 body {
@@ -51,6 +71,7 @@ body {
   color: #888;
 }
 
+/* ?? AQUÍ VAN LOS NUEVOS ESTILOS */
 .input-box {
   display: flex;
   flex-direction: column;
@@ -254,29 +275,64 @@ body {
 /* ONDAS */
 .ondas {
   display: flex;
+
   justify-content: center;
+
   align-items: flex-end;
+
   height: 30px;
+
   overflow: hidden;
-  margin: 5px 0 3px 0;
+
+margin: 5px 0 3px 0;
 }
 
 .ondas span {
+
   width: 3px;
+
   margin: 0 1px;
+
   height: 8px;
+
   border-radius: 12px;
+
   transform-origin: bottom;
+
   transition: height 0.08s linear;
-  background: linear-gradient(to top, #ff0000, #ffd000, #00ff88);
-  box-shadow: 0 0 4px #ff0000, 0 0 8px #ffd000, 0 0 12px #00ff88;
+
+  background: linear-gradient(
+    to top,
+    #ff0000,
+    #ffd000,
+    #00ff88
+  );
+
+  box-shadow:
+    0 0 4px #ff0000,
+    0 0 8px #ffd000,
+    0 0 12px #00ff88;
+
   animation: humoWave 2s infinite ease-in-out;
 }
 
 @keyframes humoWave {
-  0%{ filter: brightness(1); opacity: 0.8; }
-  50%{ filter: brightness(1.6); opacity: 1; }
-  100%{ filter: brightness(1); opacity: 0.8; }
+
+  0%{
+    filter: brightness(1);
+    opacity: 0.8;
+  }
+
+  50%{
+    filter: brightness(1.6);
+    opacity: 1;
+  }
+
+  100%{
+    filter: brightness(1);
+    opacity: 0.8;
+  }
+
 }
 
 /* PROGRESO */
@@ -284,6 +340,7 @@ body {
   width: 75%;
   max-width: 600px;
   margin: 21px auto;
+
   height: 6px;
   background: #333;
   border-radius: 10px;
@@ -302,6 +359,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 14px;
   margin-top: 12px;
 }
@@ -310,11 +368,14 @@ body {
   background: transparent;
   border: none;
   cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 40px;
   height: 40px;
+
   color: #777;
   transition: 0.2s;
 }
@@ -331,8 +392,16 @@ body {
   fill: currentColor;
 }
 
-.ctrl:hover { color: #1db954; transform: scale(1.15); }
-.ctrl.active { color: #1db954; }
+/* hover */
+.ctrl:hover {
+  color: #1db954;
+  transform: scale(1.15);
+}
+
+/* activo (shuffle / loop) */
+.ctrl.active {
+  color: #1db954;
+}
 
 /* Volumen */
 .volume-group {
@@ -349,22 +418,29 @@ body {
   letter-spacing: 1px;
 }
 
-.ctrl.main { width: 60px; height: 60px; }
-.ctrl.main svg { width: 30px; height: 30px; }
+.ctrl.main {
+  width: 60px;
+  height: 60px;
+}
+
+.ctrl.main svg {
+  width: 30px;
+  height: 30px;
+}
 
 /* INFO */
 .info {
   max-width: 500px;
   margin: 20px auto;
   text-align: left;
-  transform: translateX(40px);
+  transform: translateX(40px);  /* ?? mueve todo a la derecha */
 }
 
 .linea {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-bottom: 10px;
+  gap: 5px;              /* más controlado */
+  margin-bottom: 10px;   /* lo dejas igual */
 }
   
 .label {
@@ -377,12 +453,12 @@ body {
 
 .dos {
   margin-left: auto;
-  transform: translateX(-45px);
+  transform: translateX(-45px);  /* ?? mueve 7px a la izquierda */
 }
 
 .valor {
   flex: 1;
-  transform: translateX(-40px);
+  transform: translateX(-40px);  /* ?? se acerca al ":" */
 }
 
 /* SECCIONES */
@@ -393,28 +469,52 @@ body {
 }
 
 .lista .seccion{
+
   position:sticky;
+
   top:0;
+
   z-index:20;
+
   background:#1e1e1e;
+
   padding:10px 0;
+
 }
 
 .contenido { display:none; }
 .contenido.activo { display:block; }
 
-.info .linea:first-child .label { font-size: 23px; }
-.info .linea:first-child .valor { font-size: 23px; font-weight: 450; }
+/* ?? SOLO LA PRIMERA LINEA (TITULO) */
+.info .linea:first-child .label {
+  font-size: 23px;
+}
+
+.info .linea:first-child .valor {
+  font-size: 23px;
+  font-weight: 450;
+}  
 
 #mensajeInicial {
   margin-top: 15px;
-  font-size: 28px;
+  font-size: 28px; /* ?? recuperado */
   text-align: center;
   font-weight: bold;
-  background: linear-gradient(45deg, #d4af37, #ffd700, #fff5b7, #d4af37);
+
+  background: linear-gradient(
+    45deg,
+    #d4af37,
+    #ffd700,
+    #fff5b7,
+    #d4af37
+  );
+
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 5px rgba(255,215,0,0.5), 0 0 10px rgba(255,215,0,0.3);
+
+  text-shadow:
+    0 0 5px rgba(255, 215, 0, 0.5),
+    0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 /* ===== BLOQUE COMENTARIOS ===== */
@@ -427,6 +527,7 @@ body {
   box-sizing: border-box;
 }
 
+/* TÍTULO */
 .comentarios h2{
   text-align: center;
   color: #1db954;
@@ -436,19 +537,26 @@ body {
 
 .comentarios h2,
 .comentario-header{
+
   position:sticky;
+
   top:0;
+
   z-index:30;
+
   background:#181818;
 }
 
+/* HEADER (VISITAS + WHATSAPP) */
 .comentario-header{
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   background: #222;
   padding: 10px;
   border-radius: 10px;
+
   margin-bottom: 15px;
 }
 
@@ -456,15 +564,23 @@ body {
   font-size: 20px;
   color: #fff;
   font-weight: bold;
+
   display:flex;
   align-items:center;
   gap:8px;
 }
 
-.visitas span{ color: #1db954; font-weight: bold; }
+.visitas span{
+  color: #1db954;
+  font-weight: bold;
+}
 
-.wsp-box{ display:flex; align-items:center; }
+.wsp-box{
+  display:flex;
+  align-items:center;
+}
 
+/* FORM COMENTARIOS */
 .comentario-form{
   display:flex;
   gap:8px;
@@ -477,6 +593,7 @@ body {
   border:none;
   border-radius:8px;
   outline:none;
+
   background:#2a2a2a;
   color:white;
 }
@@ -485,41 +602,62 @@ body {
   padding:10px 14px;
   border:none;
   border-radius:8px;
+
   background:#1db954;
   color:white;
+
   font-weight:bold;
   cursor:pointer;
+
   transition:0.2s;
 }
 
-.comentario-form button:hover{ transform:scale(1.05); }
+.comentario-form button:hover{
+  transform:scale(1.05);
+}
 
+/* ICONO WHATSAPP */
 .whatsapp-boton{
   font-size: 22px;
   cursor: pointer;
   transition: 0.2s;
 }
 
-.whatsapp-boton:hover{ transform: scale(1.2); filter: brightness(1.3); }
+.whatsapp-boton:hover{
+  transform: scale(1.2);
+  filter: brightness(1.3);
+}
 
+/* LISTA DE COMENTARIOS */
 #listaComentarios{
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+/* TARJETA DE COMENTARIO */
 .comentario-item{
   background: #2a2a2a;
   padding: 12px;
   border-radius: 10px;
+
   box-shadow: 0 0 8px rgba(0,0,0,0.4);
   transition: 0.2s;
 }
 
-.comentario-item:hover{ transform: translateY(-2px); background: #333; }
+.comentario-item:hover{
+  transform: translateY(-2px);
+  background: #333;
+}
 
-.comentario-texto{ font-size: 14px; margin-bottom: 8px; color: #fff; }
+/* TEXTO DEL COMENTARIO */
+.comentario-texto{
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #fff;
+}
 
+/* META (USUARIO + FECHA) */
 .comentario-meta{
   display: flex;
   justify-content: space-between;
@@ -527,7 +665,9 @@ body {
   color: #aaa;
 }
 
-.comentario-meta .usuario{ color: #1db954; }
+.comentario-meta .usuario{
+  color: #1db954;
+}
 
 .icono-whatsapp{
   color:#25D366;
@@ -536,57 +676,110 @@ body {
   margin-left:10px;
 }
 
-.icono-whatsapp:hover{ transform:scale(1.25); filter:drop-shadow(0 0 6px #25D366); }
+.icono-whatsapp:hover{
+  transform:scale(1.25);
+  filter:drop-shadow(0 0 6px #25D366);
+}
 
 .flecha-wsp{
   font-size:20px;
   color:#25D366;
   margin-right:8px;
+
   display:inline-block;
+
   animation: flechaMove 0.8s infinite alternate;
 }
 
-.flecha-wsp svg{ width:20px; height:20px; display:block; }
+.flecha-wsp svg{
+  width:20px;
+  height:20px;
+  display:block;
+}
 
 .icono-bombillo{
   display:inline-flex;
   align-items:center;
   justify-content:center;
+
   margin-right:8px;
+
   vertical-align:middle;
 }
 
 .bombillo-svg{
+
   width:18px;
   height:18px;
+
   color:#ffd700;
-  filter: drop-shadow(0 0 4px rgba(255,215,0,0.8)) drop-shadow(0 0 8px rgba(255,215,0,0.5));
-  animation: bombilloGlow 1.5s infinite alternate, bombilloPulse 1.2s infinite ease-in-out;
+
+  filter:
+    drop-shadow(0 0 4px rgba(255,215,0,0.8))
+    drop-shadow(0 0 8px rgba(255,215,0,0.5));
+
+  animation:
+    bombilloGlow 1.5s infinite alternate,
+    bombilloPulse 1.2s infinite ease-in-out;
+
   transform-origin:center;
 }
 
 @keyframes bombilloGlow{
-  from{ filter: drop-shadow(0 0 4px rgba(255,215,0,0.5)) drop-shadow(0 0 8px rgba(255,215,0,0.3)); }
-  to{ filter: drop-shadow(0 0 8px rgba(255,215,0,1)) drop-shadow(0 0 16px rgba(255,215,0,0.7)); }
+
+  from{
+    filter:
+      drop-shadow(0 0 4px rgba(255,215,0,0.5))
+      drop-shadow(0 0 8px rgba(255,215,0,0.3));
+  }
+
+  to{
+    filter:
+      drop-shadow(0 0 8px rgba(255,215,0,1))
+      drop-shadow(0 0 16px rgba(255,215,0,0.7));
+  }
+
 }
 
 @keyframes bombilloPulse{
-  0%{ transform:scale(1); }
-  50%{ transform:scale(1.12); }
-  100%{ transform:scale(1); }
+
+  0%{
+    transform:scale(1);
+  }
+
+  50%{
+    transform:scale(1.12);
+  }
+
+  100%{
+    transform:scale(1);
+  }
+
 }
 
+/* CAJA COMENTARIO */
 .comentario-box{
   display:flex;
   gap:8px;
   margin-bottom:15px;
 }
 
-.aviso-wsp{ display:none; }
+.aviso-wsp{
+  display:none;
+}
 
 @keyframes brilloAviso{
-  from{ opacity:0.7; box-shadow:0 0 0px #25D366; }
-  to{ opacity:1; box-shadow:0 0 10px rgba(37,211,102,0.35); }
+
+  from{
+    opacity:0.7;
+    box-shadow:0 0 0px #25D366;
+  }
+
+  to{
+    opacity:1;
+    box-shadow:0 0 10px rgba(37,211,102,0.35);
+  }
+
 }
 
 .comentario-box input{
@@ -595,28 +788,43 @@ body {
   border:none;
   border-radius:10px;
   outline:none;
+
   background:#2a2a2a;
   color:white;
 }
 
-.comentario-box input::placeholder{ color:#888; }
+.comentario-box input::placeholder{
+  color:#888;
+}
 
 .comentario-box button{
   border:none;
   padding:10px 14px;
   border-radius:10px;
+
   background:#1db954;
   color:white;
   font-weight:bold;
   cursor:pointer;
+
   transition:0.2s;
 }
 
-.comentario-box button:hover{ transform:scale(1.05); filter:brightness(1.1); }
+.comentario-box button:hover{
+  transform:scale(1.05);
+  filter:brightness(1.1);
+}
 
 @keyframes flechaMove{
-  from{ transform:translateX(0px); opacity:0.5; }
-  to{ transform:translateX(6px); opacity:1; }
+  from{
+    transform:translateX(0px);
+    opacity:0.5;
+  }
+
+  to{
+    transform:translateX(6px);
+    opacity:1;
+  }
 }
 
 </style>
@@ -625,58 +833,70 @@ body {
 <body>
 
 <div id="pantallaInicio">
+
   <div class="inicio-contenido">
+
     <img src="portada 2026.jpg" class="inicio-cover">
+
     <h1>GRACIAS POR SU VISITA</h1>
+
     <div class="input-box">
+
       <input type="text" id="nombreInput" placeholder="Nombre completo">
+      
       <input type="tel" id="celularInput" placeholder="Número de celular" style="display:none;">
+      
       <input type="text" id="codigoInput" placeholder="Código de verificación" style="display:none;">
+
       <button id="btnRecibirCodigo" style="display:none;">RECIBIR CÓDIGO</button>
+
       <button id="btnIngresar" style="opacity:0; pointer-events:none;">INGRESAR</button>
+
     </div>
+
   </div>
+
 </div>
 
 <!-- LISTA -->
 <div class="lista">
 
-  <!-- ✅ NUEVO: Música para Jehová (primero) -->
-  <div class="seccion" onclick="toggle('musicaJehovaContenido')">
-    <svg class="icono-seccion icono-musica" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
-    </svg>
-    Música para Jehová
-  </div>
-  <div id="musicaJehovaContenido" class="contenido activo"></div>
-
-  <!-- Lista de reproducción (segundo) -->
+  <!-- Lista de reproducción -->
   <div class="seccion" onclick="toggle('listaContenido')">
+
     <svg class="icono-seccion icono-lista" viewBox="0 0 24 24" fill="currentColor">
       <path d="M4 6h16v2H4z"/>
       <path d="M4 11h16v2H4z"/>
       <path d="M4 16h16v2H4z"/>
     </svg>
+
     Lista de reproducción
   </div>
+
   <div id="listaContenido" class="contenido activo"></div>
 
   <!-- Más reproducido -->
   <div class="seccion" onclick="toggle('mas')">
+
     <svg class="icono-seccion icono-fuego" viewBox="0 0 24 24" fill="currentColor">
       <path d="M13 3s1 2 1 4-2 3-2 5a4 4 0 008 0c0-5-5-9-7-9zm-1 8s-4 2-4 6a5 5 0 0010 0c0-2-1-4-3-5 0 2-1 3-3 3s-3-2-3-4z"/>
     </svg>
+
     Más reproducido
   </div>
+
   <div id="mas" class="contenido"></div>
 
   <!-- Últimas -->
   <div class="seccion" onclick="toggle('ult')">
+
     <svg class="icono-seccion icono-corazon" viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 21s-7-4.35-9.33-8A5.39 5.39 0 0112 5.09 5.39 5.39 0 0121.33 13C19 16.65 12 21 12 21z"/>
     </svg>
+
     Últimas
   </div>
+
   <div id="ult" class="contenido"></div>
 
 </div>
@@ -693,44 +913,51 @@ body {
 <div class="ondas" id="ondas"></div>
 
 <div class="progreso" onclick="seek(event)">
-  <div class="barra" id="barra"></div>
+<div class="barra" id="barra"></div>
 </div>
 
 <div class="player-controls">
 
-  <button class="ctrl" id="shuffleBtn" onclick="toggleShuffle()">
+  <!-- Shuffle -->
+<button class="ctrl" id="shuffleBtn" onclick="toggleShuffle()">
     <svg viewBox="0 0 24 24">
       <path d="M16 3h5v5h-2V6.41l-5.29 5.3-1.42-1.42 5.3-5.29H16V3zM3 6h2l3.29 3.29-1.42 1.42L3 6zm18 12v3h-5v-2h1.59l-5.3-5.29 1.42-1.42 5.29 5.3V18h2zM3 18l4.29-4.29 1.42 1.42L5 18H3z"/>
     </svg>
   </button>
 
-  <button class="ctrl" id="prevBtn" onclick="prev()">
+  <!-- Previous -->
+<button class="ctrl" id="prevBtn" onclick="prev()">
     <svg viewBox="0 0 24 24">
       <path d="M6 6h2v12H6zm3.5 6L18 18V6z"/>
     </svg>
   </button>
 
-  <button class="ctrl main" id="playBtn" onclick="togglePlay()">
+  <!-- Play -->
+<button class="ctrl main" id="playBtn" onclick="togglePlay()">
     <svg id="playIcon" viewBox="0 0 24 24">
       <path d="M8 5v14l11-7z"/>
     </svg>
+
     <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none;">
       <path d="M6 5h4v14H6zm8 0h4v14h-4z"/>
     </svg>
   </button>
 
-  <button class="ctrl" id="nextBtn" onclick="next()">
+  <!-- Next -->
+<button class="ctrl" id="nextBtn" onclick="next()">
     <svg viewBox="0 0 24 24">
       <path d="M16 6h2v12h-2zM6 6v12l8-6z"/>
     </svg>
   </button>
 
-  <button class="ctrl" id="loopBtn" onclick="toggleLoop()">
+  <!-- Loop -->
+<button class="ctrl" id="loopBtn" onclick="toggleLoop()">
     <svg viewBox="0 0 24 24">
       <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v5z"/>
     </svg>
   </button>
 
+  <!-- Volumen -->
   <div class="volume-group">
     <button class="ctrl" id="volDownBtn">-</button>
     <span class="vol-text">[VOL]</span>
@@ -739,27 +966,34 @@ body {
 
 </div>
 
+<!-- INFO CORRECTO -->
 <div class="info">
+
   <div class="linea">
-    <div class="label">Título <span class="dos">:</span></div>
+<div class="label">Título <span class="dos">:</span></div>
     <div class="valor" id="titulo">---</div>
   </div>
+
   <div class="linea">
     <div class="label">De <span class="dos">:</span></div>
     <div class="valor" id="de">---</div>
   </div>
+
   <div class="linea">
     <div class="label">Para <span class="dos">:</span></div>
     <div class="valor" id="para">---</div>
   </div>
+
   <div class="linea">
     <div class="label">Código <span class="dos">:</span></div>
     <div class="valor" id="codigo">---</div>
   </div>
+
   <div class="linea">
     <div class="label">Agregado <span class="dos">:</span></div>
     <div class="valor" id="fecha">---</div>
   </div>
+
 </div>
 
 <audio id="player"></audio>
@@ -772,47 +1006,78 @@ body {
 
   <h2>Comentarios</h2>
 
+  <!-- contador + whatsapp -->
   <div class="comentario-header">
+
     <div class="visitas">
       VISITAS <span id="contadorVisitas">0</span>
     </div>
+
     <div class="wsp-box">
+
       <span class="flecha-wsp">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </span>
-      <svg class="icono-seccion icono-whatsapp" onclick="abrirWhatsApp()" viewBox="0 0 24 24">
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="20"
+     height="20"
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="3"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+
+  <line x1="5" y1="12" x2="19" y2="12"></line>
+  <polyline points="12 5 19 12 12 19"></polyline>
+
+</svg>
+
+</span>
+
+      <!-- BOTÓN WHATSAPP -->
+      <svg class="icono-seccion icono-whatsapp"
+           onclick="abrirWhatsApp()"
+           viewBox="0 0 24 24">
+
         <path d="M20.52 3.48A11.86 11.86 0 0012.07 0C5.43 0 .16 5.27.16 11.77c0 2.07.54 4.08 1.57 5.86L0 24l6.5-1.7a11.7 11.7 0 005.57 1.42h.01c6.63 0 11.9-5.27 11.9-11.77 0-3.16-1.24-6.14-3.46-8.47zM12.07 21.5c-1.87 0-3.7-.5-5.28-1.45l-.38-.22-3.86 1.01 1.03-3.76-.25-.39a9.7 9.7 0 01-1.5-5.22c0-5.4 4.39-9.77 9.74-9.77 2.6 0 5.04 1.02 6.87 2.86a9.68 9.68 0 012.86 6.91c0 5.4-4.39 9.77-9.74 9.77zm5.6-7.42c-.3-.15-1.8-.89-2.08-.99-.28-.1-.48-.15-.68.15-.2.3-.78.99-.96 1.19-.18.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.67-2.07-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.03-.53-.07-.15-.68-1.64-.94-2.26-.25-.6-.5-.52-.68-.53h-.58c-.2 0-.53.07-.8.38-.27.3-1.02 1-.02 2.45 1 1.45 2.15 2.86 3.7 4.02 1.55 1.16 2.18 1.26 2.98 1.5.8.25 1.5.22 2.07.13.63-.1 1.8-.73 2.05-1.43.25-.7.25-1.3.18-1.43-.07-.13-.27-.2-.57-.35z"/>
       </svg>
+
     </div>
+
   </div>
 
-  <div class="aviso-wsp">
-    Para consultas o contacto directo con SOUND MUSIC,
-    haz clic en el icono de WhatsApp.
-    La flecha animada te indica dónde escribirnos.
-  </div>
+<div class="aviso-wsp">
 
-  <div class="comentario-box">
-    <input type="text" id="comentarioInput" placeholder="Escribe un comentario...">
-    <button onclick="agregarComentario()">ENVIAR</button>
-  </div>
+  ?? Para consultas o contacto directo con SOUND MUSIC,
+  haz clic en el icono de WhatsApp.
+  La flecha animada te indica dónde escribirnos.
 
-  <div id="listaComentarios"></div>
+</div>
+
+<div class="comentario-box">
+
+  <input
+    type="text"
+    id="comentarioInput"
+    placeholder="Escribe un comentario..."
+  >
+
+  <button onclick="agregarComentario()">
+    ENVIAR
+  </button>
+
+</div>
+
+  <!-- lista de comentarios -->
+  <div id="listaComentarios">
+
+</div>
 
 <script>
 
-/* ============================================================
-   PLAYLISTS
-   - playlist:             canciones generales
-   - playlistMusicaJehova: nuevo apartado
-   - todasLasPlaylist:     unión para búsquedas y navegación
-   ============================================================ */
+const playlist=[
 
-const playlist = [
-  // ?? índice 0 — intro automática al ingresar — NO MOVER
+// ?? canción predeterminada (SIEMPRE índice 0 - NO MOVER - usada por DEFAULT_INDEX)
 {
 file:"Intro Sound Music 2026.mp3",
 title:"Intro Sound Music 2026",
@@ -975,293 +1240,311 @@ para:"Amelia Celeste"
 }
 ];
 
-// ✅ NUEVO APARTADO — agrega tus canciones aquí (índice 0 se oculta igual que playlist)
-const playlistMusicaJehova = [
-  // ?? índice 0 — requerido, se oculta en la lista visual
-{
-file:"intro.mp3",
-title:"Intro Sound Music 2026",
-code:"000",
-cover:"intro.png",
-de:"J.M.P_3Hermanos",
-para:"Público en General"
-},
-  // Agrega tus canciones debajo con el formato:
-{
-file:"Baila como Mirian.mp3",
-title:"Baila como Mirian",
-code:"AMU-020",
-cover:"mis-15.jpg",
-de:"Sound Music",
-para:"El Mundo"
-},
-{
-file:"De Bolivia asta Sion.mp3",
-title:"De Bolivia asta Sion",
-code:"AMU-021",
-cover:"quinseañera.jpg",
-de:"Sound Music",
-para:"El Mundo"
-}
-];
+let currentIndex=0, shuffle=false, loop=false;
 
-// ✅ Unión de ambas listas para búsquedas, historial y navegación
-const todasLasPlaylist = [...playlist, ...playlistMusicaJehova];
-
-/* ============================================================
-   VARIABLES GLOBALES
-   ============================================================ */
-
-let currentIndex = 0, shuffle = false, loop = false;
-
-const player = document.getElementById("player");
+const player=document.getElementById("player");
 
 /* AUDIO VISUALIZER */
+
 const audioContext = new AudioContext();
+
 const source = audioContext.createMediaElementSource(player);
+
 const analyser = audioContext.createAnalyser();
+
 source.connect(analyser);
+
 analyser.connect(audioContext.destination);
+
 analyser.fftSize = 64;
+
 const bufferLength = analyser.frequencyBinCount;
+
 const dataArray = new Uint8Array(bufferLength);
 
-/* ============================================================
-   RENDER LISTAS
-   ============================================================ */
-
+/* LISTA DINAMICA */
 function renderLista(){
-  let cont = document.getElementById("listaContenido");
-  cont.innerHTML = "";
-  playlist.forEach((song, index) => {
-    if(index === 0) return;
-    let div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `
-      <svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
-        <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
-      </svg>
-      ${song.title}
-    `;
-    div.onclick = () => playMusic(song.file);
-    cont.appendChild(div);
-  });
-}
+let cont=document.getElementById("listaContenido");
+cont.innerHTML="";
 
-// ✅ NUEVO
-function renderMusicaJehova(){
-  let cont = document.getElementById("musicaJehovaContenido");
-  cont.innerHTML = "";
-  playlistMusicaJehova.forEach((song, index) => {
-    if(index === 0) return;
-    let div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `
-      <svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
-        <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
-      </svg>
-      ${song.title}
-    `;
-    div.onclick = () => playMusic(song.file);
-    cont.appendChild(div);
-  });
-}
+playlist.forEach((song, index)=>{
+  if(index === 0) return;
 
+let div=document.createElement("div");
+div.className="item";
+
+div.innerHTML = `
+<svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
+<path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+</svg>
+${song.title}
+`;
+
+div.onclick=()=>playMusic(song.file);
+
+cont.appendChild(div);
+
+});
+}
 renderLista();
-renderMusicaJehova();
 
 /* ONDAS */
-let ondas = document.getElementById("ondas");
-for(let i = 0; i < 35; i++){
-  let s = document.createElement("span");
-  s.style.animationDelay = (i * 0.05) + "s";
-  ondas.appendChild(s);
+let ondas=document.getElementById("ondas");
+for(let i=0;i<35;i++){
+let s=document.createElement("span");
+s.style.animationDelay=(i*0.05)+"s";
+ondas.appendChild(s);
 }
 
 const bars = ondas.querySelectorAll("span");
 
 function animarOndas(){
+
   requestAnimationFrame(animarOndas);
+
   analyser.getByteFrequencyData(dataArray);
+
   bars.forEach((bar, i) => {
+
     let value = dataArray[i];
+
     let height = Math.min(50, Math.max(1, value * 0.18));
+
     bar.style.height = height + "px";
+
   });
+
 }
+
 animarOndas();
 
-/* ============================================================
-   UI
-   ============================================================ */
-
+/* UI */
 function updateUI(song){
-  if(!song) return;
-  document.getElementById("titulo").innerText = song.title;
-  const cover = document.getElementById("cover");
-  if(song.cover){
-    cover.src = song.cover;
-    cover.style.display = "block";
-  }else{
-    cover.style.display = "none";
-  }
-  document.getElementById("de").innerText = song.de;
-  document.getElementById("para").innerText = song.para;
-  document.getElementById("codigo").innerText = song.code;
-  if(player.currentTime > 0){
-    document.getElementById("mensajeInicial").style.display = "none";
-  }
-  let fechas = JSON.parse(localStorage.getItem("fechas")) || {};
-  if(!fechas[song.file]){
-    fechas[song.file] = new Date().toLocaleString();
-    localStorage.setItem("fechas", JSON.stringify(fechas));
-  }
-  document.getElementById("fecha").innerText = fechas[song.file];
+if(!song)return;
+
+document.getElementById("titulo").innerText=song.title;
+const cover = document.getElementById("cover");
+
+if(song.cover){
+  cover.src = song.cover;
+  cover.style.display = "block";
+}else{
+  cover.style.display = "none";
 }
 
-/* ============================================================
-   PLAY — ✅ usa todasLasPlaylist en lugar de playlist
-   ============================================================ */
+document.getElementById("de").innerText=song.de;
+document.getElementById("para").innerText=song.para;
+document.getElementById("codigo").innerText=song.code;
 
+// ? AQUÍ ES EL LUGAR CORRECTO
+if(player.currentTime > 0){
+  document.getElementById("mensajeInicial").style.display = "none";
+}
+
+let fechas=JSON.parse(localStorage.getItem("fechas"))||{};
+if(!fechas[song.file]){
+fechas[song.file]=new Date().toLocaleString();
+localStorage.setItem("fechas",JSON.stringify(fechas));
+}
+document.getElementById("fecha").innerText=fechas[song.file];
+}
+
+/* PLAY */
 function playSong(i){
+
   currentIndex = i;
-  let song = todasLasPlaylist[i]; // ✅ CAMBIO
+  let song = playlist[i];
 
-  player.pause();
-  player.currentTime = 0;
-  document.getElementById("barra").style.width = "0%";
+  player.pause();                 // ?? detener anterior
+  player.currentTime = 0;         // ?? reset inmediato
+  document.getElementById("barra").style.width = "0%"; // ?? limpia barra
 
-  updateUI(song);
+  updateUI(song);                 // ?? primero UI (evita retraso visual)
 
   player.src = song.file;
-  player.load();
+
+  player.load();                  // ?? fuerza carga inmediata
   audioContext.resume();
   player.play();
 }
 
-/* ============================================================
-   CONTROLES — introActiva sin cambios
-   ============================================================ */
+/* CONTROLES */
 
 let introActiva = true;
 
 function togglePlay(){
-  if(introActiva){ avisoUsuario(); return; }
+
+  if(introActiva){
+    avisoUsuario();
+    return;
+  }
+
   player.paused ? player.play() : player.pause();
 }
 
-// ✅ next/prev usan todasLasPlaylist.length para cubrir ambas listas
 function next(){
-  if(introActiva){ avisoUsuario(); return; }
+
+  if(introActiva){
+    avisoUsuario();
+    return;
+  }
+
   if(shuffle){
-    currentIndex = Math.floor(Math.random() * (todasLasPlaylist.length - 1)) + 1;
+    currentIndex = Math.floor(Math.random() * (playlist.length - 1)) + 1;
   }else{
     currentIndex++;
-    if(currentIndex >= todasLasPlaylist.length) currentIndex = 1;
+
+    if(currentIndex >= playlist.length){
+      currentIndex = 1;
+    }
   }
+
   playSong(currentIndex);
 }
 
 function prev(){
-  if(introActiva){ avisoUsuario(); return; }
+
+  if(introActiva){
+    avisoUsuario();
+    return;
+  }
+
   currentIndex--;
-  if(currentIndex <= 0) currentIndex = 1;
+
+  if(currentIndex <= 0){
+    currentIndex = 1;
+  }
+
   playSong(currentIndex);
 }
 
 function toggleShuffle(){
-  if(introActiva){ avisoUsuario(); return; }
+
+  if(introActiva){
+    avisoUsuario();
+    return;
+  }
+
   shuffle = !shuffle;
-  document.getElementById("shuffleBtn").classList.toggle("active", shuffle);
+
+  document.getElementById("shuffleBtn")
+  .classList.toggle("active", shuffle);
 }
 
 function toggleLoop(){
-  if(introActiva){ avisoUsuario(); return; }
+
+  if(introActiva){
+    avisoUsuario();
+    return;
+  }
+
   loop = !loop;
-  document.getElementById("loopBtn").classList.toggle("active", loop);
+
+  document.getElementById("loopBtn")
+  .classList.toggle("active", loop);
 }
 
 function avisoUsuario(){
+
   const msg = document.getElementById("mensajeInicial");
+
+  // cambia temporalmente a blanco brillante
   msg.style.background = "none";
   msg.style.webkitTextFillColor = "#ffffff";
   msg.style.color = "#ffffff";
+
   msg.style.textShadow = `
     0 0 6px rgba(255,255,255,0.9),
     0 0 14px rgba(255,255,255,0.7)
   `;
+
+  // animación atención
   msg.animate([
     { opacity: 1, transform: "scale(1)" },
     { opacity: 0.4, transform: "scale(1.08)" },
     { opacity: 1, transform: "scale(1)" }
-  ], { duration: 500, iterations: 2 });
+  ], {
+    duration: 500,
+    iterations: 2
+  });
+
+  // regresar a dorado original
   setTimeout(() => {
-    msg.style.background = `linear-gradient(45deg, #d4af37, #ffd700, #fff5b7, #d4af37)`;
+
+    msg.style.background = `
+      linear-gradient(
+        45deg,
+        #d4af37,
+        #ffd700,
+        #fff5b7,
+        #d4af37
+      )
+    `;
+
     msg.style.webkitBackgroundClip = "text";
     msg.style.webkitTextFillColor = "transparent";
+
     msg.style.textShadow = `
-      0 0 5px rgba(255,215,0,0.5),
-      0 0 10px rgba(255,215,0,0.3)
+      0 0 5px rgba(255, 215, 0, 0.5),
+      0 0 10px rgba(255, 215, 0, 0.3)
     `;
+
   }, 1200);
+
 }
 
 /* EVENTOS */
-player.addEventListener("ended", () => {
+player.addEventListener("ended",()=>loop?playSong(currentIndex):next());
 
-  // Mientras el usuario no haya elegido un mp3 → loop de intros
-  if(introActiva){
-    introIndex++;
-    if(introIndex >= intros.length) introIndex = 0; // vuelve al inicio
-    player.src = intros[introIndex].file;
-    player.load();
-    player.play();
-    updateUI(intros[introIndex]);
-    return;
-  }
-
-  // Usuario ya eligió → comportamiento normal
-  loop ? playSong(currentIndex) : next();
-
+player.addEventListener("timeupdate",()=>{
+if(!player.duration)return;
+document.getElementById("barra").style.width=(player.currentTime/player.duration)*100+"%";
 });
 
-player.addEventListener("timeupdate", () => {
-  if(!player.duration) return;
-  document.getElementById("barra").style.width = (player.currentTime / player.duration) * 100 + "%";
-});
-
-player.addEventListener("play", () => {
-  document.getElementById("playIcon").style.display = "none";
-  document.getElementById("pauseIcon").style.display = "block";
+player.addEventListener("play",()=>{
+  document.getElementById("playIcon").style.display="none";
+  document.getElementById("pauseIcon").style.display="block";
   ondas.classList.remove("pausa");
 });
 
-player.addEventListener("pause", () => {
-  document.getElementById("playIcon").style.display = "block";
-  document.getElementById("pauseIcon").style.display = "none";
+player.addEventListener("pause",()=>{
+  document.getElementById("playIcon").style.display="block";
+  document.getElementById("pauseIcon").style.display="none";
   ondas.classList.add("pausa");
 });
 
 /* SEEK */
 function seek(e){
-  let r = e.currentTarget.getBoundingClientRect();
-  player.currentTime = ((e.clientX - r.left) / r.width) * player.duration;
+let r=e.currentTarget.getBoundingClientRect();
+player.currentTime=((e.clientX-r.left)/r.width)*player.duration;
 }
 
 const volUp = document.getElementById("volUpBtn");
 const volDown = document.getElementById("volDownBtn");
+
 let interval;
 
-function changeVolume(amount, btn){
-  if(introActiva){ avisoUsuario(); return; }
+function changeVolume(amount, btn) {
+
+  if(introActiva){
+    avisoUsuario();
+    return;
+  }
+
   player.volume = Math.min(1, Math.max(0, player.volume + amount));
+
   btn.classList.add("active");
-  setTimeout(() => btn.classList.remove("active"), 200);
+
+  setTimeout(() => {
+    btn.classList.remove("active");
+  }, 200);
 }
 
+// CLICK
 volUp.onclick = () => changeVolume(0.05, volUp);
 volDown.onclick = () => changeVolume(-0.05, volDown);
 
+// CLICK SOSTENIDO
 volUp.onmousedown = () => {
   volUp.classList.add("active");
   interval = setInterval(() => changeVolume(0.02, volUp), 100);
@@ -1278,87 +1561,71 @@ document.onmouseup = () => {
   volDown.classList.remove("active");
 };
 
-/* ============================================================
-   HISTORIAL — ✅ usa todasLasPlaylist en lugar de playlist
-   ============================================================ */
-
-let reproducciones = JSON.parse(localStorage.getItem("reproducciones")) || {};
-let historial = JSON.parse(localStorage.getItem("historial")) || [];
+/* HISTORIAL */
+let reproducciones=JSON.parse(localStorage.getItem("reproducciones"))||{};
+let historial=JSON.parse(localStorage.getItem("historial"))||[];
 
 function registrarReproduccion(file){
-  reproducciones[file] = (reproducciones[file] || 0) + 1;
-  historial.unshift(file);
-  historial = historial.slice(0, 5);
-  localStorage.setItem("reproducciones", JSON.stringify(reproducciones));
-  localStorage.setItem("historial", JSON.stringify(historial));
-  actualizarSecciones();
+reproducciones[file]=(reproducciones[file]||0)+1;
+historial.unshift(file);
+historial=historial.slice(0,5);
+localStorage.setItem("reproducciones",JSON.stringify(reproducciones));
+localStorage.setItem("historial",JSON.stringify(historial));
+actualizarSecciones();
 }
 
 function actualizarSecciones(){
-  let contTop = document.getElementById("mas");
-  contTop.innerHTML = "";
 
-  Object.entries(reproducciones)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3)
-    .forEach(([file, count]) => {
-      let s = todasLasPlaylist.find(x => x.file === file); // ✅ CAMBIO
-      if(!s) return;
-      let d = document.createElement("div");
-      d.className = "item";
-      d.innerHTML = `
-        <svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
-          <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
-        </svg>
-        ${s.title} (${count})
-      `;
-      d.onclick = () => playMusic(s.file); // ✅ CAMBIO
-      contTop.appendChild(d);
-    });
+let contTop=document.getElementById("mas");
+contTop.innerHTML="";
 
-  let contUlt = document.getElementById("ult");
-  contUlt.innerHTML = "";
+Object.entries(reproducciones)
+.sort((a,b)=>b[1]-a[1])
+.slice(0,3)
+.forEach(([file,count])=>{
+let s=playlist.find(x=>x.file===file);
+if(!s)return;
+let d=document.createElement("div");
+d.className="item";
+d.innerHTML = `
+<svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
+  <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+</svg>
+${s.title} (${count})
+`;
+d.onclick=()=>playSong(playlist.indexOf(s));
+contTop.appendChild(d);
+});
 
-  [...new Set(historial)].forEach(file => {
-    let s = todasLasPlaylist.find(x => x.file === file); // ✅ CAMBIO
-    if(!s) return;
-    let d = document.createElement("div");
-    d.className = "item";
-    d.innerHTML = `
-      <svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
-        <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
-      </svg>
-      ${s.title}
-    `;
-    d.onclick = () => playMusic(s.file); // ✅ CAMBIO
-    contUlt.appendChild(d);
-  });
+let contUlt=document.getElementById("ult");
+contUlt.innerHTML="";
+
+[...new Set(historial)].forEach(file=>{
+let s=playlist.find(x=>x.file===file);
+if(!s)return;
+let d=document.createElement("div");
+d.className="item";
+d.innerHTML = `
+<svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
+  <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+</svg>
+${s.title}
+`;
+d.onclick=()=>playSong(playlist.indexOf(s));
+contUlt.appendChild(d);
+});
 }
 
-/* ============================================================
-   INTROS EN LOOP
-   - Agrega o quita entradas en el array para controlar
-     cuántas intros suenan y en qué orden.
-   - Ninguna aparece en la interfaz visual.
-   ============================================================ */
-
-const intros = [
-  playlist[0],               // ?? intro 1 — playlist original
-  // playlist[1],            // ?? intro 2 opcional de playlist (descomenta si la quieres)
-  playlistMusicaJehova[0],   // ?? intro 1 — música para Jehová
-  // playlistMusicaJehova[1] // ?? intro 2 opcional de musicaJehova (descomenta si la quieres)
-];
-
-let introIndex = 0;
-
-// ✅ playMusic usa todasLasPlaylist
 function playMusic(file){
-  let i = todasLasPlaylist.findIndex(s => s.file === file); // ✅ CAMBIO
-  if(i !== -1){
+  let i=playlist.findIndex(s=>s.file===file);
+  if(i!=-1){
     registrarReproduccion(file);
     introActiva = false;
     playSong(i);
+
+    // ?? aquí sí desaparece
     document.getElementById("mensajeInicial").style.opacity = "0";
+
     setTimeout(() => {
       document.getElementById("mensajeInicial").style.display = "none";
     }, 600);
@@ -1366,96 +1633,300 @@ function playMusic(file){
 }
 
 function toggle(id){
-  document.getElementById(id).classList.toggle("activo");
+document.getElementById(id).classList.toggle("activo");
 }
 
-/* ============================================================
-   LOGIN / PANTALLA INICIO — sin cambios
-   ============================================================ */
-
 const pantallaInicio = document.getElementById("pantallaInicio");
+
 const inputNombre = document.getElementById("nombreInput");
 const inputCelular = document.getElementById("celularInput");
 const inputCodigo = document.getElementById("codigoInput");
+
 const btnIngresar = document.getElementById("btnIngresar");
 const btnRecibir = document.getElementById("btnRecibirCodigo");
 
 let codigoGenerado = "";
 
-function resetLogin(){
+/* CONTADOR VISITAS */
+
+/*
+
+let visitas = localStorage.getItem("contadorVisitas");
+
+if(!visitas){
+  visitas = 0;
+}
+
+visitas++;
+
+localStorage.setItem("contadorVisitas", visitas);
+
+document.getElementById("contadorVisitas").innerText = visitas;
+
+*/
+
+/* WHATSAPP */
+function abrirWhatsApp(){
+
+  const nombre =
+    document.getElementById("nombreInput")?.value || "Usuario";
+
+  const mensaje =
+    `Hola, soy ${nombre} y estoy usando tu reproductor ??`;
+
+  const numero = "59170000000";
+
+  const url =
+    `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+  window.open(url, "_blank");
+}
+
+/* COMENTARIOS */
+
+/* 
+
+function agregarComentario(){
+
+  const input =
+    document.getElementById("comentarioInput");
+
+  const texto = input.value.trim();
+
+  if(!texto) return;
+
+  const nombre =
+    document.getElementById("nombreInput")?.value || "Usuario";
+
+  const fecha =
+    new Date().toLocaleDateString();
+
+  const contenedor =
+    document.getElementById("listaComentarios");
+
+  const div = document.createElement("div");
+
+  div.className = "comentario-item";
+
+  div.innerHTML = `
+    <div class="comentario-texto">
+      ${texto}
+    </div>
+
+    <div class="comentario-meta">
+      <span class="usuario">${nombre}</span>
+      <span class="fecha">${fecha}</span>
+    </div>
+  `;
+
+contenedor.appendChild(div);
+
+input.value = "";
+
+// RESPUESTA AUTOMÁTICA
+
+const textoLower = texto.toLowerCase();
+
+if(
+  textoLower.includes("informacion") ||
+  textoLower.includes("contacto") ||
+  textoLower.includes("sound music") ||
+  textoLower.includes("encargado") ||
+  textoLower.includes("consulta")
+){
+
+  const respuesta = document.createElement("div");
+
+  respuesta.className = "comentario-item";
+
+respuesta.innerHTML = `
+
+  <div class="comentario-texto">
+
+    <span class="icono-bombillo">
+
+      <svg class="bombillo-svg"
+           xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.9"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+
+        <!-- base -->
+        <path d="M9 18h6"></path>
+        <path d="M10 22h4"></path>
+
+        <!-- bombillo -->
+        <path d="
+          M12 2
+          C8 2 5 5 5 9
+          c0 2.5 1.2 4.2 2.5 5.5
+          C8.4 15.4 9 16.4 9 18
+          h6
+          c0-1.6.6-2.6 1.5-3.5
+          C17.8 13.2 19 11.5 19 9
+          c0-4-3-7-7-7z">
+        </path>
+
+        <!-- filamento -->
+        <path d="M9.5 11.5h5"></path>
+        <path d="M10.5 13h3"></path>
+
+      </svg>
+
+    </span>
+
+    Para consultas directas con SOUND MUSIC,
+    haz clic en el icono de WhatsApp.
+    La flecha animada te indicará dónde escribirnos.
+
+  </div>
+
+  <div class="comentario-meta">
+
+    <span class="usuario">
+      SOUND MUSIC
+    </span>
+
+    <span class="fecha">
+      ${new Date().toLocaleDateString()}
+    </span>
+
+  </div>
+
+`;
+
+  contenedor.appendChild(respuesta);
+}
+
+}
+
+ */
+
+/* RESET INICIAL */
+function resetLogin() {
   inputCelular.style.display = "none";
   inputCodigo.style.display = "none";
   btnRecibir.style.display = "none";
   btnIngresar.style.opacity = "0";
   btnIngresar.style.pointerEvents = "none";
 }
+
 resetLogin();
 
+/* NOMBRE */
 inputNombre.addEventListener("input", () => {
-  const ok = inputNombre.value.trim().length >= 10 && inputNombre.value.includes(" ");
-  if(ok){ inputCelular.style.display = "block"; }
-  else{ resetLogin(); }
-});
 
-inputCelular.addEventListener("input", (e) => {
-  let v = e.target.value.replace(/\D/g, "").slice(0, 8);
-  e.target.value = v;
-  if(v.length === 8){ btnRecibir.style.display = "inline-block"; }
-  else{ btnRecibir.style.display = "none"; }
-});
+  const ok = inputNombre.value.trim().length >= 10 &&
+             inputNombre.value.includes(" ");
 
-btnRecibir.addEventListener("click", () => {
-  const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const nums = "0123456789";
-  let code = "";
-  for(let i = 0; i < 3; i++) code += letras[Math.floor(Math.random() * letras.length)];
-  code += "-";
-  for(let i = 0; i < 3; i++) code += nums[Math.floor(Math.random() * nums.length)];
-  codigoGenerado = code;
-  alert("Código enviado: " + codigoGenerado);
-  inputCodigo.style.display = "block";
-});
-
-inputCodigo.addEventListener("input", () => {
-  let value = inputCodigo.value.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
-  if(value.length > 6) value = value.slice(0, 6);
-  if(value.length > 3) value = value.slice(0, 3) + "-" + value.slice(3);
-  inputCodigo.value = value;
-  if(value.length === 7){
-    btnIngresar.style.opacity = "1";
-    btnIngresar.style.pointerEvents = "auto";
-  }else{
-    btnIngresar.style.opacity = "0";
-    btnIngresar.style.pointerEvents = "none";
+  if (ok) {
+    inputCelular.style.display = "block";
+  } else {
+    resetLogin();
   }
 });
 
-btnIngresar.addEventListener("click", () => {
-  pantallaInicio.style.opacity = "0";
-  setTimeout(() => { pantallaInicio.style.display = "none"; }, 500);
-  playSong(0); // ?? intro automática — índice 0 intacto
+/* CELULAR */
+inputCelular.addEventListener("input", (e) => {
+
+  let v = e.target.value.replace(/\D/g, "").slice(0, 8);
+  e.target.value = v;
+
+  if (v.length === 8) {
+    btnRecibir.style.display = "inline-block";
+  } else {
+    btnRecibir.style.display = "none";
+  }
+
 });
 
-/* WHATSAPP */
-function abrirWhatsApp(){
-  const nombre = document.getElementById("nombreInput")?.value || "Usuario";
-  const mensaje = `Hola, soy ${nombre} y estoy usando tu reproductor ??`;
-  const numero = "59170000000";
-  const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, "_blank");
-}
+/* GENERAR CÓDIGO */
+btnRecibir.addEventListener("click", () => {
+
+  const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const nums = "0123456789";
+
+  let code = "";
+
+  for (let i = 0; i < 3; i++) {
+    code += letras[Math.floor(Math.random() * letras.length)];
+  }
+
+  code += "-";
+
+  for (let i = 0; i < 3; i++) {
+    code += nums[Math.floor(Math.random() * nums.length)];
+  }
+
+  codigoGenerado = code;
+
+  alert("Código enviado: " + codigoGenerado);
+
+  inputCodigo.style.display = "block";
+});
+
+/* CÓDIGO INPUT */
+inputCodigo.addEventListener("input", () => {
+
+  let value = inputCodigo.value
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .toUpperCase();
+
+  if (value.length > 6) value = value.slice(0, 6);
+
+  if (value.length > 3) {
+    value = value.slice(0, 3) + "-" + value.slice(3);
+  }
+
+  inputCodigo.value = value;
+
+  if (value.length === 7) {
+    btnIngresar.style.opacity = "1";
+    btnIngresar.style.pointerEvents = "auto";
+  } else {
+    btnIngresar.style.opacity = "0";
+    btnIngresar.style.pointerEvents = "none";
+  }
+
+});
+
+/* INGRESO FINAL */
+btnIngresar.addEventListener("click", () => {
+
+  pantallaInicio.style.opacity = "0";
+
+  setTimeout(() => {
+    pantallaInicio.style.display = "none";
+  }, 500);
+
+  playSong(0);
+
+});
 
 </script>
 
-<!-- ===== FIREBASE — sin cambios ===== -->
+<!-- ===== SCRIPT DE ORO conexion global FIREBASE ===== -->
+
 <script type="module">
 
 import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
-import { getDatabase, ref, set, get, push, onChildAdded, onValue }
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+import {
+  getDatabase,
+  ref,
+  set,
+  get,
+  push,
+  onChildAdded,
+  onValue
+}
+  from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
+/* FIREBASE */
 const firebaseConfig = {
   apiKey: "AIzaSyBFsAf9N6fdIylSR2qKOQzh9HnWaxRLPIY",
   authDomain: "soundmusicbeta.firebaseapp.com",
@@ -1467,90 +1938,146 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const db  = getDatabase(app);
 
-/* CONTADOR GLOBAL */
+/* =========================
+   CONTADOR GLOBAL REALTIME
+========================= */
 const visitasRef = ref(db, "contador_global");
 
 get(visitasRef)
   .then((snapshot) => {
-    if(snapshot.exists()){ set(visitasRef, snapshot.val() + 1); }
-    else{ set(visitasRef, 1); }
+    set(visitasRef, snapshot.exists() ? snapshot.val() + 1 : 1);
   })
-  .catch((error) => { console.error("Error visitas:", error); });
+  .catch((error) => {
+    console.error("Error visitas:", error);
+  });
 
 onValue(visitasRef, (snapshot) => {
-  if(snapshot.exists()){
+  if (snapshot.exists()) {
     document.getElementById("contadorVisitas").innerText = snapshot.val();
   }
 });
 
 console.log("Firebase conectado correctamente");
 
-/* COMENTARIOS */
+
+/* =========================
+   COMENTARIOS REALTIME
+========================= */
 const comentariosRef = ref(db, "comentarios");
 
+/* --- ESCUCHAR NUEVOS COMENTARIOS -------------------------
+   onChildAdded dispara por cada nodo hijo.
+   Solo mostramos los que son del usuario (nombre !== "SOUND MUSIC"),
+   porque la respuesta automática ya viaja DENTRO del mismo objeto.
+------------------------------------------------------------ */
 onChildAdded(comentariosRef, (snapshot) => {
   const data = snapshot.val();
+
+  // FIX: ignorar los push() sueltos de "SOUND MUSIC" que
+  // quedaron en la base de datos de antes. Solo renderizamos
+  // comentarios reales de usuarios.
+  if (data.nombre === "SOUND MUSIC") return;
+
   mostrarComentario(data);
 });
 
-function mostrarComentario(data){
+
+/* --- MOSTRAR COMENTARIO ----------------------------------
+   ORDEN CORRECTO:
+     1. Pregunta (usuario)   ? arriba
+     2. Respuesta (bot)      ? abajo
+------------------------------------------------------------ */
+function mostrarComentario(data) {
   const contenedor = document.getElementById("listaComentarios");
+
   const div = document.createElement("div");
   div.className = "comentario-item";
-  let respuestaHTML = "";
-  if(data.respuesta){
-    respuestaHTML = `
-      <div class="respuesta-box">
-        <div class="comentario-meta">
-          <span class="usuario">SOUND MUSIC</span>
-          <span class="fecha">${data.fechaRespuesta}</span>
-        </div>
-        <div class="comentario-texto">
-          <span class="icono-bombillo">??</span>
-          ${data.respuesta}
-        </div>
-      </div>
-    `;
-  }
-  div.innerHTML = `
+
+  // -- 1. PREGUNTA del usuario (siempre primero) --
+  let html = `
     <div class="comentario-meta">
       <span class="usuario">${data.nombre}</span>
       <span class="fecha">${data.fecha}</span>
     </div>
-    <div class="comentario-texto">${data.texto}</div>
-    ${respuestaHTML}
+    <div class="comentario-texto">
+      ${data.texto}
+    </div>
   `;
+
+  // -- 2. RESPUESTA automática (debajo, solo si existe) --
+  if (data.respuesta) {
+    html += `
+      <div class="comentario-meta" style="margin-top:8px;">
+        <div class="respuesta-box">
+          <span class="usuario">SOUND MUSIC</span>
+          <span class="fecha">${data.fechaRespuesta}</span>
+        </div>
+      </div>
+      <div class="comentario-texto">
+        <span class="icono-bombillo">??</span>
+        ${data.respuesta}
+      </div>
+    `;
+  }
+
+  div.innerHTML = html;
+
+  // FIX: append (al final) en vez de prepend (al inicio)
+  // porque onChildAdded ya llega en orden cronológico.
+  // Si quieres los más nuevos arriba ? usa prepend Y
+  // quita el if de "SOUND MUSIC" arriba. Pero solo uno de los dos.
   contenedor.prepend(div);
 }
 
-window.agregarComentario = function(){
-  const input = document.getElementById("comentarioInput");
-  const texto = input.value.trim();
-  if(!texto) return;
-  const nombre = document.getElementById("nombreInput")?.value || "Usuario";
-  const fecha = new Date().toLocaleString();
-  push(comentariosRef, { texto, nombre, fecha, timestamp: Date.now() });
-  input.value = "";
+
+/* --- AGREGAR COMENTARIO ----------------------------------
+   FIX PRINCIPAL: la respuesta automática ya NO es un push()
+   separado. Viaja dentro del mismo objeto del comentario
+   como los campos  "respuesta" y "fechaRespuesta".
+   Así siempre llegan juntos y en orden.
+------------------------------------------------------------ */
+window.agregarComentario = function () {
+  const input  = document.getElementById("comentarioInput");
+  const texto  = input.value.trim();
+  if (!texto) return;
+
+  const nombre = document.getElementById("nombreInput")?.value.trim() || "Usuario";
+  const fecha  = new Date().toLocaleString();
+
+  // Detectar palabras clave para respuesta automática
   const textoLower = texto.toLowerCase();
-  if(
-    textoLower.includes("ref") ||
-    textoLower.includes("referencia") ||
-    textoLower.includes("info") ||
-    textoLower.includes("informacion") ||
-    textoLower.includes("contacto") ||
-    textoLower.includes("sound music") ||
-    textoLower.includes("encargado") ||
+
+  let respuesta      = null;
+  let fechaRespuesta = null;
+
+  if (
+    textoLower.includes("ref")          ||
+    textoLower.includes("referencia")   ||
+    textoLower.includes("info")         ||    
+    textoLower.includes("informacion")  ||
+    textoLower.includes("información")  ||
+    textoLower.includes("contacto")     ||
+    textoLower.includes("sound music")  ||
+    textoLower.includes("encargado")    ||
     textoLower.includes("consulta")
-  ){
-    push(comentariosRef, {
-      texto: "?? Para consultas directas con SOUND MUSIC, haz clic en el icono de WhatsApp. La flecha animada te indicará dónde escribirnos.",
-      nombre: "SOUND MUSIC",
-      fecha: new Date().toLocaleString(),
-      timestamp: Date.now()
-    });
+  ) {
+    respuesta = "?? Contacto directo SOUND MUSIC, clic icono WhatsApp. ariba boton verde enviar, escribenos.";
+    fechaRespuesta = new Date().toLocaleString();
   }
+
+  // Un solo push con todo incluido
+  push(comentariosRef, {
+    texto,
+    nombre,
+    fecha,
+    timestamp:      Date.now(),
+    respuesta,        // null si no hay coincidencia, string si la hay
+    fechaRespuesta    // null si no hay coincidencia
+  });
+
+  input.value = "";
 };
 
 </script>
