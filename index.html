@@ -1500,21 +1500,25 @@ function abrirWhatsApp(){
 #listaComentarios {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 12px 0;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* ── Par pregunta + respuesta ── */
+/* ── Para pregunta + respuesta ── */
 .comentario-item {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* ── Burbuja base — mismo ancho para ambas ── */
 .burbuja {
-  width: 85%;
+  max-width: 80%;
+  width: fit-content;
   padding: 9px 13px;
   border-radius: 14px;
   font-size: 13px;
