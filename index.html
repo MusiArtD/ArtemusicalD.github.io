@@ -438,6 +438,7 @@ body {
 }
 
 .comentarios h2,
+
 .comentario-header{
   position:sticky;
   top:0;
@@ -445,14 +446,37 @@ body {
   background:#181818;
 }
 
-.comentario-header{
+.comentario-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
   background: #222;
-  padding: 10px;
+  padding: 10px 14px;
   border-radius: 10px;
   margin-bottom: 15px;
+}
+
+.header-fila1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-fila2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;        /* ← más separación entre ¿Te gustó?, 👍 y 👎 */
+  width: 100%;
+  padding-top: 6px;
+  border-top: 1px solid #333;
+}
+
+.calificar-label {
+  font-size: 13px;
+  color: #777;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
 .visitas{
@@ -622,6 +646,52 @@ body {
   to{ transform:translateX(6px); opacity:1; }
 }
 
+.votos-box {
+  display: flex;
+  align-items: center;
+  gap: 20px;        /* ← más separación entre 👍 y 👎 */
+}
+
+.voto-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #555;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.2s;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.voto-item svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.voto-item:hover { color: #888; transform: scale(1.1); }
+
+#btnLike.votado {
+  color: #ffd700;
+  filter: drop-shadow(0 0 4px rgba(255,215,0,0.5));
+  pointer-events: none;
+}
+
+#btnDislike.votado {
+  color: #ff4444;
+  filter: drop-shadow(0 0 4px rgba(255,68,68,0.5));
+  pointer-events: none;
+}
+
+.voto-item.bloqueado {
+  color: #555;
+  cursor: default;
+  pointer-events: none;
+}
+
 </style>
 </head>
 
@@ -671,7 +741,66 @@ body {
   </div>
   <div id="musicaJehovaContenido" class="contenido activo"></div>
 
-  <!-- Lista de reproducción (segundo) -->
+   <!-- ✅ NUEVO: Comercial (segundo) -->
+<div class="seccion" onclick="toggle('ComercialContenido')">
+<svg class="icono-seccion" viewBox="0 0 100 58" fill="none">
+  <style>
+    .mc { animation: deslizarC 2.2s ease-in-out infinite; }
+    .o1 { animation: ondaC 1.6s 0.0s  infinite ease-in-out; }
+    .o2 { animation: ondaC 1.6s 0.25s infinite ease-in-out; }
+    .o3 { animation: ondaC 1.6s 0.5s  infinite ease-in-out; }
+    @keyframes deslizarC {
+      0%   { transform: translateY(-4px); opacity:.7; }
+      40%  { transform: translateY(0px);  opacity:1;  }
+      70%  { transform: translateY(2px);  opacity:1;  }
+      100% { transform: translateY(-4px); opacity:.7; }
+    }
+    @keyframes ondaC {
+      0%,100% { opacity:.25; }
+      50%     { opacity:1;   }
+    }
+  </style>
+  <g class="mc">
+    <rect x="10" y="34" width="10" height="22" rx="3" fill="#1A6B22"/>
+    <rect x="11" y="37" width="8" height="2" rx="1" fill="#2ECC40" opacity="0.5"/>
+    <rect x="11" y="41" width="8" height="2" rx="1" fill="#2ECC40" opacity="0.5"/>
+    <rect x="11" y="45" width="8" height="2" rx="1" fill="#2ECC40" opacity="0.5"/>
+    <rect x="11" y="49" width="8" height="2" rx="1" fill="#2ECC40" opacity="0.5"/>
+    <rect x="6" y="10" width="22" height="26" rx="3" fill="#2ECC40"/>
+    <rect x="9"  y="13" width="16" height="20" rx="2" fill="#1A6B22" opacity="0.5"/>
+    <rect x="11" y="15" width="12" height="1.5" rx="1" fill="#2ECC40" opacity="0.6"/>
+    <rect x="11" y="19" width="12" height="1.5" rx="1" fill="#2ECC40" opacity="0.6"/>
+    <rect x="11" y="23" width="12" height="1.5" rx="1" fill="#2ECC40" opacity="0.6"/>
+    <rect x="11" y="27" width="12" height="1.5" rx="1" fill="#2ECC40" opacity="0.6"/>
+    <rect x="6" y="10" width="22" height="26" rx="3" fill="none" stroke="#5EE86E" stroke-width="0.8" stroke-opacity="0.6"/>
+    <polygon points="6,14 0,18 0,28 6,32" fill="#2ECC40"/>
+    <polygon points="6,14 0,18 0,28 6,32" fill="none" stroke="#5EE86E" stroke-width="0.6" stroke-opacity="0.5"/>
+    <polygon points="28,8 52,0 52,46 28,38" fill="#2ECC40"/>
+    <polygon points="28,8 52,0 52,46 28,38" fill="#1A6B22" opacity="0.3"/>
+    <line x1="28" y1="14" x2="52" y2="8"  stroke="#5EE86E" stroke-width="0.6" stroke-opacity="0.4"/>
+    <line x1="28" y1="20" x2="52" y2="16" stroke="#5EE86E" stroke-width="0.6" stroke-opacity="0.4"/>
+    <line x1="28" y1="26" x2="52" y2="24" stroke="#5EE86E" stroke-width="0.6" stroke-opacity="0.4"/>
+    <line x1="28" y1="32" x2="52" y2="32" stroke="#5EE86E" stroke-width="0.6" stroke-opacity="0.4"/>
+    <polygon points="28,8 52,0 52,46 28,38" fill="none" stroke="#5EE86E" stroke-width="0.8" stroke-opacity="0.6"/>
+    <ellipse cx="52" cy="23" rx="3" ry="23" fill="#1A6B22"/>
+    <ellipse cx="52" cy="23" rx="3" ry="23" fill="none" stroke="#5EE86E" stroke-width="0.8" stroke-opacity="0.5"/>
+    <rect x="14" y="6" width="6" height="5" rx="1.5" fill="#1A6B22"/>
+  </g>
+  <g class="o1">
+    <path d="M58,15 Q65,23 58,31" stroke="#2ECC40" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+  <g class="o2">
+    <path d="M63,10 Q73,23 63,36" stroke="#2ECC40" stroke-width="2" fill="none" stroke-linecap="round" stroke-opacity="0.75"/>
+  </g>
+  <g class="o3">
+    <path d="M68,5 Q82,23 68,41" stroke="#2ECC40" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-opacity="0.45"/>
+  </g>
+</svg>
+      Comercial
+     </div>
+  <div id="ComercialContenido" class="contenido"></div>
+
+<!-- Lista de reproducción (tercero) -->
   <div class="seccion" onclick="toggle('listaContenido')">
     <svg class="icono-seccion icono-lista" viewBox="0 0 24 24" fill="currentColor">
       <path d="M4 6h16v2H4z"/>
@@ -794,6 +923,9 @@ body {
   <h2>Comentarios</h2>
 
   <div class="comentario-header">
+
+  <!-- FILA 1 — elementos antiguos -->
+  <div class="header-fila1">
     <div class="visitas">
       VISITAS <span id="contadorVisitas">0</span>
     </div>
@@ -810,194 +942,38 @@ body {
     </div>
   </div>
 
-  <div class="aviso-wsp">
-    Para consultas o contacto directo con SOUND MUSIC,
-    haz clic en el icono de WhatsApp.
-    La flecha animada te indica dónde escribirnos.
+  <!-- FILA 2 — elementos nuevos -->
+  <div class="header-fila2">
+    <span class="calificar-label">¿Te gustó?</span>
+    <div class="votos-box">
+      <span class="voto-item" id="btnLike" onclick="votar('like')">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M2 20h2a1 1 0 001-1v-7a1 1 0 00-1-1H2v9zm18.5-9H15l1.2-4.5A1.5 1.5 0 0014.8 4L9 10.5V20h9.8a2 2 0 001.96-1.6l1.2-6a2 2 0 00-1.96-2.4z"/>
+        </svg>
+        <span id="contadorLike">0</span>
+      </span>
+      <span class="voto-item" id="btnDislike" onclick="votar('dislike')">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M22 4h-2a1 1 0 00-1 1v7a1 1 0 001 1h2V4zM3.5 13H9l-1.2 4.5A1.5 1.5 0 009.2 20L15 13.5V4H5.2a2 2 0 00-1.96 1.6l-1.2 6A2 2 0 003.5 13z"/>
+        </svg>
+        <span id="contadorDislike">0</span>
+      </span>
+    </div>
   </div>
-
-  <div class="comentario-box">
-    <input type="text" id="comentarioInput" placeholder="Escribe un comentario...">
-    <button onclick="agregarComentario()">ENVIAR</button>
-  </div>
-
-  <div id="listaComentarios"></div>
+</div>
 
 <script>
 
 /* ============================================================
    PLAYLISTS
-   - playlist:             canciones generales
    - playlistMusicaJehova: nuevo apartado
+   - playlistComercial:    otro apartado
+   - playlist:             canciones generales
    - todasLasPlaylist:     unión para búsquedas y navegación
    ============================================================ */
 
-const playlist = [
-  // ?? canción predeterminada (SIEMPRE índice 0 - NO MOVER - usada por DEFAULT_INDEX)
-{
-file:"Intro Sound Music 2026.mp3",
-title:"Intro Sound Music 2026",
-code:"000",
-cover:"intro.png",
-de:"J.M.P_3Hermanos",
-para:"Público en General"
-},
-{
-file:"El Cielo se Viste de Fiesta.mp3",
-title:"El Cielo se Viste de Fiesta",
-code:"AMU-001",
-cover:"mis-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Jehová Te Cuide Yuliana.mp3",
-title:"Jehová Te Cuide Yuliana",
-code:"AMU-002",
-cover:"quinseañera.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Mariachi Serenata Yuliana.mp3",
-title:"Mariachi Serenata Yuliana",
-code:"AMU-003",
-cover:"los-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Mariachi Serenata de Yuliana.mp3",
-title:"Mariachi Serenata de Yuliana",
-code:"AMU-004",
-cover:"quinseañera.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Tropical Baila Yuliana en tus 15.mp3",
-title:"Tropical Baila Yuliana en tus 15",
-code:"AMU-005",
-cover:"mis-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Tropical Desde el Cielo una Luz desendio.mp3",
-title:"Tropical Desde el Cielo una Luz desendio",
-code:"AMU-006",
-cover:"los-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Tropical Los 15 de Yuliana.mp3",
-title:"Tropical Los 15 de Yuliana",
-code:"AMU-007",
-cover:"mis-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Tropical Para Vos Yuliana.mp3",
-title:"Tropical Para Vos Yuliana",
-code:"AMU-008",
-cover:"quinseañera.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Vals 15 Rosas en Tu Corazón.mp3",
-title:"Vals 15 Rosas en Tu Corazón",
-code:"AMU-009",
-cover:"los-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Vals Como un Susuro.mp3",
-title:"Vals Como un Susuro",
-code:"AMU-010",
-cover:"quinseañera.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Vals Con Cariño y Apresio.mp3",
-title:"Vals Con Cariño y Apresio.mp3",
-code:"AMU-011",
-cover:"mis-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Vals Feliz Cumpleaños Yuliana.mp3",
-title:"Vals Feliz Cumpleaños Yuliana",
-code:"AMU-012",
-cover:"los-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Vals La Aventura de tu Vida.mp3",
-title:"Vals La Aventura de tu Vida",
-code:"AMU-013",
-cover:"mis-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Vals Regalo de amor en tus 15.mp3",
-title:"Vals Regalo de amor en tus 15",
-code:"AMU-014",
-cover:"quinseañera.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Vals Yuliana Tu Tiempo de Soñar.mp3",
-title:"Vals Yuliana Tu Tiempo de Soñar",
-code:"AMU-015",
-cover:"los-15.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Vals para Yuliana.mp3",
-title:"Vals para Yuliana",
-code:"AMU-016",
-cover:"quinseañera.jpg",
-de:"Flor de Liz y Vicente tus Padres",
-para:"Yuliana"
-},
-{
-file:"Amelia Celeste Dos Velitas hacen Fiesta.mp3",
-title:"Amelia Celeste Dos Velitas hacen Fiesta",
-code:"AMU-017",
-cover:"cumple-amelia.jpg",
-de:"Flor de Liz y Joaquin tus Padres",
-para:"Amelia Celeste"
-},
-{
-file:"Amelia Celeste Regalo bonito.mp3",
-title:"Amelia Celeste Regalo bonito",
-code:"AMU-018",
-cover:"amelia-celeste.jpg",
-de:"Flor de Liz y Joaquin tus Padres",
-para:"Amelia Celeste"
-},
-{
-file:"Amelia Celeste.mp3",
-title:"Amelia Celeste",
-code:"AMU-019",
-cover:"2-años-Amelia.jpg",
-de:"tus Padres Flor de Liz y Joaquin",
-para:"Amelia Celeste"
-}
-];
-
 const playlistMusicaJehova = [
-  // índice 0 obligatorio pero oculto (igual que playlist)
+  // ?? índice 0 — intro automática al ingresar — NO MOVER - usada por DEFAULT_INDEX)
   {
     file:"intro.mp3",
     title:"Intro",
@@ -1009,7 +985,7 @@ const playlistMusicaJehova = [
   {
     file:"Atraves de los Años.mp3",
     title:"Atraves de los Años",
-    code:"AMU-001",
+    code:"",
     cover:"Atraves de los Años.jpg",
     de:"J.M.P_3Hermanos",
     para:"Público en General"
@@ -1017,47 +993,155 @@ const playlistMusicaJehova = [
   {
     file:"Año Nuevo.mp3",
     title:"Año Nuevo",
-    code:"AMU-002",
-    cover:"Año-Nuevo.jpg",
+    code:"",
+    cover:"Año Nuevo.jpg",
     de:"J.M.P_3Hermanos",
     para:"Público en General"
   },
   {
     file:"Baila como Mirian.mp3",
     title:"Baila como Mirian",
-    code:"AMU-003",
-    cover:"Baila-como-Mirian.jpg",
+    code:"",
+    cover:"Baila como Mirian.jpg",
     de:"J.M.P_3Hermanos",
     para:"Público en General"
   },
   {
     file:"Jesucristo Eterno Adonay.mp3",
     title:"Jesucristo Eterno Adonay",
-    code:"AMU-004",
-    cover:"Jesucristo-Eterno-Adonay.jpg",
+    code:"",
+    cover:"Jesucristo Eterno Adonay.jpg",
     de:"J.M.P_3Hermanos",
     para:"Público en General"
   },
   {
     file:"Cuando se apaga mi voz.mp3",
     title:"Cuando se apaga mi voz",
-    code:"AMU-005",
-    cover:"Cuando-se-apaga-mi-voz.jpg",
+    code:"",
+    cover:"Cuando se apaga mi voz.jpg",
+    de:"J.M.P_3Hermanos",
+    para:"Público en General"
+  }
+];  
+
+const playlistComercial = [
+  // índice 0 obligatorio pero oculto (igual que playlist)
+
+  {
+    file:"Intro0.mp3",
+    title:"Intro",
+    code:"000",
+    cover:"Intro0.jpg",
     de:"J.M.P_3Hermanos",
     para:"Público en General"
   },
   {
-    file:"Atraves de los Años.mp3",
-    title:"Atraves de los Años",
-    code:"AMU-006",
-    cover:"Atraves de los Años.jpg",
+    file:"La Super Jiva.mp3",
+    title:"La Super Jiva",
+    code:"",
+    cover:"La Super Jiva.jpg",
+    de:"La Super Jiva",
+    para:"El Plan 300"
+  },
+  {
+    file:"La Super Jiva..mp3",
+    title:"La Super Jiva",
+    code:"",
+    cover:"La Super Jiva.jpg",
+    de:"La Super Jiva",
+    para:"El Plan 300"
+  },
+  {
+    file:"La Super Jiva...mp3",
+    title:"La Super Jiva",
+    code:"",
+    cover:"La Super Jiva.jpg",
+    de:"La Super Jiva",
+    para:"El Plan 300"
+  },
+  {
+    file:"El Patio de Choco Burguer.mp3",
+    title:"El Patio de Choco Burguer",
+    code:"",
+    cover:"El Patio de Choco Burguer.jpg",
+    de:"Choco Burguer",
+    para:"El Recreo Central"
+  },
+  {
+    file:"El Choco Burguer.mp3",
+    title:"El Choco Burguer",
+    code:"",
+    cover:"El Patio de Choco Burguer.jpg",
+    de:"Choco Burguer",
+    para:"El Recreo Central"
+  },
+  {
+    file:"La Choco Burguer.mp3",
+    title:"La Choco Burguer",
+    code:"",
+    cover:"El Patio de Choco Burguer.jpg",
+    de:"Choco Burguer",
+    para:"El Recreo Central"
+  },
+  {
+    file:"El Recreo Emprendedor.mp3",
+    title:"Recreo Emprendedor",
+    code:"",
+    cover:"Recreo Emprendedor.jpg",
+    de:"Grupo Recreo Emprendedor",
+    para:"El Recreo Central"
+  }
+];
+
+const playlist = [
+  // índice 0 obligatorio pero oculto (igual que playlist)
+  {
+    file:"Intro Sound Music 2026.mp3",
+    title:"Intro Sound Music 2026",
+    code:"000",
+    cover:"Intro Sound Music 2026.png",
     de:"J.M.P_3Hermanos",
     para:"Público en General"
+
+  },
+  {
+    file:"El Cielo se Viste de Fiesta.mp3",
+    title:"El Cielo se Viste de Fiesta",
+    code:"",
+    cover:"mis-15.jpg",
+    de:"Flor de Liz y Vicente tus Padres",
+    para:"Yuliana"
+  },
+  {
+    file:"Vals Como un Susuro.mp3",
+    title:"Vals Como un Susuro",
+    code:"",
+    cover:"quinseañera.jpg",
+    de:"Flor de Liz y Vicente tus Padres",
+    para:"Yuliana"
+  },
+  {
+    file:"Amelia Celeste.mp3",
+    title:"Amelia Celeste",
+    code:"",
+    cover:"2-años-Amelia.jpg",
+    de:"tus Padres Flor de Liz y Joaquin",
+    para:"Amelia Celeste"
   }
 ];
 
 // ✅ Unión de ambas listas para búsquedas, historial y navegación
-const todasLasPlaylist = [...playlist, ...playlistMusicaJehova];
+const todasLasPlaylist = [...playlist, ...playlistMusicaJehova, ...playlistComercial];
+
+function asignarCodigos() {
+  let contador = 1;
+  todasLasPlaylist.forEach((song) => {
+    if (song.code === "000") return; // saltar intros
+    song.code = "AMU-" + String(contador).padStart(3, "0");
+    contador++;
+  });
+}
+asignarCodigos();
 
 /* ============================================================
    VARIABLES GLOBALES
@@ -1081,24 +1165,6 @@ const dataArray = new Uint8Array(bufferLength);
    RENDER LISTAS
    ============================================================ */
 
-function renderLista(){
-  let cont = document.getElementById("listaContenido");
-  cont.innerHTML = "";
-  playlist.forEach((song, index) => {
-    if(index === 0) return;
-    let div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `
-      <svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
-        <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
-      </svg>
-      ${song.title}
-    `;
-    div.onclick = () => playMusic(song.file);
-    cont.appendChild(div);
-  });
-}
-
 // ✅ NUEVO
 function renderMusicaJehova(){
   let cont = document.getElementById("musicaJehovaContenido");
@@ -1118,8 +1184,46 @@ function renderMusicaJehova(){
   });
 }
 
-renderLista();
+// ✅ NUEVO
+function renderComercial(){
+  let cont = document.getElementById("ComercialContenido");
+  cont.innerHTML = "";
+  playlistComercial.forEach((song, index) => {
+    if(index === 0) return;
+    let div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
+      <svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
+        <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+      </svg>
+      ${song.title}
+    `;
+    div.onclick = () => playMusic(song.file);
+    cont.appendChild(div);
+  });
+}
+
+function renderLista(){
+  let cont = document.getElementById("listaContenido");
+  cont.innerHTML = "";
+  playlist.forEach((song, index) => {
+    if(index === 0) return;
+    let div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
+      <svg class="icono-seccion icono-musica" viewBox="0 0 24 24">
+        <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/>
+      </svg>
+      ${song.title}
+    `;
+    div.onclick = () => playMusic(song.file);
+    cont.appendChild(div);
+  });
+}
+
 renderMusicaJehova();
+renderComercial();
+renderLista();
 
 /* ONDAS */
 let ondas = document.getElementById("ondas");
@@ -1398,6 +1502,8 @@ const intros = [
   // playlist[1],            // ?? intro 2 opcional de playlist (descomenta si la quieres)
   playlistMusicaJehova[0],   // ?? intro 1 — música para Jehová
   // playlistMusicaJehova[1] // ?? intro 2 opcional de musicaJehova (descomenta si la quieres)
+  playlistComercial[0],      // ?? intro 1 — Comercial
+  // playlistCormecial[1]    // ?? intro 2 opcional de Cormecial (descomenta si la quieres)
 ];
 
 let introIndex = 0;
@@ -1419,6 +1525,7 @@ function playMusic(file){
 function toggle(id){
   const todos = [
     'musicaJehovaContenido',
+    'ComercialContenido',
     'listaContenido',
     'mas',
     'ult'
@@ -1509,8 +1616,13 @@ function abrirWhatsApp(){
 
 </script>
 
-<!-- ===== SCRIPT DE ORO conexion global FIREBASE ===== -->
+  <div class="comentario-box">
+    <input type="text" id="comentarioInput" placeholder="Escribe un comentario...">
+    <button onclick="agregarComentario()">ENVIAR</button>
+  </div>
+  <div id="listaComentarios"></div>
 
+<!-- ===== SCRIPT DE ORO conexion global FIREBASE ===== -->
 <!-- ══════════════════════════════════════════
      CSS DE BURBUJAS v2 — pega esto en tu <style>
      o en tu archivo CSS global.
@@ -1637,6 +1749,15 @@ import {
 }
   from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+const auth = getAuth(app);
+
 const firebaseConfig = {
   apiKey: "AIzaSyBFsAf9N6fdIylSR2qKOQzh9HnWaxRLPIY",
   authDomain: "soundmusicbeta.firebaseapp.com",
@@ -1666,6 +1787,85 @@ onValue(visitasRef, (snapshot) => {
 });
 
 console.log("Firebase conectado correctamente");
+
+/* ── VOTOS 👍 👎 ── */
+const likesRef    = ref(db, "votos/likes");
+const dislikesRef = ref(db, "votos/dislikes");
+
+// Escuchar cambios en tiempo real
+onValue(likesRef, (snap) => {
+  document.getElementById("contadorLike").innerText = snap.exists() ? snap.val() : 0;
+});
+onValue(dislikesRef, (snap) => {
+  document.getElementById("contadorDislike").innerText = snap.exists() ? snap.val() : 0;
+});
+
+// Verificar si ya votó este mes
+function obtenerVotoGuardado() {
+  const datos = JSON.parse(localStorage.getItem("voto_soundmusic")) || {};
+  const ahora = new Date();
+  const mesActual = `${ahora.getFullYear()}-${ahora.getMonth()}`;
+  if (datos.mes !== mesActual) return null; // mes distinto = puede votar
+  return datos.tipo; // 'like' o 'dislike'
+}
+
+function guardarVoto(tipo) {
+  const ahora = new Date();
+  const mesActual = `${ahora.getFullYear()}-${ahora.getMonth()}`;
+  localStorage.setItem("voto_soundmusic", JSON.stringify({ mes: mesActual, tipo }));
+}
+
+// Marcar visualmente el botón activo al cargar
+function reflejarVotoGuardado() {
+  const tipo = obtenerVotoGuardado();
+  const btnL = document.getElementById("btnLike");
+  const btnD = document.getElementById("btnDislike");
+
+  // limpiar estados
+  btnL.classList.remove("votado", "bloqueado");
+  btnD.classList.remove("votado", "bloqueado");
+
+  if (tipo === "like") {
+    btnL.classList.add("votado");    // amarillo
+    btnD.classList.add("bloqueado"); // gris bloqueado silencioso
+  } else if (tipo === "dislike") {
+    btnD.classList.add("votado");    // rojo
+    btnL.classList.add("bloqueado"); // gris bloqueado silencioso
+  }
+  // sin voto → ambos quedan en gris normal clickeables
+}
+// ← aquí mismo debajo agrega esta línea:
+setTimeout(() => reflejarVotoGuardado(), 300);
+
+// Función principal de voto
+window.votar = function(tipo) {
+  const votoAnterior = obtenerVotoGuardado();
+
+  // Si hace clic en el mismo que ya votó → no hace nada
+  if (votoAnterior === tipo) return;
+
+  const refNuevo    = tipo === "like" ? likesRef : dislikesRef;
+  const refAnterior = votoAnterior === "like" ? likesRef
+                    : votoAnterior === "dislike" ? dislikesRef
+                    : null;
+
+  // Restar el voto anterior si existía
+  if (refAnterior) {
+    get(refAnterior).then((snap) => {
+      const val = snap.exists() ? snap.val() : 0;
+      set(refAnterior, Math.max(0, val - 1));
+    });
+  }
+
+  // Sumar el nuevo voto
+  get(refNuevo).then((snap) => {
+    const val = snap.exists() ? snap.val() : 0;
+    set(refNuevo, val + 1);
+  });
+
+  guardarVoto(tipo);
+  reflejarVotoGuardado();
+};
 
 /* ── COMENTARIOS ── */
 const comentariosRef = ref(db, "comentarios");
@@ -1738,7 +1938,7 @@ window.agregarComentario = function () {
     textoLower.includes("consulta")
   ) {
     /* Sin 💡 aquí — se agrega solo en mostrarComentario */
-    respuesta      = "Contacto directo SOUND MUSIC, clic en icono WhatsApp. Para consulta personal, escribirnos.";
+    respuesta      = "Consulta personal, escribir. directo SOUND MUSIC, clic icono WhatsApp.";
     fechaRespuesta = new Date().toLocaleString();
   }
 
